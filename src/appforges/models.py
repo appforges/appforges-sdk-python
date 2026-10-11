@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Annotated, Any, Literal, TypeAlias
 
-from pydantic import BeforeValidator, Field
+from pydantic import AfterValidator, Field
 
 from .runtime.models import SDKModel, non_null
 
@@ -22,28 +22,28 @@ APIKeyStatus: TypeAlias = Literal[
 class APIKey(SDKModel):
     "APIKey represents a developer's API key credential."
 
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    key_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key_id")
-    key_prefix: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key_id")
+    key_prefix: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="key_prefix"
     )
-    last_used_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    last_used_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="last_used_at"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    rate_limit: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    rate_limit: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="rate_limit"
     )
-    status: Annotated[APIKeyStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[APIKeyStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
 
@@ -125,26 +125,26 @@ class CostSummary(SDKModel):
     estimated_tool_credit: str = Field(default=..., alias="estimated_tool_credit")
     estimated_total_credit: str = Field(default=..., alias="estimated_total_credit")
     net_adjustment_credit: str | None = Field(default=None, alias="net_adjustment_credit")
-    period_end: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    period_end: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="period_end"
     )
-    period_start: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    period_start: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="period_start"
     )
     pricing_version: str = Field(default=..., alias="pricing_version")
     purpose: CostPurpose = Field(default=..., alias="purpose")
-    released_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    released_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="released_at"
     )
-    settled_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    settled_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="settled_at"
     )
     settlement_status: CostSettlementStatus = Field(default=..., alias="settlement_status")
-    storage_statement: Annotated[StorageStatementSnapshot | None, BeforeValidator(non_null)] = (
-        Field(default=None, alias="storage_statement")
+    storage_statement: Annotated[StorageStatementSnapshot | None, AfterValidator(non_null)] = Field(
+        default=None, alias="storage_statement"
     )
     updated_at: Timestamp = Field(default=..., alias="updated_at")
-    wallet_ledger_entries: Annotated[list[CostLedgerEntryRef] | None, BeforeValidator(non_null)] = (
+    wallet_ledger_entries: Annotated[list[CostLedgerEntryRef] | None, AfterValidator(non_null)] = (
         Field(default=None, alias="wallet_ledger_entries")
     )
 
@@ -217,14 +217,14 @@ AccountStorageProtectionState: TypeAlias = Literal[
 class AccountStorageProtection(SDKModel):
     "AccountStorageProtection is the authoritative user-scoped singleton that\n tells clients whether hosted content remains protected."
 
-    cost_summary: Annotated[CostSummary | None, BeforeValidator(non_null)] = Field(
+    cost_summary: Annotated[CostSummary | None, AfterValidator(non_null)] = Field(
         default=None, alias="cost_summary"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
     last_checked_at: Timestamp = Field(default=..., alias="last_checked_at")
-    protected_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    protected_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="protected_at"
     )
     reason: AccountStorageProtectionReason = Field(default=..., alias="reason")
@@ -241,11 +241,11 @@ OrganizationMemberRole: TypeAlias = Literal[
 
 
 class AddMemberRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    role: Annotated[OrganizationMemberRole | None, BeforeValidator(non_null)] = Field(
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
         default=None, alias="role"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 OrganizationMemberStatus: TypeAlias = Literal[
@@ -259,27 +259,27 @@ OrganizationMemberStatus: TypeAlias = Literal[
 class OrganizationMember(SDKModel):
     "OrganizationMember is a (org, user) edge with a role and lifecycle status.\n\n The role taxonomy (owner / admin / member) is the SAME WORDS as the\n application-level membership role surfaced by the developer center;\n the two live at different scopes and do not transitively grant each\n other."
 
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    invited_by: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    invited_by: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="invited_by"
     )
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    role: Annotated[OrganizationMemberRole | None, BeforeValidator(non_null)] = Field(
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
         default=None, alias="role"
     )
-    status: Annotated[OrganizationMemberStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[OrganizationMemberStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class AddMemberResponse(SDKModel):
-    member: Annotated[OrganizationMember | None, BeforeValidator(non_null)] = Field(
+    member: Annotated[OrganizationMember | None, AfterValidator(non_null)] = Field(
         default=None, alias="member"
     )
 
@@ -287,10 +287,10 @@ class AddMemberResponse(SDKModel):
 class AppforgesCommonV1PaginationRequest(SDKModel):
     "Pagination request parameters."
 
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
@@ -298,10 +298,10 @@ class AppforgesCommonV1PaginationRequest(SDKModel):
 class AppforgesCommonV1PaginationResponse(SDKModel):
     "Pagination response metadata."
 
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
@@ -351,26 +351,26 @@ ContentFormat: TypeAlias = Literal[
 class Article(SDKModel):
     "Article represents a piece of text content (article, post, etc.).\n Article 是图文创作的核心实体，同一篇文章可能同时存在 Markdown 和 HTML 两个版本。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    content: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="content")
-    cover_image_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    cover_image_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="cover_image_url"
     )
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    format: Annotated[ContentFormat | None, BeforeValidator(non_null)] = Field(
+    format: Annotated[ContentFormat | None, AfterValidator(non_null)] = Field(
         default=None, alias="format"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    summary: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="summary")
-    tags: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(default=None, alias="tags")
-    title: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="title")
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    summary: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="summary")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
@@ -387,91 +387,89 @@ AssetType: TypeAlias = Literal[
 class Asset(SDKModel):
     "Asset represents an uploaded media resource.\n 素材可被文章引用、视频合成使用，生命周期跟随所属项目。"
 
-    asset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_id"
     )
-    content_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_type"
     )
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    duration_seconds: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    duration_seconds: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="duration_seconds"
     )
-    filename: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    filename: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="filename"
     )
-    height: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="height")
-    metadata: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    height: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="height")
+    metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    size_bytes: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    size_bytes: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="size_bytes"
     )
-    type_: Annotated[AssetType | None, BeforeValidator(non_null)] = Field(
-        default=None, alias="type"
-    )
-    url: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="url")
-    width: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="width")
+    type_: Annotated[AssetType | None, AfterValidator(non_null)] = Field(default=None, alias="type")
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    width: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="width")
 
 
 class AssetMetadataEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class AuthorizeRequest(SDKModel):
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    code_challenge: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_challenge"
     )
-    code_challenge_method: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_challenge_method: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_challenge_method"
     )
-    nonce: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="nonce")
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    nonce: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="nonce")
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
-    response_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    response_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="response_type"
     )
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
-    state: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="state")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    state: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="state")
 
 
 class AuthorizeResponse(SDKModel):
-    authorization_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    authorization_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="authorization_code"
     )
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
-    state: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="state")
+    state: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="state")
 
 
 class AuthorizedApplication(SDKModel):
     "AuthorizedApplication represents an application the user has granted access to."
 
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    app_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_name"
     )
-    authorized_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    authorized_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="authorized_at"
     )
-    granted_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    granted_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="granted_scopes"
     )
-    last_used_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    last_used_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="last_used_at"
     )
-    logo_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="logo_url"
     )
 
@@ -485,16 +483,16 @@ AvatarRetirementState: TypeAlias = Literal[
 
 
 class AvatarRetirement(SDKModel):
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    operation_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="operation_id"
     )
-    state: Annotated[AvatarRetirementState | None, BeforeValidator(non_null)] = Field(
+    state: Annotated[AvatarRetirementState | None, AfterValidator(non_null)] = Field(
         default=None, alias="state"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
@@ -514,13 +512,13 @@ PlatformConfig: TypeAlias = Any
 class BatchPublishTarget(SDKModel):
     "BatchPublishTarget 批量发布中的单个目标平台配置。"
 
-    account_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="account_id"
     )
-    platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform"
     )
-    platform_config: Annotated[PlatformConfig | None, BeforeValidator(non_null)] = Field(
+    platform_config: Annotated[PlatformConfig | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform_config"
     )
 
@@ -528,10 +526,10 @@ class BatchPublishTarget(SDKModel):
 class BatchPublishArticleRequest(SDKModel):
     "BatchPublishArticleRequest 将一篇文章同时发布到多个平台。\n 每个 target 独立执行，互不影响（部分平台失败不影响其他平台）。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    targets: Annotated[list[BatchPublishTarget] | None, BeforeValidator(non_null)] = Field(
+    targets: Annotated[list[BatchPublishTarget] | None, AfterValidator(non_null)] = Field(
         default=None, alias="targets"
     )
 
@@ -548,43 +546,43 @@ PublishStatus: TypeAlias = Literal[
 class PublishRecord(SDKModel):
     "PublishRecord records a single publish attempt to a platform.\n 每次发布操作（无论成功或失败）都会产生一条记录，支持追溯和重试。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    error_message: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="error_message"
     )
-    platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform"
     )
-    platform_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    platform_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform_url"
     )
-    published_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    published_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="published_at"
     )
-    record_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    record_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="record_id"
     )
-    status: Annotated[PublishStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[PublishStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
 
 
 class BatchPublishArticleResponse(SDKModel):
-    records: Annotated[list[PublishRecord] | None, BeforeValidator(non_null)] = Field(
+    records: Annotated[list[PublishRecord] | None, AfterValidator(non_null)] = Field(
         default=None, alias="records"
     )
 
 
 class BatchValidateAvatarMediaIDsRequest(SDKModel):
-    media_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    media_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_ids"
     )
 
 
 class BatchValidateAvatarMediaIDsResponse(SDKModel):
-    in_use_media_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    in_use_media_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="in_use_media_ids"
     )
 
@@ -592,13 +590,13 @@ class BatchValidateAvatarMediaIDsResponse(SDKModel):
 class BindPlatformAccountRequest(SDKModel):
     "BindPlatformAccountRequest 通过 OAuth 授权码绑定平台账号。\n 典型流程：前端引导用户完成 OAuth 授权 → 获取 auth_code → 调用此接口完成绑定。"
 
-    auth_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    auth_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="auth_code"
     )
-    platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform"
     )
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
 
@@ -606,28 +604,28 @@ class BindPlatformAccountRequest(SDKModel):
 class PlatformAccount(SDKModel):
     "PlatformAccount stores the binding info for a publishing platform account.\n 用户通过 OAuth 授权绑定平台账号后，后续发布操作使用该账号的凭据。"
 
-    account_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="account_id"
     )
-    authorized_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    authorized_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="authorized_at"
     )
-    display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="display_name"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    is_active: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_active: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_active"
     )
-    platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform"
     )
 
 
 class BindPlatformAccountResponse(SDKModel):
-    account: Annotated[PlatformAccount | None, BeforeValidator(non_null)] = Field(
+    account: Annotated[PlatformAccount | None, AfterValidator(non_null)] = Field(
         default=None, alias="account"
     )
 
@@ -635,7 +633,7 @@ class BindPlatformAccountResponse(SDKModel):
 class CancelVideoTaskRequest(SDKModel):
     "CancelVideoTaskRequest 取消正在执行的视频生成任务。\n 仅 PENDING / GENERATING_SCRIPT / GENERATING_ASSETS / COMPOSITING 状态的任务可取消。"
 
-    task_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
 
 
 VideoStatus: TypeAlias = Literal[
@@ -661,43 +659,43 @@ VideoStyle: TypeAlias = Literal[
 class VideoTask(SDKModel):
     "VideoTask represents a video generation job.\n 视频生成是异步任务，客户端提交后通过轮询 GetVideoTask 获取进度。"
 
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    duration_seconds: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    duration_seconds: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="duration_seconds"
     )
-    error_message: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="error_message"
     )
-    progress_percent: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    progress_percent: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="progress_percent"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    script: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="script")
-    status: Annotated[VideoStatus | None, BeforeValidator(non_null)] = Field(
+    script: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="script")
+    status: Annotated[VideoStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    style: Annotated[VideoStyle | None, BeforeValidator(non_null)] = Field(
+    style: Annotated[VideoStyle | None, AfterValidator(non_null)] = Field(
         default=None, alias="style"
     )
-    task_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="task_id")
-    thumbnail_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
+    thumbnail_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="thumbnail_url"
     )
-    title: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="title")
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
-    video_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    video_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="video_url"
     )
 
 
 class CancelVideoTaskResponse(SDKModel):
-    task: Annotated[VideoTask | None, BeforeValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
 
 
 class Category(SDKModel):
@@ -886,7 +884,7 @@ class ContentConflict(SDKModel):
     "ContentConflict identifies one user-understandable conflict that prevents the\n complete source set from fitting a readable single-page result."
 
     conflict_id: str = Field(default=..., alias="conflict_id")
-    material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="material_ids"
     )
     summary: str = Field(default=..., alias="summary")
@@ -942,12 +940,12 @@ JobFailureUserAction: TypeAlias = Literal[
 class JobFailure(SDKModel):
     "JobFailure is a safe terminal business failure projected by GetJob."
 
-    content_decision_context: Annotated[
-        ContentDecisionContext | None, BeforeValidator(non_null)
-    ] = Field(default=None, alias="content_decision_context")
+    content_decision_context: Annotated[ContentDecisionContext | None, AfterValidator(non_null)] = (
+        Field(default=None, alias="content_decision_context")
+    )
     message: str = Field(default=..., alias="message")
     reason: str = Field(default=..., alias="reason")
-    retry_after: Annotated[Duration | None, BeforeValidator(non_null)] = Field(
+    retry_after: Annotated[Duration | None, AfterValidator(non_null)] = Field(
         default=None, alias="retry_after"
     )
     retryable: bool = Field(default=..., alias="retryable")
@@ -975,17 +973,17 @@ JobStatus: TypeAlias = Literal[
 class CategoryOrganizationJob(SDKModel):
     "CategoryOrganizationJob is the authoritative asynchronous fact for one\n explicitly confirmed, paid category-organization preview."
 
-    applied_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    applied_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="applied_at"
     )
     billing_intent_id: str = Field(default=..., alias="billing_intent_id")
-    completed_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    completed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="completed_at"
     )
     cost_summary: CostSummary = Field(default=..., alias="cost_summary")
     created_at: Timestamp = Field(default=..., alias="created_at")
     estimate_id: str = Field(default=..., alias="estimate_id")
-    failure: Annotated[JobFailure | None, BeforeValidator(non_null)] = Field(
+    failure: Annotated[JobFailure | None, AfterValidator(non_null)] = Field(
         default=None, alias="failure"
     )
     organization_job_id: str = Field(default=..., alias="organization_job_id")
@@ -1000,7 +998,7 @@ class CategoryOrganizationJob(SDKModel):
 class CategoryOrganizationPreview(SDKModel):
     "CategoryOrganizationPreview is the durable, settled snapshot produced by a\n successful category organization job. It contains safe changes but never the\n user's original instruction, prompts, private reasoning, or provider output."
 
-    applied_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    applied_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="applied_at"
     )
     billing_intent_id: str = Field(default=..., alias="billing_intent_id")
@@ -1019,7 +1017,7 @@ class CategoryPreference(SDKModel):
     etag: str = Field(default=..., alias="etag")
     revision: str = Field(default=..., alias="revision")
     rules_text: str = Field(default=..., alias="rules_text")
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
@@ -1033,10 +1031,10 @@ class CategoryPreferenceSnapshot(SDKModel):
 
 
 class ChangePasswordRequest(SDKModel):
-    new_password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    new_password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="new_password_hash"
     )
-    old_password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    old_password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="old_password_hash"
     )
 
@@ -1047,51 +1045,51 @@ ChangePasswordResponse: TypeAlias = Any
 class CheckRequest(SDKModel):
     "CheckRequest carries one authorization question."
 
-    action: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="action")
-    resource: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    action: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="action")
+    resource: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="resource"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class CheckResponse(SDKModel):
     "CheckResponse carries the decision plus a human-readable explanation."
 
-    allow: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="allow")
-    effective_role: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    allow: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="allow")
+    effective_role: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="effective_role"
     )
-    reason: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="reason")
+    reason: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="reason")
 
 
 class CheckUserExistsRequest(SDKModel):
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
 
 
 class CheckUserExistsResponse(SDKModel):
-    has_password: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    has_password: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="has_password"
     )
-    is_registered: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_registered: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_registered"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
 
 
 class ClaimAvatarRetirementRequest(SDKModel):
     "Only a verified internal media caller may claim a fence. IAM atomically locks\n the media guard and checks ALL references, including restorable users.\n In-use: FAILED_PRECONDITION / AVATAR_IN_USE. Different operation:\n ABORTED / AVATAR_RETIREMENT_CONFLICT. Disabled rollout:\n FAILED_PRECONDITION / AVATAR_RETIREMENT_DISABLED. Invalid fields:\n INVALID_ARGUMENT with BadRequest field violations. Matching RETIRING or\n RETIRED claims are idempotent; only RETIRING authorizes new deletion work."
 
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    operation_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="operation_id"
     )
 
 
 class ClaimAvatarRetirementResponse(SDKModel):
-    retirement: Annotated[AvatarRetirement | None, BeforeValidator(non_null)] = Field(
+    retirement: Annotated[AvatarRetirement | None, AfterValidator(non_null)] = Field(
         default=None, alias="retirement"
     )
 
@@ -1114,16 +1112,16 @@ ClientCredentialType: TypeAlias = Literal[
 class CompleteAvatarRetirementRequest(SDKModel):
     "Call only after all objects are deleted and Media metadata is soft-deleted.\n Matching RETIRING -> RETIRED; matching RETIRED is idempotent. Missing claim\n is NOT_FOUND, mismatched operation is ABORTED. Never creates a new fence.\n A lost response is resolved through Get/retry, never through an unfence RPC."
 
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    operation_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="operation_id"
     )
 
 
 class CompleteAvatarRetirementResponse(SDKModel):
-    retirement: Annotated[AvatarRetirement | None, BeforeValidator(non_null)] = Field(
+    retirement: Annotated[AvatarRetirement | None, AfterValidator(non_null)] = Field(
         default=None, alias="retirement"
     )
 
@@ -1161,7 +1159,7 @@ class Material(SDKModel):
 
 
 class CompleteUploadResponse(SDKModel):
-    material: Annotated[Material | None, BeforeValidator(non_null)] = Field(
+    material: Annotated[Material | None, AfterValidator(non_null)] = Field(
         default=None, alias="material"
     )
     upload: UploadSession = Field(default=..., alias="upload")
@@ -1170,33 +1168,33 @@ class CompleteUploadResponse(SDKModel):
 class ConfirmUploadRequest(SDKModel):
     "ConfirmUploadRequest 确认预签名上传已完成。\n 服务端将验证文件是否存在，并提取尺寸、时长等元信息。"
 
-    asset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_id"
     )
 
 
 class ConfirmUploadResponse(SDKModel):
-    asset: Annotated[Asset | None, BeforeValidator(non_null)] = Field(default=None, alias="asset")
+    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(default=None, alias="asset")
 
 
 class ContentChunk(SDKModel):
     "ContentChunk carries a piece of LLM-generated text."
 
-    index: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="index")
-    text: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="text")
+    index: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="index")
+    text: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="text")
 
 
 class ConvertToHtmlRequest(SDKModel):
     "ConvertToHtmlRequest 将 Markdown 内容转换为 HTML 格式。\n 支持生成 Canvas 绘图（用于图表、流程图等可视化元素）。\n article_id 和 content 二选一。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    content: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="content")
-    enable_canvas: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    enable_canvas: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="enable_canvas"
     )
-    template_style: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    template_style: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_style"
     )
 
@@ -1207,34 +1205,34 @@ StreamEvent: TypeAlias = Any
 class ConvertToHtmlResponse(SDKModel):
     "ConvertToHtmlResponse 是 ConvertToHtml 的流式响应。"
 
-    article: Annotated[Article | None, BeforeValidator(non_null)] = Field(
+    article: Annotated[Article | None, AfterValidator(non_null)] = Field(
         default=None, alias="article"
     )
-    done: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="done")
-    event: Annotated[StreamEvent | None, BeforeValidator(non_null)] = Field(
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
         default=None, alias="event"
     )
 
 
 class CreateAPIKeyRequest(SDKModel):
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    rate_limit: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    rate_limit: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="rate_limit"
     )
 
 
 class CreateAPIKeyResponse(SDKModel):
-    api_key: Annotated[APIKey | None, BeforeValidator(non_null)] = Field(
+    api_key: Annotated[APIKey | None, AfterValidator(non_null)] = Field(
         default=None, alias="api_key"
     )
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
 
 
 IdentityType: TypeAlias = Literal[
@@ -1246,28 +1244,28 @@ IdentityType: TypeAlias = Literal[
 
 
 class CreateApplicationRequest(SDKModel):
-    allowed_identities: Annotated[list[IdentityType] | None, BeforeValidator(non_null)] = Field(
+    allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_identities"
     )
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_name"
     )
-    app_type: Annotated[ApplicationType | None, BeforeValidator(non_null)] = Field(
+    app_type: Annotated[ApplicationType | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_type"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    homepage_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="homepage_url"
     )
-    logo_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="logo_url"
     )
-    redirect_uris: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uris"
     )
 
@@ -1283,59 +1281,59 @@ GrantType: TypeAlias = Literal[
 class OAuthApplication(SDKModel):
     "OAuthApplication represents a registered third-party application.\n\n Display fields (`app_name`, `description`, `homepage_url`, `logo_url`)\n on this message are deprecated; the developer center is the\n authoritative source for application display metadata. The fields\n remain populated on read for backward compatibility and will be\n removed in a future major version."
 
-    allowed_grant_types: Annotated[list[GrantType] | None, BeforeValidator(non_null)] = Field(
+    allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_grant_types"
     )
-    allowed_identities: Annotated[list[IdentityType] | None, BeforeValidator(non_null)] = Field(
+    allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_identities"
     )
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    app_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_name"
     )
-    app_type: Annotated[ApplicationType | None, BeforeValidator(non_null)] = Field(
+    app_type: Annotated[ApplicationType | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_type"
     )
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    client_secret_masked: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret_masked"
     )
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    homepage_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="homepage_url"
     )
-    logo_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="logo_url"
     )
-    owner_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    owner_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="owner_id"
     )
-    redirect_uris: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uris"
     )
-    status: Annotated[ApplicationStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[ApplicationStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class CreateApplicationResponse(SDKModel):
-    application: Annotated[OAuthApplication | None, BeforeValidator(non_null)] = Field(
+    application: Annotated[OAuthApplication | None, AfterValidator(non_null)] = Field(
         default=None, alias="application"
     )
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
 
@@ -1343,30 +1341,30 @@ class CreateApplicationResponse(SDKModel):
 class CreateArticleRequest(SDKModel):
     "CreateArticleRequest 基于主题和要求，调用 LLM 生成一篇 Markdown 格式的图文。"
 
-    language: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    language: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="language"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    reference_urls: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    reference_urls: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="reference_urls"
     )
-    requirements: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    requirements: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="requirements"
     )
-    style: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="style")
-    topic: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="topic")
+    style: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="style")
+    topic: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="topic")
 
 
 class CreateArticleResponse(SDKModel):
     "CreateArticleResponse 是 CreateArticle 的流式响应。"
 
-    article: Annotated[Article | None, BeforeValidator(non_null)] = Field(
+    article: Annotated[Article | None, AfterValidator(non_null)] = Field(
         default=None, alias="article"
     )
-    done: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="done")
-    event: Annotated[StreamEvent | None, BeforeValidator(non_null)] = Field(
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
         default=None, alias="event"
     )
 
@@ -1374,7 +1372,7 @@ class CreateArticleResponse(SDKModel):
 class CreateGenerationRequest(SDKModel):
     client_reference: str | None = Field(default=None, alias="client_reference")
     instruction: str = Field(default=..., alias="instruction")
-    material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="material_ids"
     )
     orientation: Orientation | None = Field(default=None, alias="orientation")
@@ -1465,17 +1463,17 @@ JobStage: TypeAlias = Literal[
 class JobSummary(SDKModel):
     "JobSummary is the authoritative, user-visible fact for one logical\n generation job. Broker redeliveries do not create additional resources."
 
-    completed_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    completed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="completed_at"
     )
-    cost_summary: Annotated[CostSummary | None, BeforeValidator(non_null)] = Field(
+    cost_summary: Annotated[CostSummary | None, AfterValidator(non_null)] = Field(
         default=None, alias="cost_summary"
     )
     created_at: Timestamp = Field(default=..., alias="created_at")
-    execution_plan: Annotated[GenerationPlanSummary | None, BeforeValidator(non_null)] = Field(
+    execution_plan: Annotated[GenerationPlanSummary | None, AfterValidator(non_null)] = Field(
         default=None, alias="execution_plan"
     )
-    failure: Annotated[JobFailure | None, BeforeValidator(non_null)] = Field(
+    failure: Annotated[JobFailure | None, AfterValidator(non_null)] = Field(
         default=None, alias="failure"
     )
     job_id: str = Field(default=..., alias="job_id")
@@ -1511,24 +1509,24 @@ class CreateGenerationResponse(SDKModel):
 
 
 class CreateOAuthClientRequest(SDKModel):
-    allowed_grant_types: Annotated[list[GrantType] | None, BeforeValidator(non_null)] = Field(
+    allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_grant_types"
     )
-    allowed_identities: Annotated[list[IdentityType] | None, BeforeValidator(non_null)] = Field(
+    allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_identities"
     )
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    client_type: Annotated[ClientCredentialType | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    client_type: Annotated[ClientCredentialType | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_type"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    redirect_uris: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uris"
     )
 
@@ -1536,58 +1534,58 @@ class CreateOAuthClientRequest(SDKModel):
 class OAuthClient(SDKModel):
     "OAuthClient is one credential atom owned by IAM. An application may own\n multiple clients; app_id and client_id must therefore be used together for\n every management operation.\n\n Secret material and secret hashes are deliberately absent from this read\n model. Plaintext is returned exactly once by create and rotate responses."
 
-    allowed_grant_types: Annotated[list[GrantType] | None, BeforeValidator(non_null)] = Field(
+    allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_grant_types"
     )
-    allowed_identities: Annotated[list[IdentityType] | None, BeforeValidator(non_null)] = Field(
+    allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_identities"
     )
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    client_type: Annotated[ClientCredentialType | None, BeforeValidator(non_null)] = Field(
+    client_type: Annotated[ClientCredentialType | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_type"
     )
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    has_client_secret: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    has_client_secret: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="has_client_secret"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    redirect_uris: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uris"
     )
-    status: Annotated[ClientCredentialStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[ClientCredentialStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class CreateOAuthClientResponse(SDKModel):
-    client: Annotated[OAuthClient | None, BeforeValidator(non_null)] = Field(
+    client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
         default=None, alias="client"
     )
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
 
 
 class CreateOrganizationRequest(SDKModel):
-    metadata: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    metadata: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    slug: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="slug")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
 
 
 OrganizationStatus: TypeAlias = Literal[
@@ -1601,36 +1599,36 @@ OrganizationStatus: TypeAlias = Literal[
 class Organization(SDKModel):
     "Organization is one of the two concrete tenant forms (the other is\n Workspace).\n\n `org_id` is an opaque entity-id with the `org` prefix and shares the\n platform-wide `tenant_id` value space with workspace ids. Consumers\n must treat it as opaque — no parsing, no length assumptions,\n byte-exact case-sensitive comparison."
 
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    metadata: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    metadata: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    owner_user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    owner_user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="owner_user_id"
     )
-    slug: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="slug")
-    status: Annotated[OrganizationStatus | None, BeforeValidator(non_null)] = Field(
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
+    status: Annotated[OrganizationStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class CreateOrganizationResponse(SDKModel):
-    organization: Annotated[Organization | None, BeforeValidator(non_null)] = Field(
+    organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
         default=None, alias="organization"
     )
 
 
 class CreatePresetRequest(SDKModel):
-    config: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="config")
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    template_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    config: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="config")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_id"
     )
 
@@ -1638,42 +1636,40 @@ class CreatePresetRequest(SDKModel):
 class Preset(SDKModel):
     "Preset 用户自定义排版预设，基于系统模板微调。"
 
-    config: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="config")
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    config: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="config")
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    preset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    preset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="preset_id"
     )
-    template_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_id"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class CreatePresetResponse(SDKModel):
-    preset: Annotated[Preset | None, BeforeValidator(non_null)] = Field(
-        default=None, alias="preset"
-    )
+    preset: Annotated[Preset | None, AfterValidator(non_null)] = Field(default=None, alias="preset")
 
 
 class CreateProjectRequest(SDKModel):
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    metadata: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    tags: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(default=None, alias="tags")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
 
 
 class CreateProjectRequestMetadataEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 ProjectStatus: TypeAlias = Literal[
@@ -1688,128 +1684,128 @@ ProjectStatus: TypeAlias = Literal[
 class Project(SDKModel):
     "Project groups related creative content together.\n Project 是创作的顶层聚合单元，一个项目包含多篇文章、多个视频任务和多个素材。\n 典型场景：一次营销活动、一个专题系列、一期内容排期。"
 
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    metadata: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    status: Annotated[ProjectStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[ProjectStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    tags: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(default=None, alias="tags")
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class CreateProjectResponse(SDKModel):
-    project: Annotated[Project | None, BeforeValidator(non_null)] = Field(
+    project: Annotated[Project | None, AfterValidator(non_null)] = Field(
         default=None, alias="project"
     )
 
 
 class CreateScopeRequest(SDKModel):
-    category: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    category: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="category"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="display_name"
     )
-    is_sensitive: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_sensitive"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
 
 
 class Scope(SDKModel):
     "Scope defines a permission boundary for OAuth access control."
 
-    category: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    category: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="category"
     )
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="display_name"
     )
-    is_sensitive: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_sensitive"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    scope_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    scope_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="scope_id"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class CreateScopeResponse(SDKModel):
-    scope: Annotated[Scope | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
 
 
 class DeviceInfo(SDKModel):
     "DeviceInfo describes the client device."
 
-    device_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    device_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_id"
     )
-    device_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    device_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_name"
     )
-    user_agent: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    user_agent: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="user_agent"
     )
 
 
 class CreateSessionRequest(SDKModel):
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    ip: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="ip")
-    port: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="port")
+    ip: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ip")
+    port: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="port")
 
 
 class TokenPair(SDKModel):
     "TokenPair contains access and refresh tokens returned after authentication."
 
-    access_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    access_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="access_token"
     )
-    expires_in: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    expires_in: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_in"
     )
-    refresh_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="refresh_token"
     )
-    token_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    token_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="token_type"
     )
 
 
 class CreateSessionResponse(SDKModel):
-    csrf_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="csrf_token"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
 
@@ -1879,33 +1875,33 @@ class CreateUploadResponse(SDKModel):
 class CreateVideoRequest(SDKModel):
     "CreateVideoRequest 基于脚本和素材合成视频。\n 支持两种模式：\n   1. 指定 task_id —— 使用已有 VideoTask 中 LLM 生成的脚本\n   2. 指定 project_id + script —— 直接提供脚本创建视频"
 
-    asset_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    asset_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_ids"
     )
-    height: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="height")
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    height: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="height")
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    script: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="script")
-    style: Annotated[VideoStyle | None, BeforeValidator(non_null)] = Field(
+    script: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="script")
+    style: Annotated[VideoStyle | None, AfterValidator(non_null)] = Field(
         default=None, alias="style"
     )
-    task_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="task_id")
-    width: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="width")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
+    width: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="width")
 
 
 class CreateVideoResponse(SDKModel):
     "CreateVideoResponse 返回创建的视频任务。\n 视频合成为异步操作，通过 GetVideoTask 轮询进度。"
 
-    task: Annotated[VideoTask | None, BeforeValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
 
 
 class CreateWebhookRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    subscribed_events: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="subscribed_events"
     )
-    url: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="url")
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
 
 
 WebhookStatus: TypeAlias = Literal[
@@ -1916,33 +1912,33 @@ WebhookStatus: TypeAlias = Literal[
 class Webhook(SDKModel):
     "Webhook represents a registered webhook endpoint."
 
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    signing_secret_masked: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    signing_secret_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="signing_secret_masked"
     )
-    status: Annotated[WebhookStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[WebhookStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    subscribed_events: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="subscribed_events"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
-    url: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="url")
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
 
 class CreateWebhookResponse(SDKModel):
-    signing_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    signing_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="signing_secret"
     )
-    webhook: Annotated[Webhook | None, BeforeValidator(non_null)] = Field(
+    webhook: Annotated[Webhook | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook"
     )
 
@@ -1961,24 +1957,24 @@ class CurrentVersionSummary(SDKModel):
 
 
 class DeleteAccountRequest(SDKModel):
-    password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="password_hash"
     )
-    reason: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="reason")
+    reason: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="reason")
 
 
 DeleteAccountResponse: TypeAlias = Any
 
 
 class DeleteApplicationRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
 
 
 DeleteApplicationResponse: TypeAlias = Any
 
 
 class DeleteArticleRequest(SDKModel):
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
 
@@ -1987,7 +1983,7 @@ DeleteArticleResponse: TypeAlias = Any
 
 
 class DeleteAssetRequest(SDKModel):
-    asset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_id"
     )
 
@@ -2028,8 +2024,8 @@ class DeleteMaterialResponse(SDKModel):
 
 
 class DeleteOAuthClientRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
 
@@ -2038,7 +2034,7 @@ DeleteOAuthClientResponse: TypeAlias = Any
 
 
 class DeleteOrganizationRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
 
 
 DeleteOrganizationResponse: TypeAlias = Any
@@ -2067,7 +2063,7 @@ class DeletePageResponse(SDKModel):
 
 
 class DeletePresetRequest(SDKModel):
-    preset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    preset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="preset_id"
     )
 
@@ -2078,7 +2074,7 @@ DeletePresetResponse: TypeAlias = Any
 class DeleteProjectRequest(SDKModel):
     "DeleteProjectRequest 删除项目。\n 注意：将级联删除项目下的所有文章、视频任务和素材。"
 
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
 
@@ -2089,14 +2085,14 @@ DeleteProjectResponse: TypeAlias = Any
 class DeleteVideoTaskRequest(SDKModel):
     "DeleteVideoTaskRequest 删除视频任务及其生成的视频文件。"
 
-    task_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
 
 
 DeleteVideoTaskResponse: TypeAlias = Any
 
 
 class DeleteWebhookRequest(SDKModel):
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
@@ -2148,7 +2144,7 @@ class InlineTextChange(SDKModel):
 
 
 class EstimateGenerationRequest(SDKModel):
-    add_material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    add_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="add_material_ids"
     )
     base_job_id: str | None = Field(default=None, alias="base_job_id")
@@ -2163,23 +2159,23 @@ class EstimateGenerationRequest(SDKModel):
         default=None, alias="content_decision_context_id"
     )
     content_decision_note: str | None = Field(default=None, alias="content_decision_note")
-    content_decision_option_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    content_decision_option_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_decision_option_ids"
     )
     external_information_mode: ExternalInformationMode | None = Field(
         default=None, alias="external_information_mode"
     )
     inline_text: str | None = Field(default=None, alias="inline_text")
-    inline_text_change: Annotated[InlineTextChange | None, BeforeValidator(non_null)] = Field(
+    inline_text_change: Annotated[InlineTextChange | None, AfterValidator(non_null)] = Field(
         default=None, alias="inline_text_change"
     )
-    material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="material_ids"
     )
     operation: GenerationOperation = Field(default=..., alias="operation")
     orientation: Orientation | None = Field(default=None, alias="orientation")
     page_id: str | None = Field(default=None, alias="page_id")
-    remove_material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    remove_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="remove_material_ids"
     )
     source_job_id: str | None = Field(default=None, alias="source_job_id")
@@ -2194,7 +2190,7 @@ class ToolPolicySnapshot(SDKModel):
     "ToolPolicySnapshot is the immutable, server-selected capability and budget\n contract captured by a generation estimate.\n\n The current release requires mode=DISABLED, an empty allowed_capabilities\n list, and zero for every web-search budget. MCP server names, endpoints,\n credentials, and arbitrary tool names are intentionally not modeled."
 
     allowed_capabilities: list[ToolCapability] = Field(default=..., alias="allowed_capabilities")
-    freshness_window: Annotated[Duration | None, BeforeValidator(non_null)] = Field(
+    freshness_window: Annotated[Duration | None, AfterValidator(non_null)] = Field(
         default=None, alias="freshness_window"
     )
     max_ai_turn_count: int = Field(default=..., alias="max_ai_turn_count")
@@ -2264,19 +2260,19 @@ class EstimateUploadResponse(SDKModel):
 
 
 class ExchangeSessionRequest(SDKModel):
-    csrf_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="csrf_token"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
 
 class ExchangeSessionResponse(SDKModel):
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 ExportFormat: TypeAlias = Literal[
@@ -2304,70 +2300,70 @@ FieldMask: TypeAlias = str
 class GenerateScriptRequest(SDKModel):
     "GenerateScriptRequest 基于主题或已有文章，调用 LLM 生成视频脚本。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    language: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    language: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="language"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    requirements: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    requirements: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="requirements"
     )
-    style: Annotated[VideoStyle | None, BeforeValidator(non_null)] = Field(
+    style: Annotated[VideoStyle | None, AfterValidator(non_null)] = Field(
         default=None, alias="style"
     )
-    target_duration_seconds: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    target_duration_seconds: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="target_duration_seconds"
     )
-    topic: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="topic")
+    topic: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="topic")
 
 
 class GenerateScriptResponse(SDKModel):
     "GenerateScriptResponse 是 GenerateScript 的流式响应。"
 
-    done: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="done")
-    event: Annotated[StreamEvent | None, BeforeValidator(non_null)] = Field(
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
         default=None, alias="event"
     )
-    task: Annotated[VideoTask | None, BeforeValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
 
 
 class GenerateUploadUrlRequest(SDKModel):
     "GenerateUploadUrlRequest 为大文件生成预签名上传 URL。\n 客户端获取 URL 后，直接向对象存储（OSS/S3）上传文件，\n 上传完成后调用 ConfirmUpload 确认，服务端再提取文件元信息。"
 
-    content_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_type"
     )
-    filename: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    filename: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="filename"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
 
 
 class GenerateUploadUrlResponse(SDKModel):
-    asset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_id"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    upload_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    upload_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="upload_url"
     )
 
 
 class ProgressMessage(SDKModel):
-    arguments: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    arguments: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="arguments"
     )
     default_message: str = Field(default=..., alias="default_message")
     default_message_locale: str = Field(default=..., alias="default_message_locale")
-    dynamic_locale: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    dynamic_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="dynamic_locale"
     )
     message_code: str = Field(default=..., alias="message_code")
@@ -2385,17 +2381,17 @@ class GenerationProgressEvent(SDKModel):
 
 
 class GenerationProgressStep(SDKModel):
-    completed_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    completed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="completed_at"
     )
-    failed_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    failed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="failed_at"
     )
     message: ProgressMessage = Field(default=..., alias="message")
-    resume_started_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    resume_started_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="resume_started_at"
     )
-    started_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    started_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="started_at"
     )
     status: str = Field(default=..., alias="status")
@@ -2403,73 +2399,73 @@ class GenerationProgressStep(SDKModel):
 
 
 class GetApplicationRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
 
 
 class GetApplicationResponse(SDKModel):
-    application: Annotated[OAuthApplication | None, BeforeValidator(non_null)] = Field(
+    application: Annotated[OAuthApplication | None, AfterValidator(non_null)] = Field(
         default=None, alias="application"
     )
 
 
 class GetArticleRequest(SDKModel):
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
 
 
 class GetArticleResponse(SDKModel):
-    article: Annotated[Article | None, BeforeValidator(non_null)] = Field(
+    article: Annotated[Article | None, AfterValidator(non_null)] = Field(
         default=None, alias="article"
     )
 
 
 class GetAssetRequest(SDKModel):
-    asset_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_id"
     )
 
 
 class GetAssetResponse(SDKModel):
-    asset: Annotated[Asset | None, BeforeValidator(non_null)] = Field(default=None, alias="asset")
+    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(default=None, alias="asset")
 
 
 GetAvatarRequest: TypeAlias = Any
 
 
 class GetAvatarResponse(SDKModel):
-    avatar_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    avatar_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="avatar_url"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    variant_urls: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    variant_urls: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="variant_urls"
     )
 
 
 class GetAvatarResponseVariantUrlsEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class GetAvatarRetirementRequest(SDKModel):
     "Resolve unknown results by querying the same media_id AND operation_id.\n No claimed record: NOT_FOUND / AVATAR_RETIREMENT_NOT_FOUND. A mismatched\n operation is ABORTED; callers must never adopt another operation's fence."
 
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    operation_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="operation_id"
     )
 
 
 class GetAvatarRetirementResponse(SDKModel):
-    retirement: Annotated[AvatarRetirement | None, BeforeValidator(non_null)] = Field(
+    retirement: Annotated[AvatarRetirement | None, AfterValidator(non_null)] = Field(
         default=None, alias="retirement"
     )
 
@@ -2501,41 +2497,41 @@ class GetCategoryPreferenceResponse(SDKModel):
 
 
 class GetConsentInfoRequest(SDKModel):
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
 
 
 class ScopeDetail(SDKModel):
     "ScopeDetail provides display information for a scope on the consent screen."
 
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="display_name"
     )
-    is_sensitive: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_sensitive"
     )
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
 
 
 class GetConsentInfoResponse(SDKModel):
-    app_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_name"
     )
-    homepage_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="homepage_url"
     )
-    logo_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="logo_url"
     )
-    previously_granted_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    previously_granted_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="previously_granted_scopes"
     )
-    requested_scopes: Annotated[list[ScopeDetail] | None, BeforeValidator(non_null)] = Field(
+    requested_scopes: Annotated[list[ScopeDetail] | None, AfterValidator(non_null)] = Field(
         default=None, alias="requested_scopes"
     )
 
@@ -2543,48 +2539,48 @@ class GetConsentInfoResponse(SDKModel):
 class GetGenerationProgressRequest(SDKModel):
     "History is append-only and paged under a fixed upper sequence. Current\n state remains live on later pages; merge it by current_revision."
 
-    after_event_seq: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    after_event_seq: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="after_event_seq"
     )
     job_id: str = Field(default=..., alias="job_id")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
-    ui_locale: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    ui_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="ui_locale"
     )
     user_id: str = Field(default=..., alias="user_id")
 
 
 class GetGenerationProgressResponse(SDKModel):
-    content_locale: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_locale"
     )
-    content_locale_display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_locale_display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_locale_display_name"
     )
-    content_locale_source: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_locale_source: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_locale_source"
     )
-    content_locales: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    content_locales: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_locales"
     )
     current_revision: str = Field(default=..., alias="current_revision")
     events: list[GenerationProgressEvent] = Field(default=..., alias="events")
     history_upper_event_seq: str = Field(default=..., alias="history_upper_event_seq")
-    instruction_locale: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    instruction_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="instruction_locale"
     )
     job: JobSummary = Field(default=..., alias="job")
     last_event_seq: str = Field(default=..., alias="last_event_seq")
-    locale_source: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    locale_source: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="locale_source"
     )
     locale_status: str = Field(default=..., alias="locale_status")
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
     page_title: str = Field(default=..., alias="page_title")
@@ -2602,16 +2598,16 @@ GetJWKSRequest: TypeAlias = Any
 class JWK(SDKModel):
     'JWK (JSON Web Key, RFC 7517 §4) —— RSA 公钥子集。\n\n 平台 id_token 仅使用 RS256 签名算法，因此 kty 恒为 "RSA"、alg 恒为\n "RS256"、use 恒为 "sig"；这些字段保留在 message 里是为了在 JSON 序列化\n 后符合 RFC 7517 标准格式（让通用 JWT / JWKS 验签库能直接消费）。\n\n 私钥永远不出 IAM 内核；本 message 只承载公钥。'
 
-    alg: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="alg")
-    e: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="e")
-    kid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="kid")
-    kty: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="kty")
-    n: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="n")
-    use: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="use")
+    alg: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="alg")
+    e: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="e")
+    kid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="kid")
+    kty: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="kty")
+    n: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="n")
+    use: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="use")
 
 
 class GetJWKSResponse(SDKModel):
-    keys: Annotated[list[JWK] | None, BeforeValidator(non_null)] = Field(default=None, alias="keys")
+    keys: Annotated[list[JWK] | None, AfterValidator(non_null)] = Field(default=None, alias="keys")
 
 
 class GetJobRequest(SDKModel):
@@ -2625,8 +2621,8 @@ class GetJobResponse(SDKModel):
 
 class GetLoginHistoryRequest(SDKModel):
     end_date: Timestamp | None = Field(default=None, alias="end_date")
-    page: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="page")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="page")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
     start_date: Timestamp | None = Field(default=None, alias="start_date")
@@ -2644,39 +2640,37 @@ LoginType: TypeAlias = Literal[
 class LoginHistoryEntry(SDKModel):
     "LoginHistoryEntry records a single login attempt."
 
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    failure_reason: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    failure_reason: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="failure_reason"
     )
-    history_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    history_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="history_id"
     )
-    ip: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="ip")
-    location: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    ip: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ip")
+    location: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="location"
     )
-    login_time: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    login_time: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="login_time"
     )
-    login_type: Annotated[LoginType | None, BeforeValidator(non_null)] = Field(
+    login_type: Annotated[LoginType | None, AfterValidator(non_null)] = Field(
         default=None, alias="login_type"
     )
-    success: Annotated[bool | None, BeforeValidator(non_null)] = Field(
-        default=None, alias="success"
-    )
+    success: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="success")
 
 
 class GetLoginHistoryResponse(SDKModel):
-    items: Annotated[list[LoginHistoryEntry] | None, BeforeValidator(non_null)] = Field(
+    items: Annotated[list[LoginHistoryEntry] | None, AfterValidator(non_null)] = Field(
         default=None, alias="items"
     )
-    page: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="page")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="page")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    total: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="total")
+    total: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="total")
 
 
 class GetMaterialRequest(SDKModel):
@@ -2689,34 +2683,34 @@ class GetMaterialResponse(SDKModel):
 
 
 class GetOAuthClientRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
 
 
 class GetOAuthClientResponse(SDKModel):
-    client: Annotated[OAuthClient | None, BeforeValidator(non_null)] = Field(
+    client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
         default=None, alias="client"
     )
 
 
 class GetOrganizationBySlugRequest(SDKModel):
-    slug: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="slug")
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
 
 
 class GetOrganizationBySlugResponse(SDKModel):
-    organization: Annotated[Organization | None, BeforeValidator(non_null)] = Field(
+    organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
         default=None, alias="organization"
     )
 
 
 class GetOrganizationRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
 
 
 class GetOrganizationResponse(SDKModel):
-    organization: Annotated[Organization | None, BeforeValidator(non_null)] = Field(
+    organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
         default=None, alias="organization"
     )
 
@@ -2741,26 +2735,26 @@ class GetPagePromptRequest(SDKModel):
 
 
 class GetPagePromptResponse(SDKModel):
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    is_current_version: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_current_version: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_current_version"
     )
-    job_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="job_id")
-    markdown: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    job_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="job_id")
+    markdown: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="markdown"
     )
-    parent_revision_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    parent_revision_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="parent_revision_id"
     )
-    policy_version: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    policy_version: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="policy_version"
     )
-    prompt_revision_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    prompt_revision_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="prompt_revision_id"
     )
-    sha256: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="sha256")
+    sha256: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="sha256")
 
 
 class GetPageRequest(SDKModel):
@@ -2835,11 +2829,11 @@ class SourceNote(SDKModel):
     external_source_id: str | None = Field(default=None, alias="external_source_id")
     kind: SourceNoteKind = Field(default=..., alias="kind")
     material_id: str | None = Field(default=None, alias="material_id")
-    published_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    published_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="published_at"
     )
     publisher: str | None = Field(default=None, alias="publisher")
-    retrieved_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    retrieved_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="retrieved_at"
     )
     source_location: str | None = Field(default=None, alias="source_location")
@@ -2854,7 +2848,7 @@ class PageVersion(SDKModel):
     created_at: Timestamp = Field(default=..., alias="created_at")
     html: str = Field(default=..., alias="html")
     html_sha256: str = Field(default=..., alias="html_sha256")
-    information_as_of: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    information_as_of: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="information_as_of"
     )
     orientation: Orientation = Field(default=..., alias="orientation")
@@ -2863,7 +2857,7 @@ class PageVersion(SDKModel):
     published_event_revision: str = Field(default=..., alias="published_event_revision")
     sequence_number: str = Field(default=..., alias="sequence_number")
     source_job_id: str = Field(default=..., alias="source_job_id")
-    source_notes: Annotated[list[SourceNote] | None, BeforeValidator(non_null)] = Field(
+    source_notes: Annotated[list[SourceNote] | None, AfterValidator(non_null)] = Field(
         default=None, alias="source_notes"
     )
     version_id: str = Field(default=..., alias="version_id")
@@ -2877,47 +2871,47 @@ GetProfileRequest: TypeAlias = Any
 
 
 class GetProfileResponse(SDKModel):
-    avatar: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="avatar")
-    bio: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="bio")
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    avatar: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="avatar")
+    bio: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="bio")
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    default_api_version: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    default_api_version: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="default_api_version"
     )
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    email_verified: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="email_verified"
     )
-    home_address: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    home_address: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="home_address"
     )
-    location: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    location: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="location"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
-    phone_verified: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    phone_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="phone_verified"
     )
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
-    website: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="website")
-    work_address: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    website: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="website")
+    work_address: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="work_address"
     )
 
 
 class GetProjectRequest(SDKModel):
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
 
 
 class GetProjectResponse(SDKModel):
-    project: Annotated[Project | None, BeforeValidator(non_null)] = Field(
+    project: Annotated[Project | None, AfterValidator(non_null)] = Field(
         default=None, alias="project"
     )
 
@@ -2925,25 +2919,25 @@ class GetProjectResponse(SDKModel):
 class GetProjectSummaryRequest(SDKModel):
     "GetProjectSummaryRequest 获取项目概览，包含各类内容的数量统计。\n 适用于项目列表页展示概要信息。"
 
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
 
 
 class GetProjectSummaryResponse(SDKModel):
-    article_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    article_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_count"
     )
-    asset_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    asset_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="asset_count"
     )
-    project: Annotated[Project | None, BeforeValidator(non_null)] = Field(
+    project: Annotated[Project | None, AfterValidator(non_null)] = Field(
         default=None, alias="project"
     )
-    publish_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    publish_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="publish_count"
     )
-    video_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    video_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="video_count"
     )
 
@@ -2951,62 +2945,62 @@ class GetProjectSummaryResponse(SDKModel):
 class GetPromptTemplateRequest(SDKModel):
     "GetPromptTemplateRequest 获取模板对应的排版提示词。\n 用于在 LLM 生成/转换 HTML 时提供格式化指令。"
 
-    template_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_id"
     )
 
 
 class GetPromptTemplateResponse(SDKModel):
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    prompt: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="prompt")
-    template_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    prompt: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="prompt")
+    template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_id"
     )
 
 
 class GetPublishStatusRequest(SDKModel):
-    record_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    record_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="record_id"
     )
 
 
 class GetPublishStatusResponse(SDKModel):
-    record: Annotated[PublishRecord | None, BeforeValidator(non_null)] = Field(
+    record: Annotated[PublishRecord | None, AfterValidator(non_null)] = Field(
         default=None, alias="record"
     )
 
 
 class GetScopeRequest(SDKModel):
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
 
 
 class GetScopeResponse(SDKModel):
-    scope: Annotated[Scope | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
 
 
 GetSecuritySettingsRequest: TypeAlias = Any
 
 
 class GetSecuritySettingsResponse(SDKModel):
-    email_verified: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="email_verified"
     )
-    has_password: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    has_password: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="has_password"
     )
-    password_changed_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    password_changed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="password_changed_at"
     )
-    phone_verified: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    phone_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="phone_verified"
     )
-    two_factor_enabled: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    two_factor_enabled: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="two_factor_enabled"
     )
 
 
 class GetSessionRequest(SDKModel):
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
@@ -3014,33 +3008,33 @@ class GetSessionRequest(SDKModel):
 class SessionInfo(SDKModel):
     "SessionInfo describes an active session."
 
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    ip: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="ip")
-    is_current: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    ip: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ip")
+    is_current: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_current"
     )
-    last_active: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    last_active: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="last_active"
     )
-    location: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    location: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="location"
     )
-    login_time: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    login_time: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="login_time"
     )
-    port: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="port")
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    port: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="port")
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
 
 class GetSessionResponse(SDKModel):
-    session: Annotated[SessionInfo | None, BeforeValidator(non_null)] = Field(
+    session: Annotated[SessionInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="session"
     )
 
@@ -3059,7 +3053,7 @@ class GetUploadRequest(SDKModel):
 
 
 class GetUploadResponse(SDKModel):
-    material: Annotated[Material | None, BeforeValidator(non_null)] = Field(
+    material: Annotated[Material | None, AfterValidator(non_null)] = Field(
         default=None, alias="material"
     )
     upload: UploadSession = Field(default=..., alias="upload")
@@ -3068,47 +3062,47 @@ class GetUploadResponse(SDKModel):
 class GetVersionHintRequest(SDKModel):
     "Lightweight API version pin lookup. Returns the user's\n default_api_version without loading the full profile (no email / phone\n / avatar etc.). Used by the platform's API-Version resolution chain."
 
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class GetVersionHintResponse(SDKModel):
-    default_api_version: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    default_api_version: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="default_api_version"
     )
 
 
 class GetVideoTaskRequest(SDKModel):
-    task_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
 
 
 class GetVideoTaskResponse(SDKModel):
-    task: Annotated[VideoTask | None, BeforeValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
 
 
 class GetWebhookRequest(SDKModel):
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
 
 class GetWebhookResponse(SDKModel):
-    webhook: Annotated[Webhook | None, BeforeValidator(non_null)] = Field(
+    webhook: Annotated[Webhook | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook"
     )
 
 
 class IntrospectTokenRequest(SDKModel):
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
-    include_profile: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    include_profile: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="include_profile"
     )
-    token: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="token")
-    token_type_hint: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    token: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="token")
+    token_type_hint: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="token_type_hint"
     )
 
@@ -3116,163 +3110,163 @@ class IntrospectTokenRequest(SDKModel):
 class UserProfile(SDKModel):
     "UserProfile 是 OIDC userinfo 标准 claims 的 IAM 视图。字段对齐\n OpenID Connect Core 1.0 §5.4 Standard Claims。空 / 未知字段一律省略\n （proto3 zero-value 自然 omit），与 OIDC userinfo HTTP 端点的语义一致。\n\n 仅作为 IntrospectTokenResponse.profile 的载体，让 BFF 在一次\n IntrospectToken RPC 内拿齐 userinfo 所需的全部 claims，避免再调\n UserService.GetProfile。"
 
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    email_verified: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="email_verified"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    phone_number: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    phone_number: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="phone_number"
     )
-    phone_number_verified: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    phone_number_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="phone_number_verified"
     )
-    picture: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="picture")
-    preferred_username: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    picture: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="picture")
+    preferred_username: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="preferred_username"
     )
-    sub: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="sub")
-    updated_at: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    sub: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="sub")
+    updated_at: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
 
 class IntrospectTokenResponse(SDKModel):
-    active: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="active")
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    active: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="active")
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    issued_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    issued_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="issued_at"
     )
     profile: UserProfile | None = Field(default=None, alias="profile")
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
-    token_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    token_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="token_type"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class ListAPIKeysRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListAPIKeysResponse(SDKModel):
-    api_keys: Annotated[list[APIKey] | None, BeforeValidator(non_null)] = Field(
+    api_keys: Annotated[list[APIKey] | None, AfterValidator(non_null)] = Field(
         default=None, alias="api_keys"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListApplicationsRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListApplicationsResponse(SDKModel):
-    applications: Annotated[list[OAuthApplication] | None, BeforeValidator(non_null)] = Field(
+    applications: Annotated[list[OAuthApplication] | None, AfterValidator(non_null)] = Field(
         default=None, alias="applications"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListArticlesRequest(SDKModel):
     format: ContentFormat | None = Field(default=None, alias="format")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
 
 
 class ListArticlesResponse(SDKModel):
-    articles: Annotated[list[Article] | None, BeforeValidator(non_null)] = Field(
+    articles: Annotated[list[Article] | None, AfterValidator(non_null)] = Field(
         default=None, alias="articles"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListAssetsRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
     type_: AssetType | None = Field(default=None, alias="type")
 
 
 class ListAssetsResponse(SDKModel):
-    assets: Annotated[list[Asset] | None, BeforeValidator(non_null)] = Field(
+    assets: Annotated[list[Asset] | None, AfterValidator(non_null)] = Field(
         default=None, alias="assets"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListAuthorizedApplicationsRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListAuthorizedApplicationsResponse(SDKModel):
-    applications: Annotated[list[AuthorizedApplication] | None, BeforeValidator(non_null)] = Field(
+    applications: Annotated[list[AuthorizedApplication] | None, AfterValidator(non_null)] = Field(
         default=None, alias="applications"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListCategoriesRequest(SDKModel):
     order_by: str | None = Field(default=None, alias="order_by")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, BeforeValidator(non_null)] = (
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
         Field(default=None, alias="pagination")
     )
     parent_category_id: str | None = Field(default=None, alias="parent_category_id")
@@ -3285,87 +3279,87 @@ class ListCategoriesResponse(SDKModel):
 
 
 class ListMembersRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListMembersResponse(SDKModel):
-    members: Annotated[list[OrganizationMember] | None, BeforeValidator(non_null)] = Field(
+    members: Annotated[list[OrganizationMember] | None, AfterValidator(non_null)] = Field(
         default=None, alias="members"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
 
 
 class ListOAuthClientsRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListOAuthClientsResponse(SDKModel):
-    clients: Annotated[list[OAuthClient] | None, BeforeValidator(non_null)] = Field(
+    clients: Annotated[list[OAuthClient] | None, AfterValidator(non_null)] = Field(
         default=None, alias="clients"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListOrganizationsRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListOrganizationsResponse(SDKModel):
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    organizations: Annotated[list[Organization] | None, BeforeValidator(non_null)] = Field(
+    organizations: Annotated[list[Organization] | None, AfterValidator(non_null)] = Field(
         default=None, alias="organizations"
     )
 
 
 class ListPageInstructionsRequest(SDKModel):
     page_id: str = Field(default=..., alias="page_id")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, BeforeValidator(non_null)] = (
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
         Field(default=None, alias="pagination")
     )
     user_id: str = Field(default=..., alias="user_id")
 
 
 class PageInstruction(SDKModel):
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    instruction: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    instruction: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="instruction"
     )
-    job_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="job_id")
+    job_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="job_id")
 
 
 class ListPageInstructionsResponse(SDKModel):
-    instructions: Annotated[list[PageInstruction] | None, BeforeValidator(non_null)] = Field(
+    instructions: Annotated[list[PageInstruction] | None, AfterValidator(non_null)] = Field(
         default=None, alias="instructions"
     )
-    pagination: Annotated[AppforgesCommonV1PaginationResponse | None, BeforeValidator(non_null)] = (
+    pagination: Annotated[AppforgesCommonV1PaginationResponse | None, AfterValidator(non_null)] = (
         Field(default=None, alias="pagination")
     )
 
@@ -3373,7 +3367,7 @@ class ListPageInstructionsResponse(SDKModel):
 class ListPageVersionsRequest(SDKModel):
     order_by: str | None = Field(default=None, alias="order_by")
     page_id: str = Field(default=..., alias="page_id")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, BeforeValidator(non_null)] = (
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
         Field(default=None, alias="pagination")
     )
     user_id: str = Field(default=..., alias="user_id")
@@ -3387,7 +3381,7 @@ class ListPageVersionsResponse(SDKModel):
 class ListPagesRequest(SDKModel):
     category_id: str | None = Field(default=None, alias="category_id")
     order_by: str | None = Field(default=None, alias="order_by")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, BeforeValidator(non_null)] = (
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
         Field(default=None, alias="pagination")
     )
     user_id: str = Field(default=..., alias="user_id")
@@ -3404,7 +3398,7 @@ class PageSummary(SDKModel):
     category_id: str | None = Field(default=None, alias="category_id")
     content_revision: str = Field(default=..., alias="content_revision")
     created_at: Timestamp = Field(default=..., alias="created_at")
-    current_version_summary: Annotated[CurrentVersionSummary | None, BeforeValidator(non_null)] = (
+    current_version_summary: Annotated[CurrentVersionSummary | None, AfterValidator(non_null)] = (
         Field(default=None, alias="current_version_summary")
     )
     event_revision: str = Field(default=..., alias="event_revision")
@@ -3426,7 +3420,7 @@ class ListPlatformAccountsRequest(SDKModel):
 
 
 class ListPlatformAccountsResponse(SDKModel):
-    accounts: Annotated[list[PlatformAccount] | None, BeforeValidator(non_null)] = Field(
+    accounts: Annotated[list[PlatformAccount] | None, AfterValidator(non_null)] = Field(
         default=None, alias="accounts"
     )
 
@@ -3435,29 +3429,29 @@ ListPresetsRequest: TypeAlias = Any
 
 
 class ListPresetsResponse(SDKModel):
-    presets: Annotated[list[Preset] | None, BeforeValidator(non_null)] = Field(
+    presets: Annotated[list[Preset] | None, AfterValidator(non_null)] = Field(
         default=None, alias="presets"
     )
 
 
 class ListProjectsRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
     status: ProjectStatus | None = Field(default=None, alias="status")
 
 
 class ListProjectsResponse(SDKModel):
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    projects: Annotated[list[Project] | None, BeforeValidator(non_null)] = Field(
+    projects: Annotated[list[Project] | None, AfterValidator(non_null)] = Field(
         default=None, alias="projects"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
@@ -3465,13 +3459,13 @@ class ListProjectsResponse(SDKModel):
 class ListPublishRecordsRequest(SDKModel):
     "ListPublishRecordsRequest 查询发布历史，支持按文章、平台、状态过滤。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
     platform: Platform | None = Field(default=None, alias="platform")
@@ -3479,25 +3473,25 @@ class ListPublishRecordsRequest(SDKModel):
 
 
 class ListPublishRecordsResponse(SDKModel):
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    records: Annotated[list[PublishRecord] | None, BeforeValidator(non_null)] = Field(
+    records: Annotated[list[PublishRecord] | None, AfterValidator(non_null)] = Field(
         default=None, alias="records"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListScopesRequest(SDKModel):
-    category: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    category: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="category"
     )
 
 
 class ListScopesResponse(SDKModel):
-    scopes: Annotated[list[Scope] | None, BeforeValidator(non_null)] = Field(
+    scopes: Annotated[list[Scope] | None, AfterValidator(non_null)] = Field(
         default=None, alias="scopes"
     )
 
@@ -3506,7 +3500,7 @@ ListSessionsRequest: TypeAlias = Any
 
 
 class ListSessionsResponse(SDKModel):
-    sessions: Annotated[list[SessionInfo] | None, BeforeValidator(non_null)] = Field(
+    sessions: Annotated[list[SessionInfo] | None, AfterValidator(non_null)] = Field(
         default=None, alias="sessions"
     )
 
@@ -3517,66 +3511,66 @@ ListTemplatesRequest: TypeAlias = Any
 class Template(SDKModel):
     "Template 系统排版模板。"
 
-    created_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="created_at"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    is_default: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_default: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_default"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    template_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_id"
     )
-    thumbnail_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    thumbnail_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="thumbnail_url"
     )
 
 
 class ListTemplatesResponse(SDKModel):
-    templates: Annotated[list[Template] | None, BeforeValidator(non_null)] = Field(
+    templates: Annotated[list[Template] | None, AfterValidator(non_null)] = Field(
         default=None, alias="templates"
     )
 
 
 class ListVideoTasksRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
     status: VideoStatus | None = Field(default=None, alias="status")
 
 
 class ListVideoTasksResponse(SDKModel):
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    tasks: Annotated[list[VideoTask] | None, BeforeValidator(non_null)] = Field(
+    tasks: Annotated[list[VideoTask] | None, AfterValidator(non_null)] = Field(
         default=None, alias="tasks"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListWebhookDeliveriesRequest(SDKModel):
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
-    status: Annotated[DeliveryStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[DeliveryStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
@@ -3584,101 +3578,101 @@ class ListWebhookDeliveriesRequest(SDKModel):
 class WebhookDelivery(SDKModel):
     "WebhookDelivery records a single delivery attempt."
 
-    delivered_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    delivered_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="delivered_at"
     )
-    delivery_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    delivery_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="delivery_id"
     )
-    duration_ms: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    duration_ms: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="duration_ms"
     )
-    error_message: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="error_message"
     )
-    event_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    event_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="event_type"
     )
-    response_body: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    response_body: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="response_body"
     )
-    response_status: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    response_status: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="response_status"
     )
-    status: Annotated[DeliveryStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[DeliveryStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
 
 class ListWebhookDeliveriesResponse(SDKModel):
-    deliveries: Annotated[list[WebhookDelivery] | None, BeforeValidator(non_null)] = Field(
+    deliveries: Annotated[list[WebhookDelivery] | None, AfterValidator(non_null)] = Field(
         default=None, alias="deliveries"
     )
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
 
 
 class ListWebhooksRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_token"
     )
 
 
 class ListWebhooksResponse(SDKModel):
-    next_page_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="next_page_token"
     )
-    total_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_count"
     )
-    webhooks: Annotated[list[Webhook] | None, BeforeValidator(non_null)] = Field(
+    webhooks: Annotated[list[Webhook] | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhooks"
     )
 
 
 class LoginRequest(SDKModel):
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="password_hash"
     )
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
 
 
 class UserBrief(SDKModel):
     "UserBrief is a minimal user representation returned in auth responses."
 
-    avatar: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="avatar")
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    avatar: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="avatar")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class LoginResponse(SDKModel):
-    csrf_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="csrf_token"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
-    user: Annotated[UserBrief | None, BeforeValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
 
 
 VerificationType: TypeAlias = Literal[
@@ -3687,31 +3681,31 @@ VerificationType: TypeAlias = Literal[
 
 
 class LoginWithVerificationCodeRequest(SDKModel):
-    code: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    code_verifier: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_verifier"
     )
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    target: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="target")
-    txid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="txid")
-    type_: Annotated[VerificationType | None, BeforeValidator(non_null)] = Field(
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
         default=None, alias="type"
     )
 
 
 class LoginWithVerificationCodeResponse(SDKModel):
-    csrf_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="csrf_token"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
-    user: Annotated[UserBrief | None, BeforeValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
 
 
 LogoutRequest: TypeAlias = Any
@@ -3729,99 +3723,99 @@ UserStatus: TypeAlias = Literal[
 
 
 class LookupUserResponse(SDKModel):
-    email_masked: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    email_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="email_masked"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    phone_masked: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    phone_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="phone_masked"
     )
-    status: Annotated[UserStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[UserStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class OpaqueLoginFinalizeRequest(SDKModel):
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    ke3: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="ke3")
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    ke3: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ke3")
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
 
 class OpaqueLoginFinalizeResponse(SDKModel):
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
-    user: Annotated[UserBrief | None, BeforeValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
 
 
 class OpaqueLoginInitRequest(SDKModel):
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    ke1: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="ke1")
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    ke1: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ke1")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
 
 
 class OpaqueLoginInitResponse(SDKModel):
-    ke2: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="ke2")
-    server_identity: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    ke2: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ke2")
+    server_identity: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="server_identity"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
 
 class OpaqueRegisterFinalizeRequest(SDKModel):
-    code: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    code_verifier: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_verifier"
     )
-    registration_record: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    registration_record: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="registration_record"
     )
-    txid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="txid")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
 
 
 class OpaqueRegisterFinalizeResponse(SDKModel):
-    user: Annotated[UserBrief | None, BeforeValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
 
 
 class OpaqueRegisterInitRequest(SDKModel):
-    code_challenge: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_challenge"
     )
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
-    registration_request: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    registration_request: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="registration_request"
     )
 
 
 class OpaqueRegisterInitResponse(SDKModel):
-    registration_response: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    registration_response: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="registration_response"
     )
-    server_identity: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    server_identity: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="server_identity"
     )
-    txid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="txid")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
 
 
 class OptimizeHtmlRequest(SDKModel):
     "OptimizeHtmlRequest 对已有的 HTML 内容进行格式和排版优化。\n 可指定 target_platform 以针对特定平台的 HTML 兼容性进行优化\n （例如微信公众号不支持外链图片、知乎有特定 CSS 限制等）。\n article_id 和 content 二选一。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    content: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="content")
-    instructions: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    instructions: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="instructions"
     )
-    target_platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    target_platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="target_platform"
     )
 
@@ -3829,11 +3823,11 @@ class OptimizeHtmlRequest(SDKModel):
 class OptimizeHtmlResponse(SDKModel):
     "OptimizeHtmlResponse 是 OptimizeHtml 的流式响应。"
 
-    article: Annotated[Article | None, BeforeValidator(non_null)] = Field(
+    article: Annotated[Article | None, AfterValidator(non_null)] = Field(
         default=None, alias="article"
     )
-    done: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="done")
-    event: Annotated[StreamEvent | None, BeforeValidator(non_null)] = Field(
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
         default=None, alias="event"
     )
 
@@ -3841,11 +3835,11 @@ class OptimizeHtmlResponse(SDKModel):
 class OptimizeMarkdownRequest(SDKModel):
     "OptimizeMarkdownRequest 对已有的 Markdown 内容进行格式和排版优化。\n article_id 和 content 二选一：指定 article_id 则从数据库加载，\n 指定 content 则直接处理原始文本。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    content: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="content")
-    instructions: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    instructions: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="instructions"
     )
 
@@ -3853,11 +3847,11 @@ class OptimizeMarkdownRequest(SDKModel):
 class OptimizeMarkdownResponse(SDKModel):
     "OptimizeMarkdownResponse 是 OptimizeMarkdown 的流式响应。"
 
-    article: Annotated[Article | None, BeforeValidator(non_null)] = Field(
+    article: Annotated[Article | None, AfterValidator(non_null)] = Field(
         default=None, alias="article"
     )
-    done: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="done")
-    event: Annotated[StreamEvent | None, BeforeValidator(non_null)] = Field(
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
         default=None, alias="event"
     )
 
@@ -3924,7 +3918,7 @@ class PinpageCategoryPreferenceUpdateCategoryPreferenceBody(SDKModel):
 class PinpageJobsCreateGenerationBody(SDKModel):
     client_reference: str | None = Field(default=None, alias="clientReference")
     instruction: str = Field(default=..., alias="instruction")
-    material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="materialIds"
     )
     orientation: Orientation | None = Field(default=None, alias="orientation")
@@ -3933,7 +3927,7 @@ class PinpageJobsCreateGenerationBody(SDKModel):
 
 
 class PinpageJobsEstimateBody(SDKModel):
-    add_material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    add_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="addMaterialIds"
     )
     base_job_id: str | None = Field(default=None, alias="baseJobId")
@@ -3946,23 +3940,23 @@ class PinpageJobsEstimateBody(SDKModel):
     )
     content_decision_context_id: str | None = Field(default=None, alias="contentDecisionContextId")
     content_decision_note: str | None = Field(default=None, alias="contentDecisionNote")
-    content_decision_option_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    content_decision_option_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="contentDecisionOptionIds"
     )
     external_information_mode: ExternalInformationMode | None = Field(
         default=None, alias="externalInformationMode"
     )
     inline_text: str | None = Field(default=None, alias="inlineText")
-    inline_text_change: Annotated[InlineTextChange | None, BeforeValidator(non_null)] = Field(
+    inline_text_change: Annotated[InlineTextChange | None, AfterValidator(non_null)] = Field(
         default=None, alias="inlineTextChange"
     )
-    material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="materialIds"
     )
     operation: GenerationOperation = Field(default=..., alias="operation")
     orientation: Orientation | None = Field(default=None, alias="orientation")
     page_id: str | None = Field(default=None, alias="pageId")
-    remove_material_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    remove_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="removeMaterialIds"
     )
     source_job_id: str | None = Field(default=None, alias="sourceJobId")
@@ -3983,13 +3977,13 @@ class PinpageJobsSubmitBody(SDKModel):
 
 
 class PinpagePagesRegeneratePageBody(SDKModel):
-    confirmed_authorized_max_credit: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    confirmed_authorized_max_credit: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="confirmedAuthorizedMaxCredit"
     )
-    estimate_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    estimate_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="estimateId"
     )
-    input_fingerprint: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    input_fingerprint: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="inputFingerprint"
     )
     instruction: str | None = Field(default=None, alias="instruction")
@@ -4047,42 +4041,40 @@ class PreviewPageDeletionResponse(SDKModel):
 
 
 class ProgressMessageArgumentsEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class ProjectMetadataEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class ProtoAny(SDKModel):
     "Contains an arbitrary serialized message along with a @type that describes the type of the serialized message."
 
-    field_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
-        default=None, alias="@type"
-    )
+    field_type: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="@type")
 
 
 class PublishArticleRequest(SDKModel):
     "PublishArticleRequest 将一篇文章发布到指定平台。"
 
-    account_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="account_id"
     )
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
-    platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform"
     )
-    platform_config: Annotated[PlatformConfig | None, BeforeValidator(non_null)] = Field(
+    platform_config: Annotated[PlatformConfig | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform_config"
     )
 
 
 class PublishArticleResponse(SDKModel):
-    record: Annotated[PublishRecord | None, BeforeValidator(non_null)] = Field(
+    record: Annotated[PublishRecord | None, AfterValidator(non_null)] = Field(
         default=None, alias="record"
     )
 
@@ -4090,14 +4082,14 @@ class PublishArticleResponse(SDKModel):
 class PublishedArticleInfo(SDKModel):
     "PublishedArticleInfo 已发布文章信息。"
 
-    category: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    category: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="category"
     )
-    publish_time: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    publish_time: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="publish_time"
     )
-    title: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="title")
-    url: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="url")
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
 
 
 PublishToWechatMpTarget: TypeAlias = Literal[
@@ -4110,8 +4102,8 @@ PublishToWechatMpTarget: TypeAlias = Literal[
 class WechatMpCredentials(SDKModel):
     "WechatMpCredentials 微信公众号 API 调用凭证。\n\n 由调用方在请求体中提供，server 端用于调用微信公众号开放 API（上传素材 /\n 创建草稿 / 群发等）。**业务凭证是请求的固有属性，应随请求体传输**，不应\n 放在 HTTP header 中——HTTP header 在跨网关 / 多跳 RPC 时透传策略不一定\n 可靠，且不受 proto 类型 / 必填校验保护，审计日志透明度也差。\n\n 注意：app_secret 是敏感凭证，server 端日志 / 错误响应 / wire dump 必须脱敏。"
 
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    app_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_secret"
     )
 
@@ -4119,102 +4111,102 @@ class WechatMpCredentials(SDKModel):
 class PublishToWechatMpRequest(SDKModel):
     "PublishToWechatMpRequest 一站式发布 Markdown 或 HTML 内容到微信公众号。\n 流程：按格式预处理正文 → 封面上传 → 创建/更新草稿 → 可选群发。"
 
-    author: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="author")
-    cached_articles: Annotated[list[PublishedArticleInfo] | None, BeforeValidator(non_null)] = (
-        Field(default=None, alias="cached_articles")
+    author: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="author")
+    cached_articles: Annotated[list[PublishedArticleInfo] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="cached_articles"
     )
-    content: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="content")
-    content_format: Annotated[ContentFormat | None, BeforeValidator(non_null)] = Field(
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    content_format: Annotated[ContentFormat | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_format"
     )
-    content_source_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_source_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_source_url"
     )
-    cover_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    cover_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="cover_url"
     )
-    debug: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="debug")
-    digest: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="digest")
-    image_map: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    debug: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="debug")
+    digest: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="digest")
+    image_map: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="image_map"
     )
-    need_open_comment: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    need_open_comment: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="need_open_comment"
     )
-    show_cover_pic: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    show_cover_pic: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="show_cover_pic"
     )
-    target: Annotated[PublishToWechatMpTarget | None, BeforeValidator(non_null)] = Field(
+    target: Annotated[PublishToWechatMpTarget | None, AfterValidator(non_null)] = Field(
         default=None, alias="target"
     )
-    template_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="template_id"
     )
-    title: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="title")
-    wechat_mp_credentials: Annotated[WechatMpCredentials | None, BeforeValidator(non_null)] = Field(
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    wechat_mp_credentials: Annotated[WechatMpCredentials | None, AfterValidator(non_null)] = Field(
         default=None, alias="wechat_mp_credentials"
     )
 
 
 class PublishToWechatMpRequestImageMapEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class PublishToWechatMpResponse(SDKModel):
     "PublishToWechatMpResponse 发布结果。"
 
-    debug_logs: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    debug_logs: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="debug_logs"
     )
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    message: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="message")
-    ok: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="ok")
-    published_articles: Annotated[list[PublishedArticleInfo] | None, BeforeValidator(non_null)] = (
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
+    ok: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="ok")
+    published_articles: Annotated[list[PublishedArticleInfo] | None, AfterValidator(non_null)] = (
         Field(default=None, alias="published_articles")
     )
 
 
 class RefreshTokenRequest(SDKModel):
-    refresh_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="refresh_token"
     )
 
 
 class RefreshTokenResponse(SDKModel):
-    access_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    access_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="access_token"
     )
-    expires_in: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    expires_in: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_in"
     )
-    refresh_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="refresh_token"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class RegenerateAPIKeyRequest(SDKModel):
-    key_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key_id")
+    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key_id")
 
 
 class RegenerateAPIKeyResponse(SDKModel):
-    api_key: Annotated[APIKey | None, BeforeValidator(non_null)] = Field(
+    api_key: Annotated[APIKey | None, AfterValidator(non_null)] = Field(
         default=None, alias="api_key"
     )
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
 
 
 class RegeneratePageRequest(SDKModel):
-    confirmed_authorized_max_credit: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    confirmed_authorized_max_credit: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="confirmed_authorized_max_credit"
     )
-    estimate_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    estimate_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="estimate_id"
     )
-    input_fingerprint: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    input_fingerprint: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="input_fingerprint"
     )
     instruction: str | None = Field(default=None, alias="instruction")
@@ -4229,36 +4221,36 @@ class RegeneratePageResponse(SDKModel):
 
 
 class RegisterRequest(SDKModel):
-    code: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    code_verifier: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_verifier"
     )
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="password_hash"
     )
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
-    txid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="txid")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
 
 
 class RegisterResponse(SDKModel):
-    csrf_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="csrf_token"
     )
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
 
 
 class RemoveMemberRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 RemoveMemberResponse: TypeAlias = Any
@@ -4276,8 +4268,8 @@ class RenamePageResponse(SDKModel):
 
 
 class RequestPasswordResetRequest(SDKModel):
-    target: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="target")
-    type_: Annotated[VerificationType | None, BeforeValidator(non_null)] = Field(
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
+    type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
         default=None, alias="type"
     )
 
@@ -4286,16 +4278,16 @@ RequestPasswordResetResponse: TypeAlias = Any
 
 
 class ResetPasswordRequest(SDKModel):
-    code: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    code_verifier: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_verifier"
     )
-    new_password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    new_password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="new_password_hash"
     )
-    target: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="target")
-    txid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="txid")
-    type_: Annotated[VerificationType | None, BeforeValidator(non_null)] = Field(
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
         default=None, alias="type"
     )
 
@@ -4304,12 +4296,12 @@ ResetPasswordResponse: TypeAlias = Any
 
 
 class RestoreAccountRequest(SDKModel):
-    email: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="email")
-    password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="password_hash"
     )
-    phone: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phone")
-    verification_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="verification_code"
     )
 
@@ -4345,40 +4337,40 @@ class RetryJobResponse(SDKModel):
 
 
 class RetryWebhookDeliveryRequest(SDKModel):
-    delivery_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    delivery_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="delivery_id"
     )
 
 
 class RetryWebhookDeliveryResponse(SDKModel):
-    delivery: Annotated[WebhookDelivery | None, BeforeValidator(non_null)] = Field(
+    delivery: Annotated[WebhookDelivery | None, AfterValidator(non_null)] = Field(
         default=None, alias="delivery"
     )
 
 
 class RevokeAPIKeyRequest(SDKModel):
-    key_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key_id")
+    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key_id")
 
 
 RevokeAPIKeyResponse: TypeAlias = Any
 
 
 class RevokeApplicationAccessRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
 
 
 RevokeApplicationAccessResponse: TypeAlias = Any
 
 
 class RevokeTokenRequest(SDKModel):
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
-    token: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="token")
-    token_type_hint: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    token: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="token")
+    token_type_hint: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="token_type_hint"
     )
 
@@ -4387,42 +4379,42 @@ RevokeTokenResponse: TypeAlias = Any
 
 
 class RotateClientSecretRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
 
 
 class RotateClientSecretResponse(SDKModel):
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
 
 
 class RotateOAuthClientSecretRequest(SDKModel):
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
 
 
 class RotateOAuthClientSecretResponse(SDKModel):
-    client: Annotated[OAuthClient | None, BeforeValidator(non_null)] = Field(
+    client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
         default=None, alias="client"
     )
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
-    rotated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    rotated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="rotated_at"
     )
 
 
 class RotateWebhookSecretRequest(SDKModel):
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
 
 class RotateWebhookSecretResponse(SDKModel):
-    signing_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    signing_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="signing_secret"
     )
 
@@ -4430,16 +4422,16 @@ class RotateWebhookSecretResponse(SDKModel):
 class SearchUsersByPhoneRequest(SDKModel):
     "Bounded, masked INTERNAL account search. Digits match anywhere in phone."
 
-    page_size: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="page_size"
     )
-    phone_query: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    phone_query: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="phone_query"
     )
 
 
 class SearchUsersByPhoneResponse(SDKModel):
-    users: Annotated[list[LookupUserResponse] | None, BeforeValidator(non_null)] = Field(
+    users: Annotated[list[LookupUserResponse] | None, AfterValidator(non_null)] = Field(
         default=None, alias="users"
     )
 
@@ -4455,33 +4447,33 @@ VerificationPurpose: TypeAlias = Literal[
 
 
 class SendVerificationCodeRequest(SDKModel):
-    code_challenge: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_challenge"
     )
-    purpose: Annotated[VerificationPurpose | None, BeforeValidator(non_null)] = Field(
+    purpose: Annotated[VerificationPurpose | None, AfterValidator(non_null)] = Field(
         default=None, alias="purpose"
     )
-    target: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="target")
-    type_: Annotated[VerificationType | None, BeforeValidator(non_null)] = Field(
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
+    type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
         default=None, alias="type"
     )
 
 
 class SendVerificationCodeResponse(SDKModel):
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    txid: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="txid")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
 
 
 class SetPasswordRequest(SDKModel):
-    csrf_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="csrf_token"
     )
-    password_hash: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="password_hash"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
@@ -4492,20 +4484,20 @@ SetPasswordResponse: TypeAlias = Any
 class SignAssetUrlsRequest(SDKModel):
     "SignAssetUrlsRequest 为已缓存的素材对象键重新生成签名 URL。\n 用于客户端本地缓存了 object_key 后，URL 过期时重新签名。"
 
-    object_keys: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    object_keys: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="object_keys"
     )
 
 
 class SignAssetUrlsResponse(SDKModel):
-    signed_urls: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    signed_urls: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="signed_urls"
     )
 
 
 class SignAssetUrlsResponseSignedUrlsEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class SignUploadPartsRequest(SDKModel):
@@ -4528,8 +4520,8 @@ class SignUploadPartsResponse(SDKModel):
 
 
 class SignedUploadPartRequiredHeadersEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 SocialProvider: TypeAlias = Literal[
@@ -4542,52 +4534,52 @@ SocialProvider: TypeAlias = Literal[
 
 
 class SocialLoginRequest(SDKModel):
-    auth_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    auth_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="auth_code"
     )
-    code_verifier: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_verifier"
     )
-    device_info: Annotated[DeviceInfo | None, BeforeValidator(non_null)] = Field(
+    device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
         default=None, alias="device_info"
     )
-    provider: Annotated[SocialProvider | None, BeforeValidator(non_null)] = Field(
+    provider: Annotated[SocialProvider | None, AfterValidator(non_null)] = Field(
         default=None, alias="provider"
     )
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
 
 
 class SocialLoginResponse(SDKModel):
-    is_new_user: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_new_user: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_new_user"
     )
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
-    tokens: Annotated[TokenPair | None, BeforeValidator(non_null)] = Field(
+    tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
         default=None, alias="tokens"
     )
-    user: Annotated[UserBrief | None, BeforeValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
 
 
 class Status(SDKModel):
     "The Status type defines a logical error model suitable for gRPC and REST APIs."
 
-    code: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    details: Annotated[list[ProtoAny] | None, BeforeValidator(non_null)] = Field(
+    code: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    details: Annotated[list[ProtoAny] | None, AfterValidator(non_null)] = Field(
         default=None, alias="details"
     )
-    message: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="message")
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
 
 
 class StatusUpdate(SDKModel):
     "StatusUpdate notifies the client about processing phase changes."
 
-    message: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="message")
-    phase: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="phase")
-    progress_percent: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
+    phase: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phase")
+    progress_percent: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="progress_percent"
     )
 
@@ -4595,13 +4587,13 @@ class StatusUpdate(SDKModel):
 class StreamError(SDKModel):
     "StreamError reports a non-fatal error during stream processing."
 
-    code: Annotated[int | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    message: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="message")
+    code: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
 
 
 class StreamEventMetadataEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 StreamEventType: TypeAlias = Literal[
@@ -4614,30 +4606,30 @@ StreamEventType: TypeAlias = Literal[
 
 
 class SubmitConsentRequest(SDKModel):
-    approved: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    approved: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="approved"
     )
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    code_challenge: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_challenge"
     )
-    code_challenge_method: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code_challenge_method: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_challenge_method"
     )
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
-    state: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="state")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    state: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="state")
 
 
 class SubmitConsentResponse(SDKModel):
-    authorization_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    authorization_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="authorization_code"
     )
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
 
@@ -4660,10 +4652,10 @@ class SubmitGenerationResponse(SDKModel):
 class SyncAppMemberRequest(SDKModel):
     "SyncAppMemberRequest carries one upsert into the application\n membership table. All fields are required."
 
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    role: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="role")
-    status: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="status")
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    role: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="role")
+    status: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="status")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 SyncAppMemberResponse: TypeAlias = Any
@@ -4673,13 +4665,13 @@ TerminateAllOtherSessionsRequest: TypeAlias = Any
 
 
 class TerminateAllOtherSessionsResponse(SDKModel):
-    terminated_count: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    terminated_count: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="terminated_count"
     )
 
 
 class TerminateSessionRequest(SDKModel):
-    session_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="session_id"
     )
 
@@ -4688,44 +4680,44 @@ TerminateSessionResponse: TypeAlias = Any
 
 
 class TokenRequest(SDKModel):
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    client_secret: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_secret"
     )
-    code: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="code")
-    code_verifier: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="code_verifier"
     )
-    grant_type: Annotated[GrantType | None, BeforeValidator(non_null)] = Field(
+    grant_type: Annotated[GrantType | None, AfterValidator(non_null)] = Field(
         default=None, alias="grant_type"
     )
-    nonce: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="nonce")
-    redirect_uri: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    nonce: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="nonce")
+    redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uri"
     )
-    refresh_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="refresh_token"
     )
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
 
 
 class TokenResponse(SDKModel):
-    access_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    access_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="access_token"
     )
-    expires_in: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    expires_in: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_in"
     )
-    id_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    id_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="id_token"
     )
-    refresh_token: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="refresh_token"
     )
-    scope: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
-    token_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    token_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="token_type"
     )
 
@@ -4733,14 +4725,14 @@ class TokenResponse(SDKModel):
 class TokenUsage(SDKModel):
     "TokenUsage reports LLM token consumption statistics."
 
-    input_tokens: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    input_tokens: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="input_tokens"
     )
-    model: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="model")
-    output_tokens: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    model: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="model")
+    output_tokens: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="output_tokens"
     )
-    total_tokens: Annotated[int | None, BeforeValidator(non_null)] = Field(
+    total_tokens: Annotated[int | None, AfterValidator(non_null)] = Field(
         default=None, alias="total_tokens"
     )
 
@@ -4748,14 +4740,14 @@ class TokenUsage(SDKModel):
 class ToutiaoConfig(SDKModel):
     "ToutiaoConfig 今日头条发布配置。\n 文章将通过头条号 API 发布。"
 
-    category: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    category: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="category"
     )
-    tags: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(default=None, alias="tags")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
 
 
 class UnbindPlatformAccountRequest(SDKModel):
-    account_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="account_id"
     )
 
@@ -4764,29 +4756,29 @@ UnbindPlatformAccountResponse: TypeAlias = Any
 
 
 class UpdateApplicationRequest(SDKModel):
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    app_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="app_name"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    homepage_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="homepage_url"
     )
-    logo_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="logo_url"
     )
-    redirect_uris: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uris"
     )
 
 
 class UpdateApplicationResponse(SDKModel):
-    application: Annotated[OAuthApplication | None, BeforeValidator(non_null)] = Field(
+    application: Annotated[OAuthApplication | None, AfterValidator(non_null)] = Field(
         default=None, alias="application"
     )
 
@@ -4794,18 +4786,18 @@ class UpdateApplicationResponse(SDKModel):
 class UpdateArticleRequest(SDKModel):
     "UpdateArticleRequest 手动更新文章字段。使用 optional 语义：\n 未设置的字段不会被修改。"
 
-    article_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="article_id"
     )
     content: str | None = Field(default=None, alias="content")
     cover_image_url: str | None = Field(default=None, alias="cover_image_url")
     summary: str | None = Field(default=None, alias="summary")
-    tags: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(default=None, alias="tags")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
     title: str | None = Field(default=None, alias="title")
 
 
 class UpdateArticleResponse(SDKModel):
-    article: Annotated[Article | None, BeforeValidator(non_null)] = Field(
+    article: Annotated[Article | None, AfterValidator(non_null)] = Field(
         default=None, alias="article"
     )
 
@@ -4821,10 +4813,10 @@ class UpdateCategoryPreferenceResponse(SDKModel):
 
 
 class UpdateEmailRequest(SDKModel):
-    new_email: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    new_email: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="new_email"
     )
-    verification_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="verification_code"
     )
 
@@ -4833,78 +4825,78 @@ UpdateEmailResponse: TypeAlias = Any
 
 
 class UpdateMemberRoleRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    role: Annotated[OrganizationMemberRole | None, BeforeValidator(non_null)] = Field(
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
         default=None, alias="role"
     )
-    user_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
 
 
 class UpdateMemberRoleResponse(SDKModel):
-    member: Annotated[OrganizationMember | None, BeforeValidator(non_null)] = Field(
+    member: Annotated[OrganizationMember | None, AfterValidator(non_null)] = Field(
         default=None, alias="member"
     )
 
 
 class UpdateOAuthClientRequest(SDKModel):
-    allowed_grant_types: Annotated[list[GrantType] | None, BeforeValidator(non_null)] = Field(
+    allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_grant_types"
     )
-    allowed_identities: Annotated[list[IdentityType] | None, BeforeValidator(non_null)] = Field(
+    allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_identities"
     )
-    allowed_scopes: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="allowed_scopes"
     )
-    app_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="app_id")
-    client_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_id"
     )
-    client_type: Annotated[ClientCredentialType | None, BeforeValidator(non_null)] = Field(
+    client_type: Annotated[ClientCredentialType | None, AfterValidator(non_null)] = Field(
         default=None, alias="client_type"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
-    redirect_uris: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="redirect_uris"
     )
-    status: Annotated[ClientCredentialStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[ClientCredentialStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    update_mask: Annotated[FieldMask | None, BeforeValidator(non_null)] = Field(
+    update_mask: Annotated[FieldMask | None, AfterValidator(non_null)] = Field(
         default=None, alias="update_mask"
     )
 
 
 class UpdateOAuthClientResponse(SDKModel):
-    client: Annotated[OAuthClient | None, BeforeValidator(non_null)] = Field(
+    client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
         default=None, alias="client"
     )
 
 
 class UpdateOrganizationRequest(SDKModel):
-    org_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="org_id")
-    organization: Annotated[Organization | None, BeforeValidator(non_null)] = Field(
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
         default=None, alias="organization"
     )
-    update_mask: Annotated[FieldMask | None, BeforeValidator(non_null)] = Field(
+    update_mask: Annotated[FieldMask | None, AfterValidator(non_null)] = Field(
         default=None, alias="update_mask"
     )
 
 
 class UpdateOrganizationResponse(SDKModel):
-    organization: Annotated[Organization | None, BeforeValidator(non_null)] = Field(
+    organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
         default=None, alias="organization"
     )
 
 
 class UpdatePhoneRequest(SDKModel):
-    new_phone: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    new_phone: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="new_phone"
     )
-    verification_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="verification_code"
     )
 
@@ -4923,7 +4915,7 @@ class UpdateProfileRequest(SDKModel):
 
 
 class UpdateProfileResponse(SDKModel):
-    updated_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="updated_at"
     )
 
@@ -4932,63 +4924,63 @@ class UpdateProjectRequest(SDKModel):
     "UpdateProjectRequest 更新项目字段。使用 optional 语义：\n 未设置的字段不会被修改。"
 
     description: str | None = Field(default=None, alias="description")
-    metadata: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
     name: str | None = Field(default=None, alias="name")
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
     status: ProjectStatus | None = Field(default=None, alias="status")
-    tags: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(default=None, alias="tags")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
 
 
 class UpdateProjectRequestMetadataEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class UpdateProjectResponse(SDKModel):
-    project: Annotated[Project | None, BeforeValidator(non_null)] = Field(
+    project: Annotated[Project | None, AfterValidator(non_null)] = Field(
         default=None, alias="project"
     )
 
 
 class UpdateScopeRequest(SDKModel):
-    category: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    category: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="category"
     )
-    description: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    description: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="description"
     )
-    display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="display_name"
     )
-    is_sensitive: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="is_sensitive"
     )
-    name: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
 
 
 class UpdateScopeResponse(SDKModel):
-    scope: Annotated[Scope | None, BeforeValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
 
 
 class UpdateWebhookRequest(SDKModel):
-    status: Annotated[WebhookStatus | None, BeforeValidator(non_null)] = Field(
+    status: Annotated[WebhookStatus | None, AfterValidator(non_null)] = Field(
         default=None, alias="status"
     )
-    subscribed_events: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="subscribed_events"
     )
-    url: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="url")
-    webhook_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook_id"
     )
 
 
 class UpdateWebhookResponse(SDKModel):
-    webhook: Annotated[Webhook | None, BeforeValidator(non_null)] = Field(
+    webhook: Annotated[Webhook | None, AfterValidator(non_null)] = Field(
         default=None, alias="webhook"
     )
 
@@ -4996,64 +4988,64 @@ class UpdateWebhookResponse(SDKModel):
 class UploadAssetRequest(SDKModel):
     "UploadAssetRequest 直接通过 gRPC 上传小文件（建议 < 4MB）。\n 大文件请使用 GenerateUploadUrl + ConfirmUpload 流程。"
 
-    content_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_type"
     )
-    data: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="data")
-    filename: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    data: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="data")
+    filename: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="filename"
     )
-    metadata: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="metadata"
     )
-    project_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="project_id"
     )
-    wechat_mp_credentials: Annotated[WechatMpCredentials | None, BeforeValidator(non_null)] = Field(
+    wechat_mp_credentials: Annotated[WechatMpCredentials | None, AfterValidator(non_null)] = Field(
         default=None, alias="wechat_mp_credentials"
     )
 
 
 class UploadAssetRequestMetadataEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class UploadAssetResponse(SDKModel):
-    asset: Annotated[Asset | None, BeforeValidator(non_null)] = Field(default=None, alias="asset")
+    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(default=None, alias="asset")
 
 
 class UploadAvatarRequest(SDKModel):
-    content_type: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="content_type"
     )
-    image_data: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    image_data: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="image_data"
     )
 
 
 class UploadAvatarResponse(SDKModel):
-    avatar_url: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    avatar_url: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="avatar_url"
     )
-    expires_at: Annotated[Timestamp | None, BeforeValidator(non_null)] = Field(
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
         default=None, alias="expires_at"
     )
-    media_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="media_id"
     )
-    variant_urls: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    variant_urls: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="variant_urls"
     )
 
 
 class UploadAvatarResponseVariantUrlsEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class VerifyEmailRequest(SDKModel):
-    verification_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="verification_code"
     )
 
@@ -5062,7 +5054,7 @@ VerifyEmailResponse: TypeAlias = Any
 
 
 class VerifyPhoneRequest(SDKModel):
-    verification_code: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="verification_code"
     )
 
@@ -5073,27 +5065,27 @@ VerifyPhoneResponse: TypeAlias = Any
 class VerifyPlatformAccountRequest(SDKModel):
     "VerifyPlatformAccountRequest 验证平台账号凭证是否有效。\n 用于在正式发布前检查凭证可用性，例如验证微信公众号的 appid/appsecret。"
 
-    credentials: Annotated[dict[str, str] | None, BeforeValidator(non_null)] = Field(
+    credentials: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="credentials"
     )
-    platform: Annotated[Platform | None, BeforeValidator(non_null)] = Field(
+    platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
         default=None, alias="platform"
     )
 
 
 class VerifyPlatformAccountRequestCredentialsEntry(SDKModel):
-    key: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
 
 
 class VerifyPlatformAccountResponse(SDKModel):
-    display_name: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="display_name"
     )
-    error_message: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="error_message"
     )
-    valid: Annotated[bool | None, BeforeValidator(non_null)] = Field(default=None, alias="valid")
+    valid: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="valid")
 
 
 class VersionsRestorePageVersionBody(SDKModel):
@@ -5105,12 +5097,12 @@ class VersionsRestorePageVersionBody(SDKModel):
 class WechatMpConfig(SDKModel):
     'WechatMpConfig 微信公众号发布配置。\n 对应微信公众平台"新建图文消息"的参数。'
 
-    author: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="author")
-    digest: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="digest")
-    need_open_comment: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    author: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="author")
+    digest: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="digest")
+    need_open_comment: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="need_open_comment"
     )
-    show_cover_pic: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    show_cover_pic: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="show_cover_pic"
     )
 
@@ -5118,19 +5110,19 @@ class WechatMpConfig(SDKModel):
 class YuqueConfig(SDKModel):
     "YuqueConfig 语雀发布配置。\n 文章将发布到指定的语雀知识库。"
 
-    book_id: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="book_id")
-    public_access: Annotated[bool | None, BeforeValidator(non_null)] = Field(
+    book_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="book_id")
+    public_access: Annotated[bool | None, AfterValidator(non_null)] = Field(
         default=None, alias="public_access"
     )
-    slug: Annotated[str | None, BeforeValidator(non_null)] = Field(default=None, alias="slug")
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
 
 
 class ZhihuConfig(SDKModel):
     "ZhihuConfig 知乎发布配置。\n 文章将发布到指定的知乎专栏。"
 
-    column_id: Annotated[str | None, BeforeValidator(non_null)] = Field(
+    column_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="column_id"
     )
-    topic_ids: Annotated[list[str] | None, BeforeValidator(non_null)] = Field(
+    topic_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
         default=None, alias="topic_ids"
     )

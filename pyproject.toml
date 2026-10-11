@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "appforges"
-version = "0.59.2"
+version = "0.59.3"
 description = "Official AppForges Python SDK, generated from the OpenAPI specification."
 readme = "README.md"
 requires-python = ">=3.11"
