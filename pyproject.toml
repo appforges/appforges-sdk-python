@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "appforges"
+version = "0.59.2"
+description = "Official AppForges Python SDK, generated from the OpenAPI specification."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = ["httpx>=0.28,<1", "pydantic>=2.10,<3"]
+classifiers = ["Programming Language :: Python :: 3", "Typing :: Typed"]
+
+[project.urls]
+Homepage = "https://developer.appforges.com"
+Repository = "https://github.com/appforges/appforges-sdk-python"
+Generator = "https://github.com/appforges/sdk-gen"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/appforges"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "LICENSE", "pyproject.toml", "sdk-manifest.json"]
