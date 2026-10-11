@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "appforges"
-version = "0.59.3"
+version = "0.59.4"
 description = "Official AppForges Python SDK, generated from the OpenAPI specification."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -22,4 +22,4 @@ Generator = "https://github.com/appforges/sdk-gen"
 packages = ["src/appforges"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "README.md", "LICENSE", "pyproject.toml", "sdk-manifest.json"]
+include = ["src", "README.md", "CHANGELOG.md", "LICENSE", "pyproject.toml", "sdk-manifest.json"]

@@ -23,34 +23,54 @@ class APIKey(SDKModel):
     "APIKey represents a developer's API key credential."
 
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None, alias="expires_at", description="Zero value = never expires"
     )
-    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key_id")
+    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key_id", description=""
+    )
     key_prefix: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="key_prefix"
+        default=None,
+        alias="key_prefix",
+        description='First 8 chars for identification, e.g. "ak_live_"',
     )
     last_used_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="last_used_at"
+        default=None,
+        alias="last_used_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description='Human-readable label, e.g. "Production Key"'
+    )
     rate_limit: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="rate_limit"
+        default=None, alias="rate_limit", description="Requests per minute; 0 = platform default"
     )
     status: Annotated[APIKeyStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="APIKeyStatus represents the lifecycle state of an API key.",
     )
 
 
 class AbortUploadRequest(SDKModel):
-    upload_id: str = Field(default=..., alias="upload_id")
-    user_id: str = Field(default=..., alias="user_id")
+    upload_id: str = Field(
+        default=..., alias="upload_id", description="Required. Unfinished upload session to abort."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 CostPurpose: TypeAlias = Literal[
@@ -77,11 +97,31 @@ CostSettlementStatus: TypeAlias = Literal[
 class StorageStatementSnapshot(SDKModel):
     "StorageStatementSnapshot is the immutable metering statement projected into\n a storage-period or storage-adjustment cost summary."
 
-    base_statement_digest: str | None = Field(default=None, alias="base_statement_digest")
-    correction_batch_id: str | None = Field(default=None, alias="correction_batch_id")
-    statement_digest: str = Field(default=..., alias="statement_digest")
-    usage_byte_seconds: str = Field(default=..., alias="usage_byte_seconds")
-    usage_byte_seconds_delta: str | None = Field(default=None, alias="usage_byte_seconds_delta")
+    base_statement_digest: str | None = Field(
+        default=None,
+        alias="base_statement_digest",
+        description="(OPTIONAL) Conditional. Required for STORAGE_ADJUSTMENT and identifies the base statement.",
+    )
+    correction_batch_id: str | None = Field(
+        default=None,
+        alias="correction_batch_id",
+        description="(OPTIONAL) Conditional. Required for STORAGE_ADJUSTMENT and identifies the correction batch.",
+    )
+    statement_digest: str = Field(
+        default=...,
+        alias="statement_digest",
+        description="Required. SHA-256 of the canonical period, pricing, and metering statement.",
+    )
+    usage_byte_seconds: str = Field(
+        default=...,
+        alias="usage_byte_seconds",
+        description="Required. Total byte-seconds in this statement period.",
+    )
+    usage_byte_seconds_delta: str | None = Field(
+        default=None,
+        alias="usage_byte_seconds_delta",
+        description="(OPTIONAL) Conditional. Required for STORAGE_ADJUSTMENT; signed byte-second delta.",
+    )
 
 
 CostComponent: TypeAlias = Literal[
@@ -103,49 +143,141 @@ CostLedgerEntryType: TypeAlias = Literal[
 class CostLedgerEntryRef(SDKModel):
     "CostLedgerEntryRef is a safe reference to an immutable wallet ledger entry."
 
-    component: CostComponent = Field(default=..., alias="component")
-    credit_delta: str = Field(default=..., alias="credit_delta")
-    entry_type: CostLedgerEntryType = Field(default=..., alias="entry_type")
-    occurred_at: Timestamp = Field(default=..., alias="occurred_at")
-    purpose: CostPurpose = Field(default=..., alias="purpose")
-    wallet_ledger_entry_id: str = Field(default=..., alias="wallet_ledger_entry_id")
+    component: CostComponent = Field(
+        default=...,
+        alias="component",
+        description="Required. Metered component represented by this entry.",
+    )
+    credit_delta: str = Field(
+        default=...,
+        alias="credit_delta",
+        description="Required. Signed effect on user net consumption; compensation is negative.",
+    )
+    entry_type: CostLedgerEntryType = Field(
+        default=..., alias="entry_type", description="Required. Consume or compensation entry type."
+    )
+    occurred_at: Timestamp = Field(
+        default=..., alias="occurred_at", description="Required. Wallet ledger occurrence time."
+    )
+    purpose: CostPurpose = Field(
+        default=...,
+        alias="purpose",
+        description="Required. Purpose inherited from the enclosing cost summary.",
+    )
+    wallet_ledger_entry_id: str = Field(
+        default=...,
+        alias="wallet_ledger_entry_id",
+        description="Required. Opaque wallet ledger entry identifier.",
+    )
 
 
 class CostSummary(SDKModel):
     "CostSummary is the user-visible, reconciled estimate and settlement summary.\n It deliberately excludes physical model names, provider keys, request IDs,\n internal rate keys, and billing operation identifiers."
 
-    actual_ai_credit: str | None = Field(default=None, alias="actual_ai_credit")
-    actual_file_credit: str | None = Field(default=None, alias="actual_file_credit")
-    actual_tool_credit: str | None = Field(default=None, alias="actual_tool_credit")
-    actual_total_credit: str | None = Field(default=None, alias="actual_total_credit")
-    authorized_limit_exceeded: bool | None = Field(default=None, alias="authorized_limit_exceeded")
-    authorized_max_credit: str | None = Field(default=None, alias="authorized_max_credit")
-    estimated_ai_credit: str = Field(default=..., alias="estimated_ai_credit")
-    estimated_file_credit: str = Field(default=..., alias="estimated_file_credit")
-    estimated_tool_credit: str = Field(default=..., alias="estimated_tool_credit")
-    estimated_total_credit: str = Field(default=..., alias="estimated_total_credit")
-    net_adjustment_credit: str | None = Field(default=None, alias="net_adjustment_credit")
+    actual_ai_credit: str | None = Field(
+        default=None,
+        alias="actual_ai_credit",
+        description="(OPTIONAL) Conditional. Required in SETTLED or RELEASED.",
+    )
+    actual_file_credit: str | None = Field(
+        default=None,
+        alias="actual_file_credit",
+        description="(OPTIONAL) Conditional. Required in SETTLED or RELEASED.",
+    )
+    actual_tool_credit: str | None = Field(
+        default=None,
+        alias="actual_tool_credit",
+        description="(OPTIONAL) Conditional. Required in SETTLED or RELEASED; zero in the current release.",
+    )
+    actual_total_credit: str | None = Field(
+        default=None,
+        alias="actual_total_credit",
+        description="(OPTIONAL) Conditional. Required in SETTLED or RELEASED; sum of actual components.",
+    )
+    authorized_limit_exceeded: bool | None = Field(
+        default=None,
+        alias="authorized_limit_exceeded",
+        description="(OPTIONAL) Conditional. Required whenever authorized_max_credit is present.",
+    )
+    authorized_max_credit: str | None = Field(
+        default=None,
+        alias="authorized_max_credit",
+        description="(OPTIONAL) Conditional. Required for user-confirmed paid operations.",
+    )
+    estimated_ai_credit: str = Field(
+        default=...,
+        alias="estimated_ai_credit",
+        description="Required. Public AI estimate; zero when not applicable.",
+    )
+    estimated_file_credit: str = Field(
+        default=...,
+        alias="estimated_file_credit",
+        description="Required. Public file-service estimate; zero when not applicable.",
+    )
+    estimated_tool_credit: str = Field(
+        default=...,
+        alias="estimated_tool_credit",
+        description="Required. Future-reserved tool estimate; zero in the current release.",
+    )
+    estimated_total_credit: str = Field(
+        default=...,
+        alias="estimated_total_credit",
+        description="Required. Sum of all public estimated components.",
+    )
+    net_adjustment_credit: str | None = Field(
+        default=None,
+        alias="net_adjustment_credit",
+        description="(OPTIONAL) Conditional. Required only for STORAGE_ADJUSTMENT; signed net adjustment.",
+    )
     period_end: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="period_end"
+        default=None,
+        alias="period_end",
+        description="(OPTIONAL) Conditional. Required for STORAGE_PERIOD or STORAGE_ADJUSTMENT.",
     )
     period_start: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="period_start"
+        default=None,
+        alias="period_start",
+        description="(OPTIONAL) Conditional. Required for STORAGE_PERIOD or STORAGE_ADJUSTMENT.",
     )
-    pricing_version: str = Field(default=..., alias="pricing_version")
-    purpose: CostPurpose = Field(default=..., alias="purpose")
+    pricing_version: str = Field(
+        default=...,
+        alias="pricing_version",
+        description="Required. Public pricing contract version.",
+    )
+    purpose: CostPurpose = Field(
+        default=..., alias="purpose", description="Required. User-visible operation purpose."
+    )
     released_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="released_at"
+        default=None,
+        alias="released_at",
+        description="(OPTIONAL) Conditional. Required only when settlement_status is RELEASED.",
     )
     settled_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="settled_at"
+        default=None,
+        alias="settled_at",
+        description="(OPTIONAL) Conditional. Required only when settlement_status is SETTLED.",
     )
-    settlement_status: CostSettlementStatus = Field(default=..., alias="settlement_status")
+    settlement_status: CostSettlementStatus = Field(
+        default=...,
+        alias="settlement_status",
+        description="Required. Aggregate settlement lifecycle.",
+    )
     storage_statement: Annotated[StorageStatementSnapshot | None, AfterValidator(non_null)] = Field(
-        default=None, alias="storage_statement"
+        default=None,
+        alias="storage_statement",
+        description="(OPTIONAL) Conditional. Required for STORAGE_PERIOD or STORAGE_ADJUSTMENT.",
     )
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time this aggregate summary last changed.",
+    )
     wallet_ledger_entries: Annotated[list[CostLedgerEntryRef] | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="wallet_ledger_entries")
+        Field(
+            default=None,
+            alias="wallet_ledger_entries",
+            description="(OPTIONAL) Conditional. Required in SETTLED or RELEASED; may be an empty list.",
+        )
     )
 
 
@@ -166,32 +298,96 @@ UploadStatus: TypeAlias = Literal[
 class UploadedPart(SDKModel):
     "UploadedPart is one authoritative part confirmed by object storage and\n persisted into the upload session."
 
-    etag: str = Field(default=..., alias="etag")
-    part_number: int = Field(default=..., alias="part_number")
-    size_bytes: str = Field(default=..., alias="size_bytes")
+    etag: str = Field(
+        default=..., alias="etag", description="Required. Provider ETag preserved byte-for-byte."
+    )
+    part_number: int = Field(
+        default=..., alias="part_number", description="Required. Multipart part number."
+    )
+    size_bytes: str = Field(
+        default=...,
+        alias="size_bytes",
+        description="Required. Actual part size confirmed by object storage.",
+    )
 
 
 class UploadSession(SDKModel):
     "UploadSession is the durable, resumable public multipart fact. It excludes\n provider upload identifiers, object-storage keys, and credentials."
 
-    cost_summary: CostSummary = Field(default=..., alias="cost_summary")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    declared_media_type: str = Field(default=..., alias="declared_media_type")
-    declared_sha256: str = Field(default=..., alias="declared_sha256")
-    declared_size_bytes: str = Field(default=..., alias="declared_size_bytes")
-    display_name: str = Field(default=..., alias="display_name")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    failure_reason: str | None = Field(default=None, alias="failure_reason")
-    material_id: str | None = Field(default=None, alias="material_id")
-    part_count: int | None = Field(default=None, alias="part_count")
-    part_size_bytes: str | None = Field(default=None, alias="part_size_bytes")
-    status: UploadStatus = Field(default=..., alias="status")
-    upload_id: str = Field(default=..., alias="upload_id")
-    uploaded_parts: list[UploadedPart] = Field(default=..., alias="uploaded_parts")
+    cost_summary: CostSummary = Field(
+        default=...,
+        alias="cost_summary",
+        description="Required. FILE_UPLOAD estimate, authorization, and settlement summary.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Durable session creation time."
+    )
+    declared_media_type: str = Field(
+        default=...,
+        alias="declared_media_type",
+        description="Required. Declared MIME copied from the immutable estimate item.",
+    )
+    declared_sha256: str = Field(
+        default=...,
+        alias="declared_sha256",
+        description="Required. Declared complete-file SHA-256 copied from the estimate item.",
+    )
+    declared_size_bytes: str = Field(
+        default=...,
+        alias="declared_size_bytes",
+        description="Required. Declared bytes copied from the immutable estimate item.",
+    )
+    display_name: str = Field(
+        default=...,
+        alias="display_name",
+        description="Required. Sanitized display name copied from the immutable estimate item.",
+    )
+    expires_at: Timestamp = Field(
+        default=...,
+        alias="expires_at",
+        description="Required. Expiry time for an unfinished session.",
+    )
+    failure_reason: str | None = Field(
+        default=None,
+        alias="failure_reason",
+        description="(OPTIONAL) Conditional. Required in REJECTED or FAILED; stable and provider-safe.",
+    )
+    material_id: str | None = Field(
+        default=None,
+        alias="material_id",
+        description="(OPTIONAL) Conditional. Required in COMPLETED and absent in other states.",
+    )
+    part_count: int | None = Field(
+        default=None,
+        alias="part_count",
+        description="(OPTIONAL) Conditional. Present with part_size_bytes after the multipart plan is established.",
+    )
+    part_size_bytes: str | None = Field(
+        default=None,
+        alias="part_size_bytes",
+        description="(OPTIONAL) Conditional. Present with part_count after the multipart plan is established.",
+    )
+    status: UploadStatus = Field(
+        default=..., alias="status", description="Required. Current public upload lifecycle."
+    )
+    upload_id: str = Field(
+        default=...,
+        alias="upload_id",
+        description="Required. Opaque PinPage upload session identifier.",
+    )
+    uploaded_parts: list[UploadedPart] = Field(
+        default=...,
+        alias="uploaded_parts",
+        description="Required. Authoritative persisted parts; an empty list before any upload.",
+    )
 
 
 class AbortUploadResponse(SDKModel):
-    upload: UploadSession = Field(default=..., alias="upload")
+    upload: UploadSession = Field(
+        default=...,
+        alias="upload",
+        description="Required. Durable upload session in the ABORTED state.",
+    )
 
 
 AccountStorageProtectionReason: TypeAlias = Literal[
@@ -218,18 +414,36 @@ class AccountStorageProtection(SDKModel):
     "AccountStorageProtection is the authoritative user-scoped singleton that\n tells clients whether hosted content remains protected."
 
     cost_summary: Annotated[CostSummary | None, AfterValidator(non_null)] = Field(
-        default=None, alias="cost_summary"
+        default=None,
+        alias="cost_summary",
+        description="(OPTIONAL) Conditional. Present when a current settled storage fact exists.",
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description="(OPTIONAL) Conditional. Required in PROTECTED or EXPIRY_CLEANUP.",
     )
-    last_checked_at: Timestamp = Field(default=..., alias="last_checked_at")
+    last_checked_at: Timestamp = Field(
+        default=...,
+        alias="last_checked_at",
+        description="Required. Time the server last recalculated the state from billing facts.",
+    )
     protected_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="protected_at"
+        default=None,
+        alias="protected_at",
+        description="(OPTIONAL) Conditional. Required in PROTECTED or EXPIRY_CLEANUP.",
     )
-    reason: AccountStorageProtectionReason = Field(default=..., alias="reason")
-    remaining_seconds: str = Field(default=..., alias="remaining_seconds")
-    state: AccountStorageProtectionState = Field(default=..., alias="state")
+    reason: AccountStorageProtectionReason = Field(
+        default=..., alias="reason", description="Required. Stable reason for the current state."
+    )
+    remaining_seconds: str = Field(
+        default=...,
+        alias="remaining_seconds",
+        description="Required. Server-computed nonnegative seconds; zero outside PROTECTED.",
+    )
+    state: AccountStorageProtectionState = Field(
+        default=..., alias="state", description="Required. Persisted storage protection state."
+    )
 
 
 OrganizationMemberRole: TypeAlias = Literal[
@@ -241,11 +455,17 @@ OrganizationMemberRole: TypeAlias = Literal[
 
 
 class AddMemberRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
-    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
-        default=None, alias="role"
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="role",
+        description="Required. Role to assign. OWNER is rejected here (use ownership\n transfer flow); admin / member are accepted.",
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description="Required. The user being invited."
+    )
 
 
 OrganizationMemberStatus: TypeAlias = Literal[
@@ -260,27 +480,43 @@ class OrganizationMember(SDKModel):
     "OrganizationMember is a (org, user) edge with a role and lifecycle status.\n\n The role taxonomy (owner / admin / member) is the SAME WORDS as the\n application-level membership role surfaced by the developer center;\n the two live at different scopes and do not transitively grant each\n other."
 
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     invited_by: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="invited_by"
+        default=None,
+        alias="invited_by",
+        description="user_id of the inviter (empty for the initial owner)",
     )
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
+    )
     role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
-        default=None, alias="role"
+        default=None,
+        alias="role",
+        description="OrganizationMemberRole governs the actions a member may take within the\n organization. Authorization decisions are delegated to AuthZService.Check;\n these values are the canonical role identifiers stored on the row.",
     )
     status: Annotated[OrganizationMemberStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="OrganizationMemberStatus tracks the state of a membership edge.",
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
 
 
 class AddMemberResponse(SDKModel):
     member: Annotated[OrganizationMember | None, AfterValidator(non_null)] = Field(
-        default=None, alias="member"
+        default=None,
+        alias="member",
+        description="OrganizationMember is a (org, user) edge with a role and lifecycle status.\n\n The role taxonomy (owner / admin / member) is the SAME WORDS as the\n application-level membership role surfaced by the developer center;\n the two live at different scopes and do not transitively grant each\n other.",
     )
 
 
@@ -288,10 +524,10 @@ class AppforgesCommonV1PaginationRequest(SDKModel):
     "Pagination request parameters."
 
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
@@ -299,10 +535,10 @@ class AppforgesCommonV1PaginationResponse(SDKModel):
     "Pagination response metadata."
 
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
@@ -324,23 +560,57 @@ ApplicationType: TypeAlias = Literal[
 
 
 class ApplyCategoryOrganizationRequest(SDKModel):
-    billing_intent_id: str = Field(default=..., alias="billing_intent_id")
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    organization_job_id: str = Field(default=..., alias="organization_job_id")
-    user_id: str = Field(default=..., alias="user_id")
+    billing_intent_id: str = Field(
+        default=...,
+        alias="billing_intent_id",
+        description="Required. Settled billing intent belonging to the organization job.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimate_id",
+        description="Required. Estimate consumed by the organization job.",
+    )
+    organization_job_id: str = Field(
+        default=...,
+        alias="organization_job_id",
+        description="Required. Successful, unexpired organization job.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class CategoryOrganizationApplyResult(SDKModel):
     "CategoryOrganizationApplyResult confirms application of a previously\n settled preview without a second charge."
 
-    applied_at: Timestamp = Field(default=..., alias="applied_at")
-    applied_change_count: int = Field(default=..., alias="applied_change_count")
-    cost_summary: CostSummary = Field(default=..., alias="cost_summary")
-    tree_etag: str = Field(default=..., alias="tree_etag")
+    applied_at: Timestamp = Field(
+        default=..., alias="applied_at", description="Required. Time application committed."
+    )
+    applied_change_count: int = Field(
+        default=...,
+        alias="applied_change_count",
+        description="Required. Number of concrete changes applied.",
+    )
+    cost_summary: CostSummary = Field(
+        default=...,
+        alias="cost_summary",
+        description="Required. Same reconciled cost summary returned by the preview.",
+    )
+    tree_etag: str = Field(
+        default=...,
+        alias="tree_etag",
+        description="Required. Category tree version after application.",
+    )
 
 
 class ApplyCategoryOrganizationResponse(SDKModel):
-    apply_result: CategoryOrganizationApplyResult = Field(default=..., alias="apply_result")
+    apply_result: CategoryOrganizationApplyResult = Field(
+        default=...,
+        alias="apply_result",
+        description="Required. Applied change count, tree revision, cost, and commit time.",
+    )
 
 
 ContentFormat: TypeAlias = Literal[
@@ -352,26 +622,38 @@ class Article(SDKModel):
     "Article represents a piece of text content (article, post, etc.).\n Article 是图文创作的核心实体，同一篇文章可能同时存在 Markdown 和 HTML 两个版本。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="文章唯一标识。"
     )
-    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="content", description="文章正文，格式由 format 字段决定。"
+    )
     cover_image_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="cover_image_url"
+        default=None, alias="cover_image_url", description="封面图 URL。"
     )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     format: Annotated[ContentFormat | None, AfterValidator(non_null)] = Field(
-        default=None, alias="format"
+        default=None, alias="format", description="正文格式（Markdown 或 HTML）。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
-    summary: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="summary")
-    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
-    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    summary: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="summary", description="文章摘要，用于发布时的描述和 SEO。"
+    )
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="tags", description="文章标签，用于分类和检索。"
+    )
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="title", description="文章标题。"
+    )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
@@ -388,89 +670,119 @@ class Asset(SDKModel):
     "Asset represents an uploaded media resource.\n 素材可被文章引用、视频合成使用，生命周期跟随所属项目。"
 
     asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_id"
+        default=None, alias="asset_id", description="素材唯一标识。"
     )
     content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_type"
+        default=None, alias="content_type", description='MIME 类型，例如 "image/png"、"video/mp4"。'
     )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     duration_seconds: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="duration_seconds"
+        default=None, alias="duration_seconds", description="时长（秒），仅视频和音频有效。"
     )
     filename: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="filename"
+        default=None, alias="filename", description="原始文件名。"
     )
-    height: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="height")
+    height: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="height", description="高度（像素），仅图片和视频有效。"
+    )
     metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None, alias="metadata", description="扩展元数据，例如 EXIF 信息、编码参数等。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
     size_bytes: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="size_bytes"
+        default=None, alias="size_bytes", description="文件大小（字节）。"
     )
-    type_: Annotated[AssetType | None, AfterValidator(non_null)] = Field(default=None, alias="type")
-    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
-    width: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="width")
+    type_: Annotated[AssetType | None, AfterValidator(non_null)] = Field(
+        default=None, alias="type", description="素材类型。"
+    )
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="url", description="素材访问 URL（CDN 地址）。"
+    )
+    width: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="width", description="宽度（像素），仅图片和视频有效。"
+    )
 
 
 class AssetMetadataEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class AuthorizeRequest(SDKModel):
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_challenge"
+        default=None, alias="code_challenge", description="PKCE: base64url(SHA256(code_verifier))"
     )
     code_challenge_method: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_challenge_method"
+        default=None, alias="code_challenge_method", description='"S256"'
     )
-    nonce: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="nonce")
+    nonce: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="nonce",
+        description='OIDC nonce (Core 1.0 §3.1.2.1). Optional. 标准路径：客户端在\n /authorize 请求带 nonce → IAM 随授权码持久化 → 交换 token 时回灌进\n id_token 的 nonce claim。BFF 只需 verbatim 透传本字段，不解析、不\n 生成。TokenRequest.nonce (= 9) 保留为旧客户端兼容兜底：交换时若授权\n 码上已存有 nonce 则优先用存储值。仅当 scope 包含 "openid" 时有意义。',
+    )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None, alias="redirect_uri", description=""
     )
     response_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="response_type"
+        default=None, alias="response_type", description='"code"'
     )
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
-    state: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="state")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description="Space-delimited scopes"
+    )
+    state: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="state", description="CSRF protection"
+    )
 
 
 class AuthorizeResponse(SDKModel):
     authorization_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="authorization_code"
+        default=None, alias="authorization_code", description=""
     )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None, alias="redirect_uri", description="Full redirect URI with code and state"
     )
-    state: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="state")
+    state: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="state", description=""
+    )
 
 
 class AuthorizedApplication(SDKModel):
     "AuthorizedApplication represents an application the user has granted access to."
 
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_name"
+        default=None, alias="app_name", description=""
     )
     authorized_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="authorized_at"
+        default=None,
+        alias="authorized_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     granted_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="granted_scopes"
+        default=None, alias="granted_scopes", description=""
     )
     last_used_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="last_used_at"
+        default=None,
+        alias="last_used_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="logo_url"
+        default=None, alias="logo_url", description=""
     )
 
 
@@ -484,16 +796,22 @@ AvatarRetirementState: TypeAlias = Literal[
 
 class AvatarRetirement(SDKModel):
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None, alias="media_id", description=""
     )
     operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="operation_id"
+        default=None,
+        alias="operation_id",
+        description="Immutable non-empty caller operation identifier; reused across process restarts.",
     )
     state: Annotated[AvatarRetirementState | None, AfterValidator(non_null)] = Field(
-        default=None, alias="state"
+        default=None,
+        alias="state",
+        description="--- Avatar retirement (INTERNAL) ---\n Persistent deletion fence, not a lease. Neither timeouts nor retries release it.",
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
@@ -513,13 +831,17 @@ class BatchPublishTarget(SDKModel):
     "BatchPublishTarget 批量发布中的单个目标平台配置。"
 
     account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="account_id"
+        default=None, alias="account_id", description=""
     )
     platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform"
+        default=None,
+        alias="platform",
+        description="Platform indicates the target publishing platform.\n 新增平台时，在此枚举追加值，并在 publish.proto 中添加对应的 XxxConfig 消息。",
     )
     platform_config: Annotated[PlatformConfig | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform_config"
+        default=None,
+        alias="platform_config",
+        description="PlatformConfig 封装各平台的发布配置。\n 使用 oneof 确保每次发布只携带一个平台的配置。",
     )
 
 
@@ -527,10 +849,12 @@ class BatchPublishArticleRequest(SDKModel):
     "BatchPublishArticleRequest 将一篇文章同时发布到多个平台。\n 每个 target 独立执行，互不影响（部分平台失败不影响其他平台）。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="要发布的文章 ID。"
     )
     targets: Annotated[list[BatchPublishTarget] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="targets"
+        default=None,
+        alias="targets",
+        description="目标平台列表，每个 target 包含平台、配置和账号。",
     )
 
 
@@ -547,43 +871,49 @@ class PublishRecord(SDKModel):
     "PublishRecord records a single publish attempt to a platform.\n 每次发布操作（无论成功或失败）都会产生一条记录，支持追溯和重试。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="关联的文章 ID。"
     )
     error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="error_message"
+        default=None, alias="error_message", description="发布失败原因。"
     )
     platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform"
+        default=None, alias="platform", description="目标发布平台。"
     )
     platform_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform_url"
+        default=None, alias="platform_url", description="发布成功后的文章链接（平台侧 URL）。"
     )
     published_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="published_at"
+        default=None,
+        alias="published_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     record_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="record_id"
+        default=None, alias="record_id", description="发布记录唯一标识。"
     )
     status: Annotated[PublishStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None, alias="status", description="发布状态。"
     )
 
 
 class BatchPublishArticleResponse(SDKModel):
     records: Annotated[list[PublishRecord] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="records"
+        default=None, alias="records", description="每个目标平台对应一条发布记录。"
     )
 
 
 class BatchValidateAvatarMediaIDsRequest(SDKModel):
     media_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_ids"
+        default=None,
+        alias="media_ids",
+        description="Up to ~1000 media_ids per request. SweepOrphans paginates upstream\n via keyset cursor; this stays well under typical gRPC body limits.",
     )
 
 
 class BatchValidateAvatarMediaIDsResponse(SDKModel):
     in_use_media_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="in_use_media_ids"
+        default=None,
+        alias="in_use_media_ids",
+        description="Subset of input media_ids that are still referenced by at least one\n user's avatar column. Order is unspecified; absence implies orphan.",
     )
 
 
@@ -591,13 +921,13 @@ class BindPlatformAccountRequest(SDKModel):
     "BindPlatformAccountRequest 通过 OAuth 授权码绑定平台账号。\n 典型流程：前端引导用户完成 OAuth 授权 → 获取 auth_code → 调用此接口完成绑定。"
 
     auth_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="auth_code"
+        default=None, alias="auth_code", description="OAuth 授权码。"
     )
     platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform"
+        default=None, alias="platform", description="要绑定的平台。"
     )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None, alias="redirect_uri", description="OAuth 回调地址。"
     )
 
 
@@ -605,35 +935,39 @@ class PlatformAccount(SDKModel):
     "PlatformAccount stores the binding info for a publishing platform account.\n 用户通过 OAuth 授权绑定平台账号后，后续发布操作使用该账号的凭据。"
 
     account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="account_id"
+        default=None, alias="account_id", description="账号绑定记录唯一标识。"
     )
     authorized_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="authorized_at"
+        default=None, alias="authorized_at", description="OAuth 授权时间。"
     )
     display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="display_name"
+        default=None,
+        alias="display_name",
+        description="平台账号显示名称（如公众号名称、知乎用户名）。",
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None, alias="expires_at", description="授权过期时间，过期后需重新授权。"
     )
     is_active: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_active"
+        default=None, alias="is_active", description="账号是否可用（授权未过期且未被解绑）。"
     )
     platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform"
+        default=None, alias="platform", description="绑定的平台。"
     )
 
 
 class BindPlatformAccountResponse(SDKModel):
     account: Annotated[PlatformAccount | None, AfterValidator(non_null)] = Field(
-        default=None, alias="account"
+        default=None, alias="account", description="绑定成功的平台账号信息。"
     )
 
 
 class CancelVideoTaskRequest(SDKModel):
     "CancelVideoTaskRequest 取消正在执行的视频生成任务。\n 仅 PENDING / GENERATING_SCRIPT / GENERATING_ASSETS / COMPOSITING 状态的任务可取消。"
 
-    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="task_id", description=""
+    )
 
 
 VideoStatus: TypeAlias = Literal[
@@ -660,55 +994,93 @@ class VideoTask(SDKModel):
     "VideoTask represents a video generation job.\n 视频生成是异步任务，客户端提交后通过轮询 GetVideoTask 获取进度。"
 
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     duration_seconds: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="duration_seconds"
+        default=None, alias="duration_seconds", description="视频时长（秒）。"
     )
     error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="error_message"
+        default=None, alias="error_message", description="失败原因，status=FAILED 时填充。"
     )
     progress_percent: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="progress_percent"
+        default=None, alias="progress_percent", description="生成进度百分比（0-100）。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
-    script: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="script")
+    script: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="script", description="LLM 生成的视频脚本。"
+    )
     status: Annotated[VideoStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None, alias="status", description="当前任务状态。"
     )
     style: Annotated[VideoStyle | None, AfterValidator(non_null)] = Field(
-        default=None, alias="style"
+        default=None, alias="style", description="视频风格。"
     )
-    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="task_id", description="任务唯一标识。"
+    )
     thumbnail_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="thumbnail_url"
+        default=None, alias="thumbnail_url", description="视频缩略图 URL。"
     )
-    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="title", description="视频标题。"
+    )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     video_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="video_url"
+        default=None, alias="video_url", description="最终视频 URL，status=COMPLETED 时可用。"
     )
 
 
 class CancelVideoTaskResponse(SDKModel):
-    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(
+        default=None, alias="task", description="取消后的任务状态。"
+    )
 
 
 class Category(SDKModel):
     "Category is one user-owned node in the PinPage category tree."
 
-    category_id: str = Field(default=..., alias="category_id")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    direct_child_count: int = Field(default=..., alias="direct_child_count")
-    direct_page_count: int = Field(default=..., alias="direct_page_count")
-    etag: str = Field(default=..., alias="etag")
-    name: str = Field(default=..., alias="name")
-    parent_category_id: str | None = Field(default=None, alias="parent_category_id")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    category_id: str = Field(
+        default=..., alias="category_id", description="Required. Opaque category identifier."
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Category creation time."
+    )
+    direct_child_count: int = Field(
+        default=...,
+        alias="direct_child_count",
+        description="Required. Number of direct child categories.",
+    )
+    direct_page_count: int = Field(
+        default=...,
+        alias="direct_page_count",
+        description="Required. Number of pages directly assigned to this category.",
+    )
+    etag: str = Field(
+        default=..., alias="etag", description="Required. Optimistic concurrency validator."
+    )
+    name: str = Field(
+        default=...,
+        alias="name",
+        description="Required. User-visible name, unique within the current parent.",
+    )
+    parent_category_id: str | None = Field(
+        default=None,
+        alias="parent_category_id",
+        description="(OPTIONAL) Optional. Direct parent category; absent for a root category.",
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time category metadata last changed.",
+    )
 
 
 CategoryChangeType: TypeAlias = Literal[
@@ -725,110 +1097,342 @@ CategoryChangeType: TypeAlias = Literal[
 class CategoryChange(SDKModel):
     "CategoryChange is one safe, concrete change proposed by a category\n organization preview."
 
-    category_id: str | None = Field(default=None, alias="category_id")
-    change_type: CategoryChangeType = Field(default=..., alias="change_type")
-    page_id: str | None = Field(default=None, alias="page_id")
-    summary: str = Field(default=..., alias="summary")
-    target_category_id: str | None = Field(default=None, alias="target_category_id")
+    category_id: str | None = Field(
+        default=None,
+        alias="category_id",
+        description="(OPTIONAL) Optional. Existing category involved in this change.",
+    )
+    change_type: CategoryChangeType = Field(
+        default=...,
+        alias="change_type",
+        description="Required. Closed change kind; non-empty categories and pages are never deleted.",
+    )
+    page_id: str | None = Field(
+        default=None,
+        alias="page_id",
+        description="(OPTIONAL) Optional. Page involved in a MOVE_PAGE change.",
+    )
+    summary: str = Field(
+        default=..., alias="summary", description="Required. User-understandable change summary."
+    )
+    target_category_id: str | None = Field(
+        default=None,
+        alias="target_category_id",
+        description="(OPTIONAL) Optional. Destination category when the change has one.",
+    )
 
 
 class CategoryDeletionTarget(SDKModel):
     "CategoryDeletionTarget is one exact category node included in a signed\n category-deletion preview."
 
-    category_id: str = Field(default=..., alias="category_id")
-    etag: str = Field(default=..., alias="etag")
-    name: str = Field(default=..., alias="name")
+    category_id: str = Field(
+        default=...,
+        alias="category_id",
+        description="Required. Opaque category identifier to delete.",
+    )
+    etag: str = Field(
+        default=...,
+        alias="etag",
+        description="Required. Category revision incorporated into the impact fingerprint.",
+    )
+    name: str = Field(
+        default=...,
+        alias="name",
+        description="Required. Current user-visible name shown for confirmation.",
+    )
 
 
 class PageDeletionTarget(SDKModel):
     "PageDeletionTarget is one exact page included in a signed category subtree\n deletion preview."
 
-    content_revision: str = Field(default=..., alias="content_revision")
-    deletion_scope_fingerprint: str = Field(default=..., alias="deletion_scope_fingerprint")
-    page_id: str = Field(default=..., alias="page_id")
-    title: str = Field(default=..., alias="title")
+    content_revision: str = Field(
+        default=...,
+        alias="content_revision",
+        description="Required. Page content revision incorporated into the impact fingerprint.",
+    )
+    deletion_scope_fingerprint: str = Field(
+        default=...,
+        alias="deletion_scope_fingerprint",
+        description="Required. SHA-256 of this page's complete canonical deletion scope.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque page identifier to delete."
+    )
+    title: str = Field(
+        default=...,
+        alias="title",
+        description="Required. Current user-visible title shown for confirmation.",
+    )
 
 
 class CategoryDeletionPreview(SDKModel):
     "CategoryDeletionPreview is a signed, short-lived exact impact snapshot for\n deleting one category subtree and all pages contained in it."
 
-    affected_active_estimate_count: int = Field(default=..., alias="affected_active_estimate_count")
-    affected_ai_call_count: int = Field(default=..., alias="affected_ai_call_count")
-    affected_brief_revision_count: int = Field(default=..., alias="affected_brief_revision_count")
+    affected_active_estimate_count: int = Field(
+        default=...,
+        alias="affected_active_estimate_count",
+        description="Required. Active generation estimates that will be invalidated.",
+    )
+    affected_ai_call_count: int = Field(
+        default=...,
+        alias="affected_ai_call_count",
+        description="Required. Logical AI call slots included in the deletion scope.",
+    )
+    affected_brief_revision_count: int = Field(
+        default=...,
+        alias="affected_brief_revision_count",
+        description="Required. Complete brief revisions included in the deletion scope.",
+    )
     affected_categories: list[CategoryDeletionTarget] = Field(
-        default=..., alias="affected_categories"
+        default=...,
+        alias="affected_categories",
+        description="Required. Exact root and descendant categories in stable order.",
     )
     affected_category_organization_estimate_count: int = Field(
-        default=..., alias="affected_category_organization_estimate_count"
+        default=...,
+        alias="affected_category_organization_estimate_count",
+        description="Required. Category-organization estimates that will be invalidated.",
     )
     affected_category_organization_job_count: int = Field(
-        default=..., alias="affected_category_organization_job_count"
+        default=...,
+        alias="affected_category_organization_job_count",
+        description="Required. Category-organization jobs included in the deletion scope.",
     )
-    affected_category_plan_count: int = Field(default=..., alias="affected_category_plan_count")
-    affected_export_count: int = Field(default=..., alias="affected_export_count")
-    affected_external_source_count: int = Field(default=..., alias="affected_external_source_count")
+    affected_category_plan_count: int = Field(
+        default=...,
+        alias="affected_category_plan_count",
+        description="Required. Category plan storage objects included in the deletion scope.",
+    )
+    affected_export_count: int = Field(
+        default=...,
+        alias="affected_export_count",
+        description="Required. PDF and PNG artifacts included in the deletion scope.",
+    )
+    affected_external_source_count: int = Field(
+        default=...,
+        alias="affected_external_source_count",
+        description="Required. Future-reserved external source count; zero in the current release.",
+    )
     affected_external_temp_copy_count: int = Field(
-        default=..., alias="affected_external_temp_copy_count"
+        default=...,
+        alias="affected_external_temp_copy_count",
+        description="Required. Registered external temporary copies included in the scope.",
     )
-    affected_failure_context_count: int = Field(default=..., alias="affected_failure_context_count")
-    affected_generation_plan_count: int = Field(default=..., alias="affected_generation_plan_count")
+    affected_failure_context_count: int = Field(
+        default=...,
+        alias="affected_failure_context_count",
+        description="Required. Typed failure contexts included in the deletion scope.",
+    )
+    affected_generation_plan_count: int = Field(
+        default=...,
+        alias="affected_generation_plan_count",
+        description="Required. Generation plan revisions included in the deletion scope.",
+    )
     affected_generation_plan_step_count: int = Field(
-        default=..., alias="affected_generation_plan_step_count"
+        default=...,
+        alias="affected_generation_plan_step_count",
+        description="Required. Structured generation plan steps included in the deletion scope.",
     )
-    affected_job_count: int = Field(default=..., alias="affected_job_count")
-    affected_job_input_count: int = Field(default=..., alias="affected_job_input_count")
-    affected_material_count: int = Field(default=..., alias="affected_material_count")
-    affected_page_count: int = Field(default=..., alias="affected_page_count")
-    affected_pages: list[PageDeletionTarget] = Field(default=..., alias="affected_pages")
+    affected_job_count: int = Field(
+        default=...,
+        alias="affected_job_count",
+        description="Required. Logical jobs included in the deletion scope.",
+    )
+    affected_job_input_count: int = Field(
+        default=...,
+        alias="affected_job_input_count",
+        description="Required. Frozen job inputs included in the deletion scope.",
+    )
+    affected_material_count: int = Field(
+        default=...,
+        alias="affected_material_count",
+        description="Required. Materials included in the deletion scope.",
+    )
+    affected_page_count: int = Field(
+        default=...,
+        alias="affected_page_count",
+        description="Required. Number of pages included in the category subtree.",
+    )
+    affected_pages: list[PageDeletionTarget] = Field(
+        default=...,
+        alias="affected_pages",
+        description="Required. Exact pages in the subtree in stable order.",
+    )
     affected_provisional_candidate_count: int = Field(
-        default=..., alias="affected_provisional_candidate_count"
+        default=...,
+        alias="affected_provisional_candidate_count",
+        description="Required. Unpublished candidates included in the deletion scope.",
     )
-    affected_replan_decision_count: int = Field(default=..., alias="affected_replan_decision_count")
-    affected_review_report_count: int = Field(default=..., alias="affected_review_report_count")
-    affected_source_count: int = Field(default=..., alias="affected_source_count")
-    affected_tool_call_count: int = Field(default=..., alias="affected_tool_call_count")
-    affected_version_count: int = Field(default=..., alias="affected_version_count")
-    confirmation_token: str = Field(default=..., alias="confirmation_token")
-    descendant_category_count: int = Field(default=..., alias="descendant_category_count")
-    direct_child_count: int = Field(default=..., alias="direct_child_count")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    impact_fingerprint: str = Field(default=..., alias="impact_fingerprint")
-    tree_etag: str = Field(default=..., alias="tree_etag")
+    affected_replan_decision_count: int = Field(
+        default=...,
+        alias="affected_replan_decision_count",
+        description="Required. Structured replan decisions included in the deletion scope.",
+    )
+    affected_review_report_count: int = Field(
+        default=...,
+        alias="affected_review_report_count",
+        description="Required. Structured review reports included in the deletion scope.",
+    )
+    affected_source_count: int = Field(
+        default=...,
+        alias="affected_source_count",
+        description="Required. Material and inline-text sources included in the deletion scope.",
+    )
+    affected_tool_call_count: int = Field(
+        default=...,
+        alias="affected_tool_call_count",
+        description="Required. Future-reserved tool call count; zero in the current release.",
+    )
+    affected_version_count: int = Field(
+        default=...,
+        alias="affected_version_count",
+        description="Required. Published versions included in the deletion scope.",
+    )
+    confirmation_token: str = Field(
+        default=...,
+        alias="confirmation_token",
+        description="Required. Short-lived confirmation capability; never log or persist in telemetry.",
+    )
+    descendant_category_count: int = Field(
+        default=...,
+        alias="descendant_category_count",
+        description="Required. Number of all descendant categories.",
+    )
+    direct_child_count: int = Field(
+        default=...,
+        alias="direct_child_count",
+        description="Required. Number of direct child categories.",
+    )
+    expires_at: Timestamp = Field(
+        default=...,
+        alias="expires_at",
+        description="Required. Expiry of the confirmation token and impact snapshot.",
+    )
+    impact_fingerprint: str = Field(
+        default=...,
+        alias="impact_fingerprint",
+        description="Required. SHA-256 of the complete canonical subtree deletion scope.",
+    )
+    tree_etag: str = Field(
+        default=...,
+        alias="tree_etag",
+        description="Required. Category tree version observed by this preview.",
+    )
 
 
 class CategoryDeletionResult(SDKModel):
     "CategoryDeletionResult confirms immediate access revocation for a category\n subtree and the exact content scope accepted for asynchronous cleanup."
 
-    accepted_at: Timestamp = Field(default=..., alias="accepted_at")
-    affected_active_estimate_count: int = Field(default=..., alias="affected_active_estimate_count")
-    affected_ai_call_count: int = Field(default=..., alias="affected_ai_call_count")
-    affected_brief_revision_count: int = Field(default=..., alias="affected_brief_revision_count")
+    accepted_at: Timestamp = Field(
+        default=...,
+        alias="accepted_at",
+        description="Required. Time logical access revocation became effective.",
+    )
+    affected_active_estimate_count: int = Field(
+        default=...,
+        alias="affected_active_estimate_count",
+        description="Required. Active generation estimates atomically invalidated.",
+    )
+    affected_ai_call_count: int = Field(
+        default=...,
+        alias="affected_ai_call_count",
+        description="Required. Logical AI call slots accepted for cleanup.",
+    )
+    affected_brief_revision_count: int = Field(
+        default=...,
+        alias="affected_brief_revision_count",
+        description="Required. Complete brief revisions accepted for deletion.",
+    )
     affected_category_organization_estimate_count: int = Field(
-        default=..., alias="affected_category_organization_estimate_count"
+        default=...,
+        alias="affected_category_organization_estimate_count",
+        description="Required. Category-organization estimates atomically invalidated.",
     )
     affected_category_organization_job_count: int = Field(
-        default=..., alias="affected_category_organization_job_count"
+        default=...,
+        alias="affected_category_organization_job_count",
+        description="Required. Category-organization jobs canceled or access-revoked.",
     )
-    affected_category_plan_count: int = Field(default=..., alias="affected_category_plan_count")
-    affected_export_count: int = Field(default=..., alias="affected_export_count")
+    affected_category_plan_count: int = Field(
+        default=...,
+        alias="affected_category_plan_count",
+        description="Required. Category plan storage objects accepted for cleanup.",
+    )
+    affected_export_count: int = Field(
+        default=...,
+        alias="affected_export_count",
+        description="Required. PDF and PNG artifacts accepted for deletion.",
+    )
     affected_external_temp_copy_count: int = Field(
-        default=..., alias="affected_external_temp_copy_count"
+        default=...,
+        alias="affected_external_temp_copy_count",
+        description="Required. Registered external temporary copies accepted for cleanup.",
     )
-    affected_failure_context_count: int = Field(default=..., alias="affected_failure_context_count")
-    affected_job_count: int = Field(default=..., alias="affected_job_count")
-    affected_job_input_count: int = Field(default=..., alias="affected_job_input_count")
-    affected_material_count: int = Field(default=..., alias="affected_material_count")
-    affected_page_count: int = Field(default=..., alias="affected_page_count")
+    affected_failure_context_count: int = Field(
+        default=...,
+        alias="affected_failure_context_count",
+        description="Required. Typed failure contexts accepted for deletion.",
+    )
+    affected_job_count: int = Field(
+        default=...,
+        alias="affected_job_count",
+        description="Required. Logical jobs accepted for deletion.",
+    )
+    affected_job_input_count: int = Field(
+        default=...,
+        alias="affected_job_input_count",
+        description="Required. Frozen job inputs accepted for deletion.",
+    )
+    affected_material_count: int = Field(
+        default=...,
+        alias="affected_material_count",
+        description="Required. Materials accepted for deletion.",
+    )
+    affected_page_count: int = Field(
+        default=...,
+        alias="affected_page_count",
+        description="Required. Pages accepted for deletion.",
+    )
     affected_provisional_candidate_count: int = Field(
-        default=..., alias="affected_provisional_candidate_count"
+        default=...,
+        alias="affected_provisional_candidate_count",
+        description="Required. Unpublished candidates accepted for deletion.",
     )
-    affected_replan_decision_count: int = Field(default=..., alias="affected_replan_decision_count")
-    affected_review_report_count: int = Field(default=..., alias="affected_review_report_count")
-    affected_source_count: int = Field(default=..., alias="affected_source_count")
-    affected_tool_call_count: int = Field(default=..., alias="affected_tool_call_count")
-    affected_version_count: int = Field(default=..., alias="affected_version_count")
-    category_id: str = Field(default=..., alias="category_id")
-    deleted_category_count: int = Field(default=..., alias="deleted_category_count")
+    affected_replan_decision_count: int = Field(
+        default=...,
+        alias="affected_replan_decision_count",
+        description="Required. Structured replan decisions accepted for cleanup.",
+    )
+    affected_review_report_count: int = Field(
+        default=...,
+        alias="affected_review_report_count",
+        description="Required. Structured review reports accepted for cleanup.",
+    )
+    affected_source_count: int = Field(
+        default=...,
+        alias="affected_source_count",
+        description="Required. Material and inline-text sources accepted for deletion.",
+    )
+    affected_tool_call_count: int = Field(
+        default=...,
+        alias="affected_tool_call_count",
+        description="Required. Future-reserved tool calls; zero in the current release.",
+    )
+    affected_version_count: int = Field(
+        default=...,
+        alias="affected_version_count",
+        description="Required. Published versions accepted for deletion.",
+    )
+    category_id: str = Field(
+        default=...,
+        alias="category_id",
+        description="Required. Opaque deleted root category identifier.",
+    )
+    deleted_category_count: int = Field(
+        default=...,
+        alias="deleted_category_count",
+        description="Required. Root and descendant categories accepted for deletion.",
+    )
 
 
 EstimateState: TypeAlias = Literal[
@@ -842,21 +1446,65 @@ EstimateState: TypeAlias = Literal[
 class CategoryOrganizationEstimate(SDKModel):
     "CategoryOrganizationEstimate is a durable, short-lived estimate for one\n explicitly confirmed asynchronous category-organization preview."
 
-    authorized_max_credit: str = Field(default=..., alias="authorized_max_credit")
-    balance_sufficient: bool = Field(default=..., alias="balance_sufficient")
-    consumed_organization_job_id: str | None = Field(
-        default=None, alias="consumed_organization_job_id"
+    authorized_max_credit: str = Field(
+        default=...,
+        alias="authorized_max_credit",
+        description="Required. Maximum permitted user net charge for this operation.",
     )
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    current_balance_credit: str = Field(default=..., alias="current_balance_credit")
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    estimated_ai_credit: str = Field(default=..., alias="estimated_ai_credit")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    input_fingerprint: str = Field(default=..., alias="input_fingerprint")
-    pricing_version: str = Field(default=..., alias="pricing_version")
-    scope_category_id: str | None = Field(default=None, alias="scope_category_id")
-    state: EstimateState = Field(default=..., alias="state")
-    tree_etag: str = Field(default=..., alias="tree_etag")
+    balance_sufficient: bool = Field(
+        default=...,
+        alias="balance_sufficient",
+        description="Required. Whether the balance covers authorized_max_credit.",
+    )
+    consumed_organization_job_id: str | None = Field(
+        default=None,
+        alias="consumed_organization_job_id",
+        description="(OPTIONAL) Conditional. Present when CONSUMED and identifies the unique organization job.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Durable estimate creation time."
+    )
+    current_balance_credit: str = Field(
+        default=...,
+        alias="current_balance_credit",
+        description="Required. Wallet balance snapshot at estimate creation.",
+    )
+    estimate_id: str = Field(
+        default=..., alias="estimate_id", description="Required. Opaque estimate identifier."
+    )
+    estimated_ai_credit: str = Field(
+        default=...,
+        alias="estimated_ai_credit",
+        description="Required. Estimated AI credits for the complete preview operation.",
+    )
+    expires_at: Timestamp = Field(
+        default=...,
+        alias="expires_at",
+        description="Required. Time after which a new estimate is required.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="input_fingerprint",
+        description="Required. SHA-256 of the frozen instruction, scope, and tree_etag.",
+    )
+    pricing_version: str = Field(
+        default=...,
+        alias="pricing_version",
+        description="Required. Public AI pricing contract version.",
+    )
+    scope_category_id: str | None = Field(
+        default=None,
+        alias="scope_category_id",
+        description="(OPTIONAL) Optional. Root of the affected subtree; absent means the full tree.",
+    )
+    state: EstimateState = Field(
+        default=..., alias="state", description="Required. Current estimate lifecycle state."
+    )
+    tree_etag: str = Field(
+        default=...,
+        alias="tree_etag",
+        description="Required. Category tree version observed during estimation.",
+    )
 
 
 Orientation: TypeAlias = Literal[
@@ -872,22 +1520,54 @@ ContentFitStatus: TypeAlias = Literal[
 class ContentBudgetSummary(SDKModel):
     "ContentBudgetSummary explains the current single-page readability budget."
 
-    allowed_orientations: list[Orientation] = Field(default=..., alias="allowed_orientations")
-    conflict_count: int = Field(default=..., alias="conflict_count")
-    current_orientation: Orientation = Field(default=..., alias="current_orientation")
-    fit_status: ContentFitStatus = Field(default=..., alias="fit_status")
-    summary: str = Field(default=..., alias="summary")
-    target_page_count: int = Field(default=..., alias="target_page_count")
+    allowed_orientations: list[Orientation] = Field(
+        default=...,
+        alias="allowed_orientations",
+        description="Required. Orientations that may resolve the current conflict.",
+    )
+    conflict_count: int = Field(
+        default=...,
+        alias="conflict_count",
+        description="Required. Number of conflicts in the enclosing context.",
+    )
+    current_orientation: Orientation = Field(
+        default=...,
+        alias="current_orientation",
+        description="Required. Current selected page orientation.",
+    )
+    fit_status: ContentFitStatus = Field(
+        default=..., alias="fit_status", description="Required. Current content fit status."
+    )
+    summary: str = Field(
+        default=...,
+        alias="summary",
+        description="Required. Safe explanation of why the readable budget cannot be met.",
+    )
+    target_page_count: int = Field(
+        default=...,
+        alias="target_page_count",
+        description="Required. Target page count; fixed to one in P1.",
+    )
 
 
 class ContentConflict(SDKModel):
     "ContentConflict identifies one user-understandable conflict that prevents the\n complete source set from fitting a readable single-page result."
 
-    conflict_id: str = Field(default=..., alias="conflict_id")
-    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="material_ids"
+    conflict_id: str = Field(
+        default=...,
+        alias="conflict_id",
+        description="Required. Stable identifier within the enclosing decision context.",
     )
-    summary: str = Field(default=..., alias="summary")
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="material_ids",
+        description="(OPTIONAL) Optional. Source material identifiers when the conflict is attributable.",
+    )
+    summary: str = Field(
+        default=...,
+        alias="summary",
+        description="Required. Safe conflict explanation without prompts or internal scoring.",
+    )
 
 
 ContentDecisionAction: TypeAlias = Literal[
@@ -902,24 +1582,68 @@ ContentDecisionAction: TypeAlias = Literal[
 class ContentDecisionOption(SDKModel):
     "ContentDecisionOption is an explicit, stable choice that the client may\n submit for one content decision context."
 
-    action: ContentDecisionAction = Field(default=..., alias="action")
-    label: str = Field(default=..., alias="label")
-    option_id: str = Field(default=..., alias="option_id")
-    orientation: Orientation | None = Field(default=None, alias="orientation")
-    summary: str = Field(default=..., alias="summary")
+    action: ContentDecisionAction = Field(
+        default=..., alias="action", description="Required. Explicit content trade-off action."
+    )
+    label: str = Field(
+        default=..., alias="label", description="Required. Short client display label."
+    )
+    option_id: str = Field(
+        default=...,
+        alias="option_id",
+        description="Required. Stable identifier scoped to the enclosing context.",
+    )
+    orientation: Orientation | None = Field(
+        default=None,
+        alias="orientation",
+        description="(OPTIONAL) Conditional. Required only for CHANGE_ORIENTATION.",
+    )
+    summary: str = Field(
+        default=..., alias="summary", description="Required. Safe expected trade-off summary."
+    )
 
 
 class ContentDecisionContext(SDKModel):
     "ContentDecisionContext is the durable, typed user decision state associated\n with a failed job and immutable input. It contains only safe summaries and\n explicit choices, never prompts or private reasoning."
 
-    action_token: str = Field(default=..., alias="action_token")
-    action_token_expires_at: Timestamp = Field(default=..., alias="action_token_expires_at")
-    base_page_content_revision: str = Field(default=..., alias="base_page_content_revision")
-    budget: ContentBudgetSummary = Field(default=..., alias="budget")
-    conflicts: list[ContentConflict] = Field(default=..., alias="conflicts")
-    context_digest: str = Field(default=..., alias="context_digest")
-    context_id: str = Field(default=..., alias="context_id")
-    options: list[ContentDecisionOption] = Field(default=..., alias="options")
+    action_token: str = Field(
+        default=...,
+        alias="action_token",
+        description="Required. Short-lived signed token authorizing only the listed options.",
+    )
+    action_token_expires_at: Timestamp = Field(
+        default=...,
+        alias="action_token_expires_at",
+        description="Required. Expiry of action_token; the durable context may remain valid.",
+    )
+    base_page_content_revision: str = Field(
+        default=...,
+        alias="base_page_content_revision",
+        description="Required. Page content revision at which the conflict was produced.",
+    )
+    budget: ContentBudgetSummary = Field(
+        default=...,
+        alias="budget",
+        description="Required. Current single-page content budget summary.",
+    )
+    conflicts: list[ContentConflict] = Field(
+        default=...,
+        alias="conflicts",
+        description="Required. Conflicting content groups; at least one.",
+    )
+    context_digest: str = Field(
+        default=...,
+        alias="context_digest",
+        description="Required. SHA-256 of the complete durable failure context.",
+    )
+    context_id: str = Field(
+        default=...,
+        alias="context_id",
+        description="Required. Durable context identifier bound to the failed job and input.",
+    )
+    options: list[ContentDecisionOption] = Field(
+        default=..., alias="options", description="Required. Stable client choices; at least one."
+    )
 
 
 Duration: TypeAlias = str
@@ -941,15 +1665,37 @@ class JobFailure(SDKModel):
     "JobFailure is a safe terminal business failure projected by GetJob."
 
     content_decision_context: Annotated[ContentDecisionContext | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="content_decision_context")
+        Field(
+            default=None,
+            alias="content_decision_context",
+            description="(OPTIONAL) Conditional. Required only for PINPAGE_CONTENT_DECISION_REQUIRED.",
+        )
     )
-    message: str = Field(default=..., alias="message")
-    reason: str = Field(default=..., alias="reason")
+    message: str = Field(
+        default=...,
+        alias="message",
+        description="Required. Safe explanation without source content or provider details.",
+    )
+    reason: str = Field(
+        default=...,
+        alias="reason",
+        description="Required. Stable machine-readable reason used for client branching.",
+    )
     retry_after: Annotated[Duration | None, AfterValidator(non_null)] = Field(
-        default=None, alias="retry_after"
+        default=None,
+        alias="retry_after",
+        description="(OPTIONAL) Optional. Server-advised delay before the next user action.",
     )
-    retryable: bool = Field(default=..., alias="retryable")
-    user_action: JobFailureUserAction = Field(default=..., alias="user_action")
+    retryable: bool = Field(
+        default=...,
+        alias="retryable",
+        description="Required. Whether the user may create a manual retry.",
+    )
+    user_action: JobFailureUserAction = Field(
+        default=...,
+        alias="user_action",
+        description="Required. Safe user action; search actions are disabled in this release.",
+    )
 
 
 CategoryOrganizationPreviewState: TypeAlias = Literal[
@@ -974,68 +1720,160 @@ class CategoryOrganizationJob(SDKModel):
     "CategoryOrganizationJob is the authoritative asynchronous fact for one\n explicitly confirmed, paid category-organization preview."
 
     applied_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="applied_at"
+        default=None,
+        alias="applied_at",
+        description="(OPTIONAL) Conditional. Required after apply; retained in the EXPIRED projection.",
     )
-    billing_intent_id: str = Field(default=..., alias="billing_intent_id")
+    billing_intent_id: str = Field(
+        default=...,
+        alias="billing_intent_id",
+        description="Required. Logical user-confirmation billing intent, not an operation or attempt ID.",
+    )
     completed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="completed_at"
+        default=None,
+        alias="completed_at",
+        description="(OPTIONAL) Conditional. Required in SUCCEEDED or FAILED; apply and expiry do not change it.",
     )
-    cost_summary: CostSummary = Field(default=..., alias="cost_summary")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    estimate_id: str = Field(default=..., alias="estimate_id")
+    cost_summary: CostSummary = Field(
+        default=...,
+        alias="cost_summary",
+        description="Required. CATEGORY_ORGANIZATION estimate and reconciled settlement summary.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Logical job creation time."
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimate_id",
+        description="Required. Opaque estimate atomically consumed by this job.",
+    )
     failure: Annotated[JobFailure | None, AfterValidator(non_null)] = Field(
-        default=None, alias="failure"
+        default=None,
+        alias="failure",
+        description="(OPTIONAL) Conditional. Required in FAILED and contains only safe failure details.",
     )
-    organization_job_id: str = Field(default=..., alias="organization_job_id")
+    organization_job_id: str = Field(
+        default=...,
+        alias="organization_job_id",
+        description="Required. Opaque logical organization job identifier.",
+    )
     preview_state: CategoryOrganizationPreviewState | None = Field(
-        default=None, alias="preview_state"
+        default=None,
+        alias="preview_state",
+        description="(OPTIONAL) Conditional. Required in SUCCEEDED and absent before planning succeeds.",
     )
-    preview_unavailable_reason: str | None = Field(default=None, alias="preview_unavailable_reason")
-    status: JobStatus = Field(default=..., alias="status")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    preview_unavailable_reason: str | None = Field(
+        default=None,
+        alias="preview_unavailable_reason",
+        description="(OPTIONAL) Conditional. Required when preview_state is EXPIRED.",
+    )
+    status: JobStatus = Field(
+        default=..., alias="status", description="Required. Public asynchronous job lifecycle."
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time the authoritative job fact last changed.",
+    )
 
 
 class CategoryOrganizationPreview(SDKModel):
     "CategoryOrganizationPreview is the durable, settled snapshot produced by a\n successful category organization job. It contains safe changes but never the\n user's original instruction, prompts, private reasoning, or provider output."
 
     applied_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="applied_at"
+        default=None,
+        alias="applied_at",
+        description="(OPTIONAL) Conditional. Required after successful apply and absent before apply.",
     )
-    billing_intent_id: str = Field(default=..., alias="billing_intent_id")
-    changes: list[CategoryChange] = Field(default=..., alias="changes")
-    cost_summary: CostSummary = Field(default=..., alias="cost_summary")
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    organization_job_id: str = Field(default=..., alias="organization_job_id")
-    summary: str = Field(default=..., alias="summary")
-    tree_etag: str = Field(default=..., alias="tree_etag")
+    billing_intent_id: str = Field(
+        default=...,
+        alias="billing_intent_id",
+        description="Required. Logical user-confirmation billing intent.",
+    )
+    changes: list[CategoryChange] = Field(
+        default=...,
+        alias="changes",
+        description="Required. Ordered concrete changes; may be empty when no change is needed.",
+    )
+    cost_summary: CostSummary = Field(
+        default=...,
+        alias="cost_summary",
+        description="Required. Reconciled CATEGORY_ORGANIZATION cost summary.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimate_id",
+        description="Required. Estimate consumed by the organization job.",
+    )
+    expires_at: Timestamp = Field(
+        default=..., alias="expires_at", description="Required. Durable preview expiry time."
+    )
+    organization_job_id: str = Field(
+        default=...,
+        alias="organization_job_id",
+        description="Required. Organization job identifier and preview snapshot identity.",
+    )
+    summary: str = Field(
+        default=...,
+        alias="summary",
+        description="Required. User-understandable overall change summary.",
+    )
+    tree_etag: str = Field(
+        default=...,
+        alias="tree_etag",
+        description="Required. Category tree version from which this preview was generated.",
+    )
 
 
 class CategoryPreference(SDKModel):
     "CategoryPreference is the user-scoped singleton containing explicitly saved\n long-lived category rules. It never receives one-time organization prompts."
 
-    etag: str = Field(default=..., alias="etag")
-    revision: str = Field(default=..., alias="revision")
-    rules_text: str = Field(default=..., alias="rules_text")
+    etag: str = Field(
+        default=..., alias="etag", description="Required. Optimistic concurrency validator."
+    )
+    revision: str = Field(
+        default=...,
+        alias="revision",
+        description="Required. Monotonic singleton revision; zero means never configured.",
+    )
+    rules_text: str = Field(
+        default=...,
+        alias="rules_text",
+        description="Required. Complete saved rules; an empty string explicitly means no rules.",
+    )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description="(OPTIONAL) Optional. Last explicit save or clear time; absent when never configured.",
     )
 
 
 class CategoryPreferenceSnapshot(SDKModel):
     "CategoryPreferenceSnapshot is the immutable category preference captured in\n a generation estimate and its resulting job input."
 
-    revision: str = Field(default=..., alias="revision")
-    rules_sha256: str = Field(default=..., alias="rules_sha256")
-    rules_text: str = Field(default=..., alias="rules_text")
+    revision: str = Field(
+        default=...,
+        alias="revision",
+        description="Required. Monotonic preference revision; zero means never configured.",
+    )
+    rules_sha256: str = Field(
+        default=...,
+        alias="rules_sha256",
+        description="Required. SHA-256 of rules_text, including the stable digest of empty text.",
+    )
+    rules_text: str = Field(
+        default=...,
+        alias="rules_text",
+        description="Required. Complete normalized rules; an empty string means no rules.",
+    )
 
 
 class ChangePasswordRequest(SDKModel):
     new_password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="new_password_hash"
+        default=None, alias="new_password_hash", description=""
     )
     old_password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="old_password_hash"
+        default=None, alias="old_password_hash", description=""
     )
 
 
@@ -1045,52 +1883,76 @@ ChangePasswordResponse: TypeAlias = Any
 class CheckRequest(SDKModel):
     "CheckRequest carries one authorization question."
 
-    action: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="action")
-    resource: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="resource"
+    action: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="action",
+        description='Required. Verb-style action name. Common values:\n   "read"       — any active member\n   "update"     — admin or owner\n   "delete"     — owner only\n   "transfer"   — owner only\n   "rotate"     — admin or owner (for credentials)\n\n Convention: action names are lowercase ASCII; service-specific actions\n SHOULD be namespaced (e.g. "credentials:rotate"). The full action\n taxonomy is documented per service in their respective READMEs.',
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    resource: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="resource",
+        description='Required. Dotted "type:id" form, e.g.:\n   "app:app01abc..."         (Application)\n   "org:org01xyz..."         (Organization)\n   "workspace:wsp..."        (Workspace)\n   "credential:key..."       (API Key)',
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user_id",
+        description="Required. The principal whose permissions are being tested. Opaque\n entity-id with `usr` prefix; legacy formats also accepted.",
+    )
 
 
 class CheckResponse(SDKModel):
     "CheckResponse carries the decision plus a human-readable explanation."
 
-    allow: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="allow")
-    effective_role: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="effective_role"
+    allow: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="allow", description="True if the principal is authorized."
     )
-    reason: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="reason")
+    effective_role: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="effective_role",
+        description="Effective role observed at decision time. Empty when allow=false and\n user is not a member of the resource. Useful for audit logs.",
+    )
+    reason: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="reason",
+        description='Short machine-readable reason code. Values:\n   "OK"                       — allowed\n   "NOT_A_MEMBER"             — user not in resource\'s membership table\n   "INSUFFICIENT_ROLE"        — user is a member but role too low\n   "RESOURCE_TYPE_UNKNOWN"    — service does not recognize the resource type\n   "CACHE_NOT_READY"          — app_members cache not yet synced (transient)\n   "RESOURCE_NOT_FOUND"       — resource id does not exist\n\n Loggable by callers; not user-facing.',
+    )
 
 
 class CheckUserExistsRequest(SDKModel):
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
 
 
 class CheckUserExistsResponse(SDKModel):
     has_password: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="has_password"
+        default=None, alias="has_password", description=""
     )
     is_registered: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_registered"
+        default=None, alias="is_registered", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
 
 
 class ClaimAvatarRetirementRequest(SDKModel):
     "Only a verified internal media caller may claim a fence. IAM atomically locks\n the media guard and checks ALL references, including restorable users.\n In-use: FAILED_PRECONDITION / AVATAR_IN_USE. Different operation:\n ABORTED / AVATAR_RETIREMENT_CONFLICT. Disabled rollout:\n FAILED_PRECONDITION / AVATAR_RETIREMENT_DISABLED. Invalid fields:\n INVALID_ARGUMENT with BadRequest field violations. Matching RETIRING or\n RETIRED claims are idempotent; only RETIRING authorizes new deletion work."
 
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None, alias="media_id", description=""
     )
     operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="operation_id"
+        default=None, alias="operation_id", description=""
     )
 
 
 class ClaimAvatarRetirementResponse(SDKModel):
     retirement: Annotated[AvatarRetirement | None, AfterValidator(non_null)] = Field(
-        default=None, alias="retirement"
+        default=None, alias="retirement", description=""
     )
 
 
@@ -1110,25 +1972,33 @@ ClientCredentialType: TypeAlias = Literal[
 
 
 class CompleteAvatarRetirementRequest(SDKModel):
-    "Call only after all objects are deleted and Media metadata is soft-deleted.\n Matching RETIRING -> RETIRED; matching RETIRED is idempotent. Missing claim\n is NOT_FOUND, mismatched operation is ABORTED. Never creates a new fence.\n A lost response is resolved through Get/retry, never through an unfence RPC."
+    "Call only after all objects are deleted and Media metadata is soft-deleted.\n Matching RETIRING -\u003e RETIRED; matching RETIRED is idempotent. Missing claim\n is NOT_FOUND, mismatched operation is ABORTED. Never creates a new fence.\n A lost response is resolved through Get/retry, never through an unfence RPC."
 
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None, alias="media_id", description=""
     )
     operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="operation_id"
+        default=None, alias="operation_id", description=""
     )
 
 
 class CompleteAvatarRetirementResponse(SDKModel):
     retirement: Annotated[AvatarRetirement | None, AfterValidator(non_null)] = Field(
-        default=None, alias="retirement"
+        default=None, alias="retirement", description=""
     )
 
 
 class CompleteUploadRequest(SDKModel):
-    upload_id: str = Field(default=..., alias="upload_id")
-    user_id: str = Field(default=..., alias="user_id")
+    upload_id: str = Field(
+        default=...,
+        alias="upload_id",
+        description="Required. OPEN or idempotently completed upload identifier.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 MaterialStatus: TypeAlias = Literal[
@@ -1145,57 +2015,121 @@ MaterialStatus: TypeAlias = Literal[
 class Material(SDKModel):
     "Material is a validated, owner-scoped source asset created only after a\n multipart upload is completed and the full object has been verified."
 
-    cost_summary: CostSummary = Field(default=..., alias="cost_summary")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    detected_media_type: str = Field(default=..., alias="detected_media_type")
-    display_name: str = Field(default=..., alias="display_name")
-    failure_reason: str | None = Field(default=None, alias="failure_reason")
-    material_id: str = Field(default=..., alias="material_id")
-    page_id: str | None = Field(default=None, alias="page_id")
-    sha256: str = Field(default=..., alias="sha256")
-    size_bytes: str = Field(default=..., alias="size_bytes")
-    status: MaterialStatus = Field(default=..., alias="status")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    cost_summary: CostSummary = Field(
+        default=...,
+        alias="cost_summary",
+        description="Required. File-service estimate and settlement summary.",
+    )
+    created_at: Timestamp = Field(
+        default=...,
+        alias="created_at",
+        description="Required. Material creation time after multipart completion.",
+    )
+    detected_media_type: str = Field(
+        default=...,
+        alias="detected_media_type",
+        description="Required. MIME detected from the complete uploaded object.",
+    )
+    display_name: str = Field(
+        default=...,
+        alias="display_name",
+        description="Required. Sanitized user-visible basename without a device path.",
+    )
+    failure_reason: str | None = Field(
+        default=None,
+        alias="failure_reason",
+        description="(OPTIONAL) Conditional. Required in REJECTED or FAILED; stable and provider-safe.",
+    )
+    material_id: str = Field(
+        default=..., alias="material_id", description="Required. Opaque material identifier."
+    )
+    page_id: str | None = Field(
+        default=None,
+        alias="page_id",
+        description="(OPTIONAL) Conditional. Present after the material is retained by a page.",
+    )
+    sha256: str = Field(
+        default=...,
+        alias="sha256",
+        description="Required. Lowercase hexadecimal SHA-256 of the complete object.",
+    )
+    size_bytes: str = Field(
+        default=...,
+        alias="size_bytes",
+        description="Required. Actual object size confirmed by storage.",
+    )
+    status: MaterialStatus = Field(
+        default=...,
+        alias="status",
+        description="Required. Current validation and parsing lifecycle state.",
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time the material fact last changed.",
+    )
 
 
 class CompleteUploadResponse(SDKModel):
     material: Annotated[Material | None, AfterValidator(non_null)] = Field(
-        default=None, alias="material"
+        default=None,
+        alias="material",
+        description="(OPTIONAL) Optional. Required only when upload.status is COMPLETED.",
     )
-    upload: UploadSession = Field(default=..., alias="upload")
+    upload: UploadSession = Field(
+        default=...,
+        alias="upload",
+        description="Required. Durable terminal upload fact after completion processing.",
+    )
 
 
 class ConfirmUploadRequest(SDKModel):
     "ConfirmUploadRequest 确认预签名上传已完成。\n 服务端将验证文件是否存在，并提取尺寸、时长等元信息。"
 
     asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_id"
+        default=None,
+        alias="asset_id",
+        description="预分配的素材 ID（来自 GenerateUploadUrlResponse）。",
     )
 
 
 class ConfirmUploadResponse(SDKModel):
-    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(default=None, alias="asset")
+    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(
+        default=None, alias="asset", description="确认后的完整素材信息。"
+    )
 
 
 class ContentChunk(SDKModel):
     "ContentChunk carries a piece of LLM-generated text."
 
-    index: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="index")
-    text: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="text")
+    index: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="index", description="片段序号（从 0 开始），用于客户端排序和校验。"
+    )
+    text: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="text", description="文本内容片段。"
+    )
 
 
 class ConvertToHtmlRequest(SDKModel):
     "ConvertToHtmlRequest 将 Markdown 内容转换为 HTML 格式。\n 支持生成 Canvas 绘图（用于图表、流程图等可视化元素）。\n article_id 和 content 二选一。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="待转换的文章 ID，与 content 互斥。"
     )
-    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="content",
+        description="待转换的原始 Markdown 文本，与 article_id 互斥。",
+    )
     enable_canvas: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="enable_canvas"
+        default=None,
+        alias="enable_canvas",
+        description="是否为图表/流程图等元素生成 Canvas 绘图代码。",
     )
     template_style: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_style"
+        default=None,
+        alias="template_style",
+        description='视觉模板风格，例如 "modern"（现代）、"classic"（经典）、"minimal"（极简）。',
     )
 
 
@@ -1206,33 +2140,49 @@ class ConvertToHtmlResponse(SDKModel):
     "ConvertToHtmlResponse 是 ConvertToHtml 的流式响应。"
 
     article: Annotated[Article | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article"
+        default=None,
+        alias="article",
+        description="转换后的完整文章实体（format=HTML），仅在 done=true 时填充。",
     )
-    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="done", description="是否转换完毕。"
+    )
     event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
-        default=None, alias="event"
+        default=None,
+        alias="event",
+        description="流式事件，携带内容片段、状态更新、Token 用量或错误信息。",
     )
 
 
 class CreateAPIKeyRequest(SDKModel):
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
     rate_limit: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="rate_limit"
+        default=None, alias="rate_limit", description=""
     )
 
 
 class CreateAPIKeyResponse(SDKModel):
     api_key: Annotated[APIKey | None, AfterValidator(non_null)] = Field(
-        default=None, alias="api_key"
+        default=None,
+        alias="api_key",
+        description="APIKey represents a developer's API key credential.",
     )
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description="Full key returned in plaintext only on creation"
+    )
 
 
 IdentityType: TypeAlias = Literal[
@@ -1245,28 +2195,34 @@ IdentityType: TypeAlias = Literal[
 
 class CreateApplicationRequest(SDKModel):
     allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_identities"
+        default=None,
+        alias="allowed_identities",
+        description="Optional. Empty defaults to the ApplicationType-based mapping; see\n OAuthApplication.allowed_identities for the rules.",
     )
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
     app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_name"
+        default=None,
+        alias="app_name",
+        description="Deprecated: pass display fields via the developer center. Accepted\n here for legacy direct callers; will be removed in a future major\n version.",
     )
     app_type: Annotated[ApplicationType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_type"
+        default=None,
+        alias="app_type",
+        description="ApplicationType describes the kind of OAuth client application.",
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="Deprecated: same as app_name."
     )
     homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="homepage_url"
+        default=None, alias="homepage_url", description="Deprecated: same as app_name."
     )
     logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="logo_url"
+        default=None, alias="logo_url", description="Deprecated: same as app_name."
     )
     redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uris"
+        default=None, alias="redirect_uris", description=""
     )
 
 
@@ -1282,59 +2238,77 @@ class OAuthApplication(SDKModel):
     "OAuthApplication represents a registered third-party application.\n\n Display fields (`app_name`, `description`, `homepage_url`, `logo_url`)\n on this message are deprecated; the developer center is the\n authoritative source for application display metadata. The fields\n remain populated on read for backward compatibility and will be\n removed in a future major version."
 
     allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_grant_types"
+        default=None, alias="allowed_grant_types", description=""
     )
     allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_identities"
+        default=None,
+        alias="allowed_identities",
+        description="Which identity forms (user / org / workspace) this Client may issue\n tokens for. Empty list falls back to the historical\n ApplicationType-based default — TYPE_WEB / TYPE_SPA / TYPE_MOBILE\n issue user tokens only; TYPE_SERVICE issues org tokens only. New\n clients SHOULD set this explicitly.",
     )
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_name"
+        default=None,
+        alias="app_name",
+        description="Deprecated: read display fields from the developer center. Will be\n removed in a future major version.",
     )
     app_type: Annotated[ApplicationType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_type"
+        default=None,
+        alias="app_type",
+        description="ApplicationType describes the kind of OAuth client application.",
     )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     client_secret_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret_masked"
+        default=None,
+        alias="client_secret_masked",
+        description='Only last 4 chars visible, e.g. "****abcd"',
     )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="Deprecated: same as app_name."
     )
     homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="homepage_url"
+        default=None, alias="homepage_url", description="Deprecated: same as app_name."
     )
     logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="logo_url"
+        default=None, alias="logo_url", description="Deprecated: same as app_name."
     )
     owner_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="owner_id"
+        default=None, alias="owner_id", description="Developer user ID who owns this application"
     )
     redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uris"
+        default=None, alias="redirect_uris", description=""
     )
     status: Annotated[ApplicationStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="ApplicationStatus represents the lifecycle state of an OAuth application.",
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class CreateApplicationResponse(SDKModel):
     application: Annotated[OAuthApplication | None, AfterValidator(non_null)] = Field(
-        default=None, alias="application"
+        default=None,
+        alias="application",
+        description="OAuthApplication represents a registered third-party application.\n\n Display fields (`app_name`, `description`, `homepage_url`, `logo_url`)\n on this message are deprecated; the developer center is the\n authoritative source for application display metadata. The fields\n remain populated on read for backward compatibility and will be\n removed in a future major version.",
     )
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None, alias="client_secret", description="Returned in plaintext only on creation"
     )
 
 
@@ -1342,43 +2316,79 @@ class CreateArticleRequest(SDKModel):
     "CreateArticleRequest 基于主题和要求，调用 LLM 生成一篇 Markdown 格式的图文。"
 
     language: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="language"
+        default=None, alias="language", description='输出语言，BCP 47 格式，例如 "zh-CN"、"en-US"。'
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
     reference_urls: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="reference_urls"
+        default=None,
+        alias="reference_urls",
+        description="参考资料 URL 列表，LLM 可参考这些内容进行创作。",
     )
     requirements: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="requirements"
+        default=None,
+        alias="requirements",
+        description='补充要求或指令，例如 "控制在3000字以内"、"包含数据图表"。',
     )
-    style: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="style")
-    topic: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="topic")
+    style: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="style",
+        description='写作风格，例如 "professional"（专业）、"casual"（轻松）、"technical"（技术向）。',
+    )
+    topic: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="topic", description='创作主题/题目，例如 "2024年AI发展趋势"。'
+    )
 
 
 class CreateArticleResponse(SDKModel):
     "CreateArticleResponse 是 CreateArticle 的流式响应。"
 
     article: Annotated[Article | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article"
+        default=None, alias="article", description="完整的文章实体，仅在 done=true 时填充。"
     )
-    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="done", description="是否生成完毕。客户端收到 done=true 后应关闭流。"
+    )
     event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
-        default=None, alias="event"
+        default=None,
+        alias="event",
+        description="流式事件，携带内容片段、状态更新、Token 用量或错误信息。",
     )
 
 
 class CreateGenerationRequest(SDKModel):
-    client_reference: str | None = Field(default=None, alias="client_reference")
-    instruction: str = Field(default=..., alias="instruction")
-    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="material_ids"
+    client_reference: str | None = Field(
+        default=None,
+        alias="client_reference",
+        description="(OPTIONAL) Optional. Client-local draft correlation value, at most 128 characters.",
     )
-    orientation: Orientation | None = Field(default=None, alias="orientation")
-    title: str | None = Field(default=None, alias="title")
-    ui_locale: str | None = Field(default=None, alias="ui_locale")
-    user_id: str = Field(default=..., alias="user_id")
+    instruction: str = Field(
+        default=...,
+        alias="instruction",
+        description="Required. The complete production requirement, including any source text\n the user wants PinPage to use. It is never interpreted as a money budget.",
+    )
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="material_ids",
+        description="(OPTIONAL) Optional. Complete set of READY materials attached to this generation.",
+    )
+    orientation: Orientation | None = Field(
+        default=None, alias="orientation", description="(OPTIONAL) Optional. Defaults to AUTO."
+    )
+    title: str | None = Field(
+        default=None, alias="title", description="(OPTIONAL) Optional. Candidate page title."
+    )
+    ui_locale: str | None = Field(
+        default=None,
+        alias="ui_locale",
+        description="(OPTIONAL) Optional. Actual UI locale; valid Accept-Language takes precedence.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 GenerationPlanStatus: TypeAlias = Literal[
@@ -1418,23 +2428,69 @@ GenerationPlanStepStatus: TypeAlias = Literal[
 class GenerationPlanStepSummary(SDKModel):
     "GenerationPlanStepSummary is a safe, user-facing projection of one durable\n plan step. It excludes prompts, private reasoning, search queries, raw tool\n parameters and results, provider errors, and content-bearing checkpoints."
 
-    kind: GenerationPlanStepKind = Field(default=..., alias="kind")
-    sequence_number: int = Field(default=..., alias="sequence_number")
-    status: GenerationPlanStepStatus = Field(default=..., alias="status")
-    summary: str = Field(default=..., alias="summary")
+    kind: GenerationPlanStepKind = Field(
+        default=...,
+        alias="kind",
+        description="Required. Closed step kind; WEB_RESEARCH is future-reserved and disabled.",
+    )
+    sequence_number: int = Field(
+        default=...,
+        alias="sequence_number",
+        description="Required. Stable one-based order within the current plan revision.",
+    )
+    status: GenerationPlanStepStatus = Field(
+        default=...,
+        alias="status",
+        description="Required. Safe status derived from the durable step checkpoint.",
+    )
+    summary: str = Field(
+        default=...,
+        alias="summary",
+        description="Required. User-understandable goal or result summary, at most 200 characters.",
+    )
 
 
 class GenerationPlanSummary(SDKModel):
     "GenerationPlanSummary is a safe projection of the active durable generation\n plan revision, not an editable resource or a chain-of-thought transcript."
 
-    external_source_count: int = Field(default=..., alias="external_source_count")
-    plan_id: str = Field(default=..., alias="plan_id")
-    replan_count: int = Field(default=..., alias="replan_count")
-    revision: int = Field(default=..., alias="revision")
-    status: GenerationPlanStatus = Field(default=..., alias="status")
-    steps: list[GenerationPlanStepSummary] = Field(default=..., alias="steps")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
-    web_search_used: bool = Field(default=..., alias="web_search_used")
+    external_source_count: int = Field(
+        default=...,
+        alias="external_source_count",
+        description="Required. Future-reserved projection; zero in the current release.",
+    )
+    plan_id: str = Field(
+        default=...,
+        alias="plan_id",
+        description="Required. Opaque plan identifier used only for observation within this job.",
+    )
+    replan_count: int = Field(
+        default=...,
+        alias="replan_count",
+        description="Required. Number of replacement revisions already committed.",
+    )
+    revision: int = Field(
+        default=...,
+        alias="revision",
+        description="Required. Immutable plan revision, starting at one.",
+    )
+    status: GenerationPlanStatus = Field(
+        default=..., alias="status", description="Required. Safe, derived current plan status."
+    )
+    steps: list[GenerationPlanStepSummary] = Field(
+        default=...,
+        alias="steps",
+        description="Required. Ordered safe steps for the current revision; at least one.",
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time the current plan checkpoint last changed.",
+    )
+    web_search_used: bool = Field(
+        default=...,
+        alias="web_search_used",
+        description="Required. Future-reserved projection; false in the current release.",
+    )
 
 
 GenerationOperation: TypeAlias = Literal[
@@ -1464,70 +2520,158 @@ class JobSummary(SDKModel):
     "JobSummary is the authoritative, user-visible fact for one logical\n generation job. Broker redeliveries do not create additional resources."
 
     completed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="completed_at"
+        default=None,
+        alias="completed_at",
+        description="(OPTIONAL) Conditional. Required in SUCCEEDED or FAILED.",
     )
     cost_summary: Annotated[CostSummary | None, AfterValidator(non_null)] = Field(
-        default=None, alias="cost_summary"
+        default=None,
+        alias="cost_summary",
+        description="(OPTIONAL) Deprecated. LLM charging and quota admission are owned by Vertex and\n Billing; PinPage no longer projects monetary state into generation jobs.",
     )
-    created_at: Timestamp = Field(default=..., alias="created_at")
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Logical job creation time."
+    )
     execution_plan: Annotated[GenerationPlanSummary | None, AfterValidator(non_null)] = Field(
-        default=None, alias="execution_plan"
+        default=None,
+        alias="execution_plan",
+        description="(OPTIONAL) Conditional. Present after the first structured plan is committed.",
     )
     failure: Annotated[JobFailure | None, AfterValidator(non_null)] = Field(
-        default=None, alias="failure"
+        default=None,
+        alias="failure",
+        description="(OPTIONAL) Conditional. Required in FAILED and absent in other states.",
     )
-    job_id: str = Field(default=..., alias="job_id")
-    operation: GenerationOperation = Field(default=..., alias="operation")
-    page_id: str = Field(default=..., alias="page_id")
-    result_version_id: str | None = Field(default=None, alias="result_version_id")
-    sequence_number: str = Field(default=..., alias="sequence_number")
-    source_job_id: str | None = Field(default=None, alias="source_job_id")
-    stage: JobStage | None = Field(default=None, alias="stage")
-    status: JobStatus = Field(default=..., alias="status")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    job_id: str = Field(
+        default=..., alias="job_id", description="Required. Opaque logical job identifier."
+    )
+    operation: GenerationOperation = Field(
+        default=..., alias="operation", description="Required. User-visible generation operation."
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque owning page identifier."
+    )
+    result_version_id: str | None = Field(
+        default=None,
+        alias="result_version_id",
+        description="(OPTIONAL) Conditional. Required in SUCCEEDED and absent in other states.",
+    )
+    sequence_number: str = Field(
+        default=...,
+        alias="sequence_number",
+        description="Required. Monotonic event sequence within this logical job.",
+    )
+    source_job_id: str | None = Field(
+        default=None,
+        alias="source_job_id",
+        description="(OPTIONAL) Conditional. Required for RETRY_JOB and identifies the failed source job.",
+    )
+    stage: JobStage | None = Field(
+        default=None,
+        alias="stage",
+        description="(OPTIONAL) Optional. Current visible stage while applicable; RESEARCHING is disabled.",
+    )
+    status: JobStatus = Field(
+        default=..., alias="status", description="Required. Current public job lifecycle."
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time the authoritative job fact last changed.",
+    )
 
 
 class Page(SDKModel):
     "Page is the authoritative user-visible aggregate for one PinPage."
 
-    active_job_id: str | None = Field(default=None, alias="active_job_id")
-    category_id: str | None = Field(default=None, alias="category_id")
-    content_revision: str = Field(default=..., alias="content_revision")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    current_version_id: str | None = Field(default=None, alias="current_version_id")
-    etag: str = Field(default=..., alias="etag")
-    event_revision: str = Field(default=..., alias="event_revision")
-    latest_job: JobSummary = Field(default=..., alias="latest_job")
-    page_id: str = Field(default=..., alias="page_id")
-    title: str = Field(default=..., alias="title")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    active_job_id: str | None = Field(
+        default=None,
+        alias="active_job_id",
+        description="(OPTIONAL) Conditional. Present while exactly one user job is QUEUED or RUNNING.",
+    )
+    category_id: str | None = Field(
+        default=None,
+        alias="category_id",
+        description="(OPTIONAL) Optional. Direct category identifier; absent when uncategorized.",
+    )
+    content_revision: str = Field(
+        default=...,
+        alias="content_revision",
+        description="Required. Monotonic content baseline revision used for publication CAS.",
+    )
+    created_at: Timestamp = Field(
+        default=...,
+        alias="created_at",
+        description="Required. First submission time; regeneration does not change it.",
+    )
+    current_version_id: str | None = Field(
+        default=None,
+        alias="current_version_id",
+        description="(OPTIONAL) Optional. Current successful version; absent before first publication.",
+    )
+    etag: str = Field(
+        default=...,
+        alias="etag",
+        description="Required. Cache and representation validator for the current Page view.",
+    )
+    event_revision: str = Field(
+        default=...,
+        alias="event_revision",
+        description="Required. Monotonic event revision for all client-visible changes.",
+    )
+    latest_job: JobSummary = Field(
+        default=...,
+        alias="latest_job",
+        description="Required. Most recent logical generation job summary.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque page identifier."
+    )
+    title: str = Field(
+        default=...,
+        alias="title",
+        description="Required. User-visible title, from 1 to 200 Unicode characters.",
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time page metadata or current-version pointer last changed.",
+    )
 
 
 class CreateGenerationResponse(SDKModel):
-    job: JobSummary = Field(default=..., alias="job")
-    page: Page = Field(default=..., alias="page")
+    job: JobSummary = Field(
+        default=..., alias="job", description="Required. Newly created logical generation job."
+    )
+    page: Page = Field(default=..., alias="page", description="Required. Newly created page.")
 
 
 class CreateOAuthClientRequest(SDKModel):
     allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_grant_types"
+        default=None, alias="allowed_grant_types", description=""
     )
     allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_identities"
+        default=None, alias="allowed_identities", description=""
     )
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     client_type: Annotated[ClientCredentialType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_type"
+        default=None,
+        alias="client_type",
+        description="ClientCredentialType describes whether an OAuth client can keep a secret.",
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
     redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uris"
+        default=None, alias="redirect_uris", description=""
     )
 
 
@@ -1535,57 +2679,81 @@ class OAuthClient(SDKModel):
     "OAuthClient is one credential atom owned by IAM. An application may own\n multiple clients; app_id and client_id must therefore be used together for\n every management operation.\n\n Secret material and secret hashes are deliberately absent from this read\n model. Plaintext is returned exactly once by create and rotate responses."
 
     allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_grant_types"
+        default=None, alias="allowed_grant_types", description=""
     )
     allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_identities"
+        default=None, alias="allowed_identities", description=""
     )
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     client_type: Annotated[ClientCredentialType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_type"
+        default=None,
+        alias="client_type",
+        description="ClientCredentialType describes whether an OAuth client can keep a secret.",
     )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description=""
     )
     has_client_secret: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="has_client_secret"
+        default=None, alias="has_client_secret", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
     redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uris"
+        default=None, alias="redirect_uris", description=""
     )
     status: Annotated[ClientCredentialStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="ClientCredentialStatus represents the lifecycle state of one OAuth client.",
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class CreateOAuthClientResponse(SDKModel):
     client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client"
+        default=None,
+        alias="client",
+        description="OAuthClient is one credential atom owned by IAM. An application may own\n multiple clients; app_id and client_id must therefore be used together for\n every management operation.\n\n Secret material and secret hashes are deliberately absent from this read\n model. Plaintext is returned exactly once by create and rotate responses.",
     )
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None,
+        alias="client_secret",
+        description="Plaintext returned once; empty for public clients.",
     )
 
 
 class CreateOrganizationRequest(SDKModel):
     metadata: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None,
+        alias="metadata",
+        description="Optional. Free-form JSON object. Server validates it parses as JSON.",
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="Required. Display name. 1-128 chars."
+    )
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="slug",
+        description="Required. URL-friendly slug. Server validates ^[a-z0-9-]{3,40}$ and\n returns ALREADY_EXISTS on conflict. Globally unique across all orgs.",
+    )
 
 
 OrganizationStatus: TypeAlias = Literal[
@@ -1600,76 +2768,122 @@ class Organization(SDKModel):
     "Organization is one of the two concrete tenant forms (the other is\n Workspace).\n\n `org_id` is an opaque entity-id with the `org` prefix and shares the\n platform-wide `tenant_id` value space with workspace ids. Consumers\n must treat it as opaque — no parsing, no length assumptions,\n byte-exact case-sensitive comparison."
 
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     metadata: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None,
+        alias="metadata",
+        description="Free-form JSON object. Pre-scrubbed of secrets at write time. Forward-\n compatible across proto bumps without breaking consumers.",
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="name",
+        description="Display name shown in dashboards and consent screens.",
+    )
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="org_id",
+        description="Opaque entity-id with `org` prefix. Globally unique across the tenant_id\n value space.",
+    )
     owner_user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="owner_user_id"
+        default=None,
+        alias="owner_user_id",
+        description="user_id of the initial creator. Transferable via UpdateOrganization +\n server-side ownership-handoff workflow (TODO: dedicated TransferOwnership\n RPC may land in a follow-up slice if needed; for now ownership is\n transferred by promoting another member to owner via UpdateMemberRole\n and then demoting the previous owner).",
     )
-    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="slug",
+        description="URL-friendly short name. Lowercase alphanumerics + dashes, 3-40 chars.\n Globally unique. Used in URLs like /v1/orgs/{slug} when a developer\n prefers slug-routed paths over org_id-routed ones.",
+    )
     status: Annotated[OrganizationStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None, alias="status", description="Lifecycle state. See OrganizationStatus enum."
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class CreateOrganizationResponse(SDKModel):
     organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
-        default=None, alias="organization"
+        default=None,
+        alias="organization",
+        description="Organization is one of the two concrete tenant forms (the other is\n Workspace).\n\n `org_id` is an opaque entity-id with the `org` prefix and shares the\n platform-wide `tenant_id` value space with workspace ids. Consumers\n must treat it as opaque — no parsing, no length assumptions,\n byte-exact case-sensitive comparison.",
     )
 
 
 class CreatePresetRequest(SDKModel):
-    config: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="config")
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    config: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="config", description="自定义配置，JSON 格式。"
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="预设名称。"
+    )
     template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_id"
+        default=None, alias="template_id", description="基于的系统模板 ID。"
     )
 
 
 class Preset(SDKModel):
     "Preset 用户自定义排版预设，基于系统模板微调。"
 
-    config: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="config")
-    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+    config: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="config", description="自定义配置，JSON 格式存储。"
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="预设显示名称。"
+    )
     preset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="preset_id"
+        default=None, alias="preset_id", description="预设唯一标识。"
     )
     template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_id"
+        default=None, alias="template_id", description="基于的系统模板 ID。"
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class CreatePresetResponse(SDKModel):
-    preset: Annotated[Preset | None, AfterValidator(non_null)] = Field(default=None, alias="preset")
+    preset: Annotated[Preset | None, AfterValidator(non_null)] = Field(
+        default=None, alias="preset", description="Preset 用户自定义排版预设，基于系统模板微调。"
+    )
 
 
 class CreateProjectRequest(SDKModel):
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="项目描述。"
     )
     metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None,
+        alias="metadata",
+        description="扩展元数据，用于存储业务自定义信息（如来源、优先级等），\n 避免频繁变更表结构。",
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="项目名称。"
+    )
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="tags", description="项目标签，用于分类和检索。"
+    )
 
 
 class CreateProjectRequestMetadataEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 ProjectStatus: TypeAlias = Literal[
@@ -1685,137 +2899,179 @@ class Project(SDKModel):
     "Project groups related creative content together.\n Project 是创作的顶层聚合单元，一个项目包含多篇文章、多个视频任务和多个素材。\n 典型场景：一次营销活动、一个专题系列、一期内容排期。"
 
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="项目描述。"
     )
     metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None,
+        alias="metadata",
+        description="扩展元数据，用于存储业务自定义信息，避免频繁变更表结构。",
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="项目名称。"
+    )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="项目唯一标识。"
     )
     status: Annotated[ProjectStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None, alias="status", description="项目状态。"
     )
-    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="tags", description="项目标签。"
+    )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class CreateProjectResponse(SDKModel):
     project: Annotated[Project | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project"
+        default=None,
+        alias="project",
+        description="Project groups related creative content together.\n Project 是创作的顶层聚合单元，一个项目包含多篇文章、多个视频任务和多个素材。\n 典型场景：一次营销活动、一个专题系列、一期内容排期。",
     )
 
 
 class CreateScopeRequest(SDKModel):
     category: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="category"
+        default=None, alias="category", description=""
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description=""
     )
     display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="display_name"
+        default=None, alias="display_name", description=""
     )
     is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_sensitive"
+        default=None, alias="is_sensitive", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
 
 
 class Scope(SDKModel):
     "Scope defines a permission boundary for OAuth access control."
 
     category: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="category"
+        default=None, alias="category", description='Grouping, e.g. "creative", "hanzi", "user"'
     )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="Shown on the consent screen"
     )
     display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="display_name"
+        default=None,
+        alias="display_name",
+        description='Human-readable label, e.g. "Read Creative Projects"',
     )
     is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_sensitive"
+        default=None, alias="is_sensitive", description="Requires explicit user approval"
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description='Machine-readable identifier, e.g. "creative:read"'
+    )
     scope_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="scope_id"
+        default=None, alias="scope_id", description=""
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class CreateScopeResponse(SDKModel):
-    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="scope",
+        description="Scope defines a permission boundary for OAuth access control.",
+    )
 
 
 class DeviceInfo(SDKModel):
     "DeviceInfo describes the client device."
 
     device_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_id"
+        default=None, alias="device_id", description=""
     )
     device_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_name"
+        default=None, alias="device_name", description=""
     )
     user_agent: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="user_agent"
+        default=None, alias="user_agent", description=""
     )
 
 
 class CreateSessionRequest(SDKModel):
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
-    ip: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ip")
-    port: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="port")
+    ip: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ip", description=""
+    )
+    port: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="port", description=""
+    )
 
 
 class TokenPair(SDKModel):
     "TokenPair contains access and refresh tokens returned after authentication."
 
     access_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="access_token"
+        default=None, alias="access_token", description=""
     )
     expires_in: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_in"
+        default=None, alias="expires_in", description=""
     )
     refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="refresh_token"
+        default=None, alias="refresh_token", description=""
     )
     token_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="token_type"
+        default=None, alias="token_type", description='"Bearer"'
     )
 
 
 class CreateSessionResponse(SDKModel):
     csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="csrf_token"
+        default=None, alias="csrf_token", description=""
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="TokenPair contains access and refresh tokens returned after authentication.",
     )
 
 
 class CreateUploadRequest(SDKModel):
     confirmed_authorized_max_credit: str = Field(
-        default=..., alias="confirmed_authorized_max_credit"
+        default=...,
+        alias="confirmed_authorized_max_credit",
+        description="Required. Exact parent-estimate maximum net charge confirmed by the user.",
     )
-    estimate_item_id: str = Field(default=..., alias="estimate_item_id")
-    user_id: str = Field(default=..., alias="user_id")
+    estimate_item_id: str = Field(
+        default=...,
+        alias="estimate_item_id",
+        description="Required. Available item in an unexpired upload estimate.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 UploadEstimateItemState: TypeAlias = Literal[
@@ -1829,13 +3085,39 @@ UploadEstimateItemState: TypeAlias = Literal[
 class UploadEstimateItem(SDKModel):
     "UploadEstimateItem is one immutable declared file position in an upload\n estimate batch. Content-bearing fields are suppressed after CONTENT_PURGED."
 
-    consumed_upload_id: str | None = Field(default=None, alias="consumed_upload_id")
-    declared_media_type: str | None = Field(default=None, alias="declared_media_type")
-    declared_sha256: str | None = Field(default=None, alias="declared_sha256")
-    declared_size_bytes: str | None = Field(default=None, alias="declared_size_bytes")
-    display_name: str | None = Field(default=None, alias="display_name")
-    estimate_item_id: str = Field(default=..., alias="estimate_item_id")
-    state: UploadEstimateItemState = Field(default=..., alias="state")
+    consumed_upload_id: str | None = Field(
+        default=None,
+        alias="consumed_upload_id",
+        description="(OPTIONAL) Conditional. Required in CONSUMED and omitted after CONTENT_PURGED.",
+    )
+    declared_media_type: str | None = Field(
+        default=None,
+        alias="declared_media_type",
+        description="(OPTIONAL) Conditional. Required in AVAILABLE or CONSUMED; omitted after CONTENT_PURGED.",
+    )
+    declared_sha256: str | None = Field(
+        default=None,
+        alias="declared_sha256",
+        description="(OPTIONAL) Conditional. Required in AVAILABLE or CONSUMED; omitted after CONTENT_PURGED.",
+    )
+    declared_size_bytes: str | None = Field(
+        default=None,
+        alias="declared_size_bytes",
+        description="(OPTIONAL) Conditional. Required in AVAILABLE or CONSUMED; omitted after CONTENT_PURGED.",
+    )
+    display_name: str | None = Field(
+        default=None,
+        alias="display_name",
+        description="(OPTIONAL) Conditional. Required in AVAILABLE or CONSUMED; omitted after CONTENT_PURGED.",
+    )
+    estimate_item_id: str = Field(
+        default=...,
+        alias="estimate_item_id",
+        description="Required. Opaque item identifier allocated within the estimate.",
+    )
+    state: UploadEstimateItemState = Field(
+        default=..., alias="state", description="Required. Current item lifecycle state."
+    )
 
 
 UploadEstimateState: TypeAlias = Literal[
@@ -1850,58 +3132,132 @@ UploadEstimateState: TypeAlias = Literal[
 class UploadEstimate(SDKModel):
     "UploadEstimate is a durable, short-lived batch estimate created before any\n multipart upload, signed URL, reserve, or object exists."
 
-    authorized_max_credit: str = Field(default=..., alias="authorized_max_credit")
-    balance_sufficient: bool = Field(default=..., alias="balance_sufficient")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    current_balance_credit: str = Field(default=..., alias="current_balance_credit")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    input_fingerprint: str = Field(default=..., alias="input_fingerprint")
-    items: list[UploadEstimateItem] = Field(default=..., alias="items")
-    pricing_version: str = Field(default=..., alias="pricing_version")
-    remaining_estimated_file_credit: str = Field(
-        default=..., alias="remaining_estimated_file_credit"
+    authorized_max_credit: str = Field(
+        default=...,
+        alias="authorized_max_credit",
+        description="Required. Immutable maximum net charge confirmed for the original batch.",
     )
-    remaining_file_count: int = Field(default=..., alias="remaining_file_count")
-    remaining_total_size_bytes: str = Field(default=..., alias="remaining_total_size_bytes")
-    state: UploadEstimateState = Field(default=..., alias="state")
-    upload_estimate_id: str = Field(default=..., alias="upload_estimate_id")
+    balance_sufficient: bool = Field(
+        default=...,
+        alias="balance_sufficient",
+        description="Required. Whether the balance covers authorized_max_credit.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Durable estimate creation time."
+    )
+    current_balance_credit: str = Field(
+        default=...,
+        alias="current_balance_credit",
+        description="Required. Wallet balance snapshot at estimate creation.",
+    )
+    expires_at: Timestamp = Field(
+        default=...,
+        alias="expires_at",
+        description="Required. Time after which remaining items cannot be consumed.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="input_fingerprint",
+        description="Required. SHA-256 of the original normalized declarations.",
+    )
+    items: list[UploadEstimateItem] = Field(
+        default=...,
+        alias="items",
+        description="Required. Original ordered item positions, including purged tombstones.",
+    )
+    pricing_version: str = Field(
+        default=...,
+        alias="pricing_version",
+        description="Required. Public file-service pricing contract version.",
+    )
+    remaining_estimated_file_credit: str = Field(
+        default=...,
+        alias="remaining_estimated_file_credit",
+        description="Required. File estimate across current non-purged items.",
+    )
+    remaining_file_count: int = Field(
+        default=...,
+        alias="remaining_file_count",
+        description="Required. Count of current non-purged items.",
+    )
+    remaining_total_size_bytes: str = Field(
+        default=...,
+        alias="remaining_total_size_bytes",
+        description="Required. Declared bytes across current non-purged items.",
+    )
+    state: UploadEstimateState = Field(
+        default=..., alias="state", description="Required. Derived batch lifecycle state."
+    )
+    upload_estimate_id: str = Field(
+        default=...,
+        alias="upload_estimate_id",
+        description="Required. Opaque upload estimate identifier.",
+    )
 
 
 class CreateUploadResponse(SDKModel):
-    upload: UploadSession = Field(default=..., alias="upload")
-    upload_estimate: UploadEstimate = Field(default=..., alias="upload_estimate")
+    upload: UploadSession = Field(
+        default=...,
+        alias="upload",
+        description="Required. Newly created durable multipart session.",
+    )
+    upload_estimate: UploadEstimate = Field(
+        default=...,
+        alias="upload_estimate",
+        description="Required. Parent estimate after atomic item consumption.",
+    )
 
 
 class CreateVideoRequest(SDKModel):
     "CreateVideoRequest 基于脚本和素材合成视频。\n 支持两种模式：\n   1. 指定 task_id —— 使用已有 VideoTask 中 LLM 生成的脚本\n   2. 指定 project_id + script —— 直接提供脚本创建视频"
 
     asset_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_ids"
+        default=None,
+        alias="asset_ids",
+        description="需要包含在视频中的素材 ID 列表（图片、音频等）。",
     )
-    height: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="height")
+    height: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="height", description="输出分辨率高度（像素），默认 1080。"
+    )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID，与 task_id 互斥时使用。"
     )
-    script: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="script")
+    script: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="script", description="直接提供的视频脚本文本，与 task_id 互斥时使用。"
+    )
     style: Annotated[VideoStyle | None, AfterValidator(non_null)] = Field(
-        default=None, alias="style"
+        default=None, alias="style", description="视频风格。"
     )
-    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
-    width: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="width")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="task_id",
+        description="已有的视频任务 ID（包含 LLM 生成的脚本），与 project_id+script 互斥。",
+    )
+    width: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="width", description="输出分辨率宽度（像素），默认 1920。"
+    )
 
 
 class CreateVideoResponse(SDKModel):
     "CreateVideoResponse 返回创建的视频任务。\n 视频合成为异步操作，通过 GetVideoTask 轮询进度。"
 
-    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="task",
+        description="VideoTask represents a video generation job.\n 视频生成是异步任务，客户端提交后通过轮询 GetVideoTask 获取进度。",
+    )
 
 
 class CreateWebhookRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
-    subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="subscribed_events"
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
     )
-    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="subscribed_events", description=""
+    )
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="url", description=""
+    )
 
 
 WebhookStatus: TypeAlias = Literal[
@@ -1912,62 +3268,108 @@ WebhookStatus: TypeAlias = Literal[
 class Webhook(SDKModel):
     "Webhook represents a registered webhook endpoint."
 
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     signing_secret_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="signing_secret_masked"
+        default=None, alias="signing_secret_masked", description="Only last 4 chars visible"
     )
     status: Annotated[WebhookStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="WebhookStatus represents the state of a webhook endpoint.",
     )
     subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="subscribed_events"
+        default=None,
+        alias="subscribed_events",
+        description='e.g. "project.created", "article.published"',
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="url", description=""
+    )
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
 class CreateWebhookResponse(SDKModel):
     signing_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="signing_secret"
+        default=None, alias="signing_secret", description="Returned in plaintext only on creation"
     )
     webhook: Annotated[Webhook | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook"
+        default=None,
+        alias="webhook",
+        description="Webhook represents a registered webhook endpoint.",
     )
 
 
 class CurrentVersionSummary(SDKModel):
     "CurrentVersionSummary is the lightweight projection of a page's current,\n fully published version. It never includes the HTML body."
 
-    html_sha256: str = Field(default=..., alias="html_sha256")
-    orientation: Orientation = Field(default=..., alias="orientation")
-    png_export_id: str = Field(default=..., alias="png_export_id")
-    png_sha256: str = Field(default=..., alias="png_sha256")
-    png_size_bytes: str = Field(default=..., alias="png_size_bytes")
-    thumbnail_url: str = Field(default=..., alias="thumbnail_url")
-    thumbnail_url_expires_at: Timestamp = Field(default=..., alias="thumbnail_url_expires_at")
-    version_id: str = Field(default=..., alias="version_id")
+    html_sha256: str = Field(
+        default=...,
+        alias="html_sha256",
+        description="Required. SHA-256 of the complete normalized HTML.",
+    )
+    orientation: Orientation = Field(
+        default=..., alias="orientation", description="Required. Published A4 page orientation."
+    )
+    png_export_id: str = Field(
+        default=...,
+        alias="png_export_id",
+        description="Required. Opaque identifier of the persisted PNG artifact.",
+    )
+    png_sha256: str = Field(
+        default=...,
+        alias="png_sha256",
+        description="Required. SHA-256 of the persisted PNG used for the thumbnail.",
+    )
+    png_size_bytes: str = Field(
+        default=...,
+        alias="png_size_bytes",
+        description="Required. Actual persisted PNG size in bytes.",
+    )
+    thumbnail_url: str = Field(
+        default=...,
+        alias="thumbnail_url",
+        description="Required. Short-lived, owner-authorized thumbnail URL or ticket.",
+    )
+    thumbnail_url_expires_at: Timestamp = Field(
+        default=...,
+        alias="thumbnail_url_expires_at",
+        description="Required. Expiry time of thumbnail_url.",
+    )
+    version_id: str = Field(
+        default=..., alias="version_id", description="Required. Opaque current version identifier."
+    )
 
 
 class DeleteAccountRequest(SDKModel):
     password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="password_hash"
+        default=None, alias="password_hash", description=""
     )
-    reason: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="reason")
+    reason: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="reason", description=""
+    )
 
 
 DeleteAccountResponse: TypeAlias = Any
 
 
 class DeleteApplicationRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
 
 
 DeleteApplicationResponse: TypeAlias = Any
@@ -1975,7 +3377,7 @@ DeleteApplicationResponse: TypeAlias = Any
 
 class DeleteArticleRequest(SDKModel):
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description=""
     )
 
 
@@ -1984,7 +3386,7 @@ DeleteArticleResponse: TypeAlias = Any
 
 class DeleteAssetRequest(SDKModel):
     asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_id"
+        default=None, alias="asset_id", description=""
     )
 
 
@@ -1998,35 +3400,73 @@ DeleteAvatarResponse: TypeAlias = Any
 
 
 class DeleteCategoryRequest(SDKModel):
-    category_id: str = Field(default=..., alias="category_id")
-    impact_fingerprint: str = Field(default=..., alias="impact_fingerprint")
-    user_id: str = Field(default=..., alias="user_id")
+    category_id: str = Field(
+        default=...,
+        alias="category_id",
+        description="Required. Root category to revoke and delete with its subtree.",
+    )
+    impact_fingerprint: str = Field(
+        default=...,
+        alias="impact_fingerprint",
+        description="Required. Exact aggregate impact fingerprint from the adjacent preview.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class DeleteCategoryResponse(SDKModel):
-    deletion_result: CategoryDeletionResult = Field(default=..., alias="deletion_result")
+    deletion_result: CategoryDeletionResult = Field(
+        default=...,
+        alias="deletion_result",
+        description="Required. Safe category-subtree deletion receipt.",
+    )
 
 
 class DeleteMaterialRequest(SDKModel):
-    material_id: str = Field(default=..., alias="material_id")
-    user_id: str = Field(default=..., alias="user_id")
+    material_id: str = Field(
+        default=...,
+        alias="material_id",
+        description="Required. Unbound material whose access is revoked.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class MaterialDeletionResult(SDKModel):
     "MaterialDeletionResult confirms immediate access revocation for an unbound\n material. Physical cleanup continues asynchronously."
 
-    accepted_at: Timestamp = Field(default=..., alias="accepted_at")
-    material_id: str = Field(default=..., alias="material_id")
+    accepted_at: Timestamp = Field(
+        default=...,
+        alias="accepted_at",
+        description="Required. Time logical access revocation became effective.",
+    )
+    material_id: str = Field(
+        default=...,
+        alias="material_id",
+        description="Required. Opaque deleted material identifier.",
+    )
 
 
 class DeleteMaterialResponse(SDKModel):
-    deletion_result: MaterialDeletionResult = Field(default=..., alias="deletion_result")
+    deletion_result: MaterialDeletionResult = Field(
+        default=...,
+        alias="deletion_result",
+        description="Required. Safe access-revocation receipt.",
+    )
 
 
 class DeleteOAuthClientRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
 
 
@@ -2034,37 +3474,79 @@ DeleteOAuthClientResponse: TypeAlias = Any
 
 
 class DeleteOrganizationRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
+    )
 
 
 DeleteOrganizationResponse: TypeAlias = Any
 
 
 class DeletePageRequest(SDKModel):
-    expected_content_revision: str = Field(default=..., alias="expected_content_revision")
-    impact_fingerprint: str = Field(default=..., alias="impact_fingerprint")
-    page_etag: str | None = Field(default=None, alias="page_etag")
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
+    expected_content_revision: str = Field(
+        default=...,
+        alias="expected_content_revision",
+        description="Required. Content revision returned by the adjacent preview.",
+    )
+    impact_fingerprint: str = Field(
+        default=...,
+        alias="impact_fingerprint",
+        description="Required. Exact impact fingerprint returned by the adjacent preview.",
+    )
+    page_etag: str | None = Field(
+        default=None,
+        alias="page_etag",
+        description="(OPTIONAL) Optional. Exact representation validator requested by the client.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Page to revoke and delete."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class PageDeletionResult(SDKModel):
     "PageDeletionResult confirms immediate access revocation and the accepted\n asynchronous physical-deletion deadline."
 
-    accepted_at: Timestamp = Field(default=..., alias="accepted_at")
-    content_revision: str = Field(default=..., alias="content_revision")
-    event_revision: str = Field(default=..., alias="event_revision")
-    page_id: str = Field(default=..., alias="page_id")
-    physical_delete_due_at: Timestamp = Field(default=..., alias="physical_delete_due_at")
+    accepted_at: Timestamp = Field(
+        default=...,
+        alias="accepted_at",
+        description="Required. Time logical access revocation became effective.",
+    )
+    content_revision: str = Field(
+        default=...,
+        alias="content_revision",
+        description="Required. Content tombstone revision produced by the deletion transaction.",
+    )
+    event_revision: str = Field(
+        default=...,
+        alias="event_revision",
+        description="Required. Event tombstone revision produced by the deletion transaction.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque deleted page identifier."
+    )
+    physical_delete_due_at: Timestamp = Field(
+        default=...,
+        alias="physical_delete_due_at",
+        description="Required. Latest permitted physical deletion time for primary storage.",
+    )
 
 
 class DeletePageResponse(SDKModel):
-    deletion_result: PageDeletionResult = Field(default=..., alias="deletion_result")
+    deletion_result: PageDeletionResult = Field(
+        default=...,
+        alias="deletion_result",
+        description="Required. Safe logical-deletion receipt and physical-cleanup deadline.",
+    )
 
 
 class DeletePresetRequest(SDKModel):
     preset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="preset_id"
+        default=None, alias="preset_id", description=""
     )
 
 
@@ -2075,7 +3557,7 @@ class DeleteProjectRequest(SDKModel):
     "DeleteProjectRequest 删除项目。\n 注意：将级联删除项目下的所有文章、视频任务和素材。"
 
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description=""
     )
 
 
@@ -2085,7 +3567,9 @@ DeleteProjectResponse: TypeAlias = Any
 class DeleteVideoTaskRequest(SDKModel):
     "DeleteVideoTaskRequest 删除视频任务及其生成的视频文件。"
 
-    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="task_id", description=""
+    )
 
 
 DeleteVideoTaskResponse: TypeAlias = Any
@@ -2093,7 +3577,7 @@ DeleteVideoTaskResponse: TypeAlias = Any
 
 class DeleteWebhookRequest(SDKModel):
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
@@ -2109,14 +3593,28 @@ DeliveryStatus: TypeAlias = Literal[
 
 
 class EstimateCategoryOrganizationRequest(SDKModel):
-    instruction: str = Field(default=..., alias="instruction")
-    scope_category_id: str | None = Field(default=None, alias="scope_category_id")
-    user_id: str = Field(default=..., alias="user_id")
+    instruction: str = Field(
+        default=...,
+        alias="instruction",
+        description="Required. One-time organization instruction, from 1 to 2,000 characters.",
+    )
+    scope_category_id: str | None = Field(
+        default=None,
+        alias="scope_category_id",
+        description="(OPTIONAL) Optional. Omit for the whole tree; otherwise restrict to this subtree.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class EstimateCategoryOrganizationResponse(SDKModel):
     organization_estimate: CategoryOrganizationEstimate = Field(
-        default=..., alias="organization_estimate"
+        default=...,
+        alias="organization_estimate",
+        description="Required. Durable no-charge category organization estimate.",
     )
 
 
@@ -2139,48 +3637,110 @@ InlineTextChangeMode: TypeAlias = Literal[
 class InlineTextChange(SDKModel):
     "InlineTextChange carries a regeneration-only inline-text delta."
 
-    mode: InlineTextChangeMode = Field(default=..., alias="mode")
-    text: str | None = Field(default=None, alias="text")
+    mode: InlineTextChangeMode = Field(
+        default=..., alias="mode", description="Required. KEEP, REPLACE, or REMOVE."
+    )
+    text: str | None = Field(
+        default=None,
+        alias="text",
+        description="(OPTIONAL) Optional. Required and non-empty for REPLACE; forbidden otherwise.",
+    )
 
 
 class EstimateGenerationRequest(SDKModel):
     add_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="add_material_ids"
+        default=None,
+        alias="add_material_ids",
+        description="(OPTIONAL) Optional. Materials added to a regeneration baseline.",
     )
-    base_job_id: str | None = Field(default=None, alias="base_job_id")
-    brief_instruction: str | None = Field(default=None, alias="brief_instruction")
+    base_job_id: str | None = Field(
+        default=None,
+        alias="base_job_id",
+        description="(OPTIONAL) Optional. Regeneration baseline job when the selected branch requires one.",
+    )
+    brief_instruction: str | None = Field(
+        default=None,
+        alias="brief_instruction",
+        description="(OPTIONAL) Optional. Required for create and an optional delta for regeneration.",
+    )
     content_decision_action_token: str | None = Field(
-        default=None, alias="content_decision_action_token"
+        default=None,
+        alias="content_decision_action_token",
+        description="(OPTIONAL) Optional. Required with content_decision_context_id and never logged.",
     )
     content_decision_context_digest: str | None = Field(
-        default=None, alias="content_decision_context_digest"
+        default=None,
+        alias="content_decision_context_digest",
+        description="(OPTIONAL) Optional. Required with content_decision_context_id.",
     )
     content_decision_context_id: str | None = Field(
-        default=None, alias="content_decision_context_id"
+        default=None,
+        alias="content_decision_context_id",
+        description="(OPTIONAL) Optional. Required when resolving a durable content-decision context.",
     )
-    content_decision_note: str | None = Field(default=None, alias="content_decision_note")
+    content_decision_note: str | None = Field(
+        default=None,
+        alias="content_decision_note",
+        description="(OPTIONAL) Optional. Regeneration-only note accompanying selected option identifiers.",
+    )
     content_decision_option_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_decision_option_ids"
+        default=None,
+        alias="content_decision_option_ids",
+        description="(OPTIONAL) Optional. Required and non-empty with content_decision_context_id.",
     )
     external_information_mode: ExternalInformationMode | None = Field(
-        default=None, alias="external_information_mode"
+        default=None,
+        alias="external_information_mode",
+        description="(OPTIONAL) Optional. Required for create/regeneration and currently must be DISABLED.",
     )
-    inline_text: str | None = Field(default=None, alias="inline_text")
+    inline_text: str | None = Field(
+        default=None,
+        alias="inline_text",
+        description="(OPTIONAL) Optional. Complete inline source for create; forbidden for other operations.",
+    )
     inline_text_change: Annotated[InlineTextChange | None, AfterValidator(non_null)] = Field(
-        default=None, alias="inline_text_change"
+        default=None,
+        alias="inline_text_change",
+        description="(OPTIONAL) Optional. Typed inline-text delta for regeneration only.",
     )
     material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="material_ids"
+        default=None,
+        alias="material_ids",
+        description="(OPTIONAL) Optional. Complete create-time material set; conditionally non-empty.",
     )
-    operation: GenerationOperation = Field(default=..., alias="operation")
-    orientation: Orientation | None = Field(default=None, alias="orientation")
-    page_id: str | None = Field(default=None, alias="page_id")
+    operation: GenerationOperation = Field(
+        default=...,
+        alias="operation",
+        description="Required. CREATE_PAGE, REGENERATE_PAGE, or RETRY_JOB.",
+    )
+    orientation: Orientation | None = Field(
+        default=None,
+        alias="orientation",
+        description="(OPTIONAL) Optional. Create or regeneration orientation; forbidden for retry.",
+    )
+    page_id: str | None = Field(
+        default=None,
+        alias="page_id",
+        description="(OPTIONAL) Optional. Required for REGENERATE_PAGE and RETRY_JOB; forbidden for create.",
+    )
     remove_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="remove_material_ids"
+        default=None,
+        alias="remove_material_ids",
+        description="(OPTIONAL) Optional. Materials removed from a regeneration baseline.",
     )
-    source_job_id: str | None = Field(default=None, alias="source_job_id")
-    title: str | None = Field(default=None, alias="title")
-    user_id: str = Field(default=..., alias="user_id")
+    source_job_id: str | None = Field(
+        default=None,
+        alias="source_job_id",
+        description="(OPTIONAL) Optional. Required only for RETRY_JOB.",
+    )
+    title: str | None = Field(
+        default=None, alias="title", description="(OPTIONAL) Optional. Create-only candidate title."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 ToolCapability: TypeAlias = Literal["TOOL_CAPABILITY_UNSPECIFIED", "TOOL_CAPABILITY_WEB_SEARCH"]
@@ -2189,90 +3749,264 @@ ToolCapability: TypeAlias = Literal["TOOL_CAPABILITY_UNSPECIFIED", "TOOL_CAPABIL
 class ToolPolicySnapshot(SDKModel):
     "ToolPolicySnapshot is the immutable, server-selected capability and budget\n contract captured by a generation estimate.\n\n The current release requires mode=DISABLED, an empty allowed_capabilities\n list, and zero for every web-search budget. MCP server names, endpoints,\n credentials, and arbitrary tool names are intentionally not modeled."
 
-    allowed_capabilities: list[ToolCapability] = Field(default=..., alias="allowed_capabilities")
-    freshness_window: Annotated[Duration | None, AfterValidator(non_null)] = Field(
-        default=None, alias="freshness_window"
+    allowed_capabilities: list[ToolCapability] = Field(
+        default=...,
+        alias="allowed_capabilities",
+        description="Required. Current release is empty; WEB_SEARCH is future-reserved.",
     )
-    max_ai_turn_count: int = Field(default=..., alias="max_ai_turn_count")
-    max_call_attempt_count: int = Field(default=..., alias="max_call_attempt_count")
-    max_execution_duration_ms: str = Field(default=..., alias="max_execution_duration_ms")
-    max_plan_step_count: int = Field(default=..., alias="max_plan_step_count")
-    max_replan_count: int = Field(default=..., alias="max_replan_count")
-    max_result_bytes: str = Field(default=..., alias="max_result_bytes")
-    max_results_per_call: int = Field(default=..., alias="max_results_per_call")
-    max_web_search_call_count: int = Field(default=..., alias="max_web_search_call_count")
-    max_web_search_duration_ms: str = Field(default=..., alias="max_web_search_duration_ms")
-    mode: ExternalInformationMode = Field(default=..., alias="mode")
-    policy_version: str = Field(default=..., alias="policy_version")
-    requires_fresh_sources: bool = Field(default=..., alias="requires_fresh_sources")
+    freshness_window: Annotated[Duration | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="freshness_window",
+        description="(OPTIONAL) Conditional. Future-reserved freshness window; absent in the current release.",
+    )
+    max_ai_turn_count: int = Field(
+        default=...,
+        alias="max_ai_turn_count",
+        description="Required. Hard limit for logical AI turns across all plan revisions.",
+    )
+    max_call_attempt_count: int = Field(
+        default=...,
+        alias="max_call_attempt_count",
+        description="Required. Future-reserved tool attempts; current release is zero.",
+    )
+    max_execution_duration_ms: str = Field(
+        default=...,
+        alias="max_execution_duration_ms",
+        description="Required. End-to-end execution deadline in milliseconds.",
+    )
+    max_plan_step_count: int = Field(
+        default=...,
+        alias="max_plan_step_count",
+        description="Required. Hard limit for steps in one plan revision.",
+    )
+    max_replan_count: int = Field(
+        default=...,
+        alias="max_replan_count",
+        description="Required. Hard limit for replacement revisions; P1 fixes this to two.",
+    )
+    max_result_bytes: str = Field(
+        default=...,
+        alias="max_result_bytes",
+        description="Required. Future-reserved result bytes; current release is zero.",
+    )
+    max_results_per_call: int = Field(
+        default=...,
+        alias="max_results_per_call",
+        description="Required. Future-reserved results per search call; current release is zero.",
+    )
+    max_web_search_call_count: int = Field(
+        default=...,
+        alias="max_web_search_call_count",
+        description="Required. Future-reserved web-search calls; current release is zero.",
+    )
+    max_web_search_duration_ms: str = Field(
+        default=...,
+        alias="max_web_search_duration_ms",
+        description="Required. Future-reserved search duration in milliseconds; current release is zero.",
+    )
+    mode: ExternalInformationMode = Field(
+        default=...,
+        alias="mode",
+        description="Required. Current release is DISABLED; search modes are future-reserved.",
+    )
+    policy_version: str = Field(
+        default=...,
+        alias="policy_version",
+        description="Required. Reviewed policy version included in the input fingerprint.",
+    )
+    requires_fresh_sources: bool = Field(
+        default=...,
+        alias="requires_fresh_sources",
+        description="Required. Future-reserved freshness flag; current release is false.",
+    )
 
 
 class GenerationEstimate(SDKModel):
     "GenerationEstimate is a durable, short-lived snapshot that authorizes one\n generation job with exactly the frozen input and maximum exposure shown."
 
-    authorized_max_credit: str = Field(default=..., alias="authorized_max_credit")
-    balance_sufficient: bool = Field(default=..., alias="balance_sufficient")
-    base_brief_revision_id: str | None = Field(default=None, alias="base_brief_revision_id")
-    base_job_id: str | None = Field(default=None, alias="base_job_id")
-    base_page_content_revision: str | None = Field(default=None, alias="base_page_content_revision")
-    base_version_id: str | None = Field(default=None, alias="base_version_id")
-    category_preference_snapshot: CategoryPreferenceSnapshot = Field(
-        default=..., alias="category_preference_snapshot"
+    authorized_max_credit: str = Field(
+        default=...,
+        alias="authorized_max_credit",
+        description="Required. Maximum permitted user net charge for this operation.",
     )
-    consumed_job_id: str | None = Field(default=None, alias="consumed_job_id")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    current_balance_credit: str = Field(default=..., alias="current_balance_credit")
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    estimated_ai_credit: str = Field(default=..., alias="estimated_ai_credit")
-    estimated_file_credit: str = Field(default=..., alias="estimated_file_credit")
-    estimated_tool_credit: str = Field(default=..., alias="estimated_tool_credit")
-    estimated_total_credit: str = Field(default=..., alias="estimated_total_credit")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    input_fingerprint: str = Field(default=..., alias="input_fingerprint")
-    operation: GenerationOperation = Field(default=..., alias="operation")
-    page_id: str | None = Field(default=None, alias="page_id")
-    pricing_version: str = Field(default=..., alias="pricing_version")
-    source_job_id: str | None = Field(default=None, alias="source_job_id")
-    state: EstimateState = Field(default=..., alias="state")
-    tool_policy_snapshot: ToolPolicySnapshot = Field(default=..., alias="tool_policy_snapshot")
+    balance_sufficient: bool = Field(
+        default=...,
+        alias="balance_sufficient",
+        description="Required. Whether the balance covers authorized_max_credit.",
+    )
+    base_brief_revision_id: str | None = Field(
+        default=None,
+        alias="base_brief_revision_id",
+        description="(OPTIONAL) Conditional. Present when a successful version brief is the selected baseline.",
+    )
+    base_job_id: str | None = Field(
+        default=None,
+        alias="base_job_id",
+        description="(OPTIONAL) Conditional. REGENERATE_PAGE baseline job when required by the selected branch.",
+    )
+    base_page_content_revision: str | None = Field(
+        default=None,
+        alias="base_page_content_revision",
+        description="(OPTIONAL) Conditional. Required for REGENERATE_PAGE or RETRY_JOB.",
+    )
+    base_version_id: str | None = Field(
+        default=None,
+        alias="base_version_id",
+        description="(OPTIONAL) Conditional. Present when the target page has a current version.",
+    )
+    category_preference_snapshot: CategoryPreferenceSnapshot = Field(
+        default=...,
+        alias="category_preference_snapshot",
+        description="Required. Immutable preference snapshot used by the resulting job.",
+    )
+    consumed_job_id: str | None = Field(
+        default=None,
+        alias="consumed_job_id",
+        description="(OPTIONAL) Conditional. Present when CONSUMED and identifies the unique logical job.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Durable estimate creation time."
+    )
+    current_balance_credit: str = Field(
+        default=...,
+        alias="current_balance_credit",
+        description="Required. Wallet balance snapshot at estimate creation.",
+    )
+    estimate_id: str = Field(
+        default=..., alias="estimate_id", description="Required. Opaque estimate identifier."
+    )
+    estimated_ai_credit: str = Field(
+        default=...,
+        alias="estimated_ai_credit",
+        description="Required. Estimated AI credits for the complete logical job.",
+    )
+    estimated_file_credit: str = Field(
+        default=...,
+        alias="estimated_file_credit",
+        description="Required. Estimated file-service credits.",
+    )
+    estimated_tool_credit: str = Field(
+        default=...,
+        alias="estimated_tool_credit",
+        description="Required. Future-reserved tool estimate; zero in the current release.",
+    )
+    estimated_total_credit: str = Field(
+        default=...,
+        alias="estimated_total_credit",
+        description="Required. Sum of all public estimated components.",
+    )
+    expires_at: Timestamp = Field(
+        default=...,
+        alias="expires_at",
+        description="Required. Time after which a new estimate is required.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="input_fingerprint",
+        description="Required. SHA-256 of the complete frozen input and authorization snapshot.",
+    )
+    operation: GenerationOperation = Field(
+        default=...,
+        alias="operation",
+        description="Required. Generation operation authorized by this estimate.",
+    )
+    page_id: str | None = Field(
+        default=None,
+        alias="page_id",
+        description="(OPTIONAL) Conditional. Required for regeneration or retry of an existing page.",
+    )
+    pricing_version: str = Field(
+        default=...,
+        alias="pricing_version",
+        description="Required. Public pricing contract version.",
+    )
+    source_job_id: str | None = Field(
+        default=None,
+        alias="source_job_id",
+        description="(OPTIONAL) Conditional. Required for RETRY_JOB and absent for other operations.",
+    )
+    state: EstimateState = Field(
+        default=..., alias="state", description="Required. Current estimate lifecycle state."
+    )
+    tool_policy_snapshot: ToolPolicySnapshot = Field(
+        default=...,
+        alias="tool_policy_snapshot",
+        description="Required. Immutable, server-selected tool policy snapshot.",
+    )
 
 
 class EstimateGenerationResponse(SDKModel):
-    estimate: GenerationEstimate = Field(default=..., alias="estimate")
+    estimate: GenerationEstimate = Field(
+        default=...,
+        alias="estimate",
+        description="Required. Durable frozen estimate and input fingerprint.",
+    )
 
 
 class UploadEstimateDeclaration(SDKModel):
     "UploadEstimateDeclaration is one client file declaration priced as an\n immutable item before any multipart session or signed URL exists."
 
-    declared_media_type: str = Field(default=..., alias="declared_media_type")
-    declared_sha256: str = Field(default=..., alias="declared_sha256")
-    declared_size_bytes: str = Field(default=..., alias="declared_size_bytes")
-    display_name: str = Field(default=..., alias="display_name")
+    declared_media_type: str = Field(
+        default=...,
+        alias="declared_media_type",
+        description="Required. Client-declared MIME used for validation and estimation.",
+    )
+    declared_sha256: str = Field(
+        default=...,
+        alias="declared_sha256",
+        description="Required. Lowercase hexadecimal SHA-256 of the complete file.",
+    )
+    declared_size_bytes: str = Field(
+        default=...,
+        alias="declared_size_bytes",
+        description="Required. Declared complete-file size, from 1 to 50,000,000 bytes.",
+    )
+    display_name: str = Field(
+        default=...,
+        alias="display_name",
+        description="Required. Sanitized user-visible basename, from 1 to 255 characters.",
+    )
 
 
 class EstimateUploadRequest(SDKModel):
-    files: list[UploadEstimateDeclaration] = Field(default=..., alias="files")
-    user_id: str = Field(default=..., alias="user_id")
+    files: list[UploadEstimateDeclaration] = Field(
+        default=...,
+        alias="files",
+        description="Required. One to ten declarations with at most 200 MB in aggregate.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class EstimateUploadResponse(SDKModel):
-    upload_estimate: UploadEstimate = Field(default=..., alias="upload_estimate")
+    upload_estimate: UploadEstimate = Field(
+        default=...,
+        alias="upload_estimate",
+        description="Required. Durable short-lived batch estimate; no charge has occurred.",
+    )
 
 
 class ExchangeSessionRequest(SDKModel):
     csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="csrf_token"
+        default=None, alias="csrf_token", description=""
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
 class ExchangeSessionResponse(SDKModel):
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="TokenPair contains access and refresh tokens returned after authentication.",
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
 
 
 ExportFormat: TypeAlias = Literal[
@@ -2283,15 +4017,39 @@ ExportFormat: TypeAlias = Literal[
 class ExportArtifact(SDKModel):
     "ExportArtifact is an immutable published artifact plus a freshly authorized\n short-lived download ticket. It never exposes an object-storage key."
 
-    download_url: str = Field(default=..., alias="download_url")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    export_id: str = Field(default=..., alias="export_id")
-    format: ExportFormat = Field(default=..., alias="format")
-    orientation: Orientation = Field(default=..., alias="orientation")
-    page_id: str = Field(default=..., alias="page_id")
-    sha256: str = Field(default=..., alias="sha256")
-    size_bytes: str = Field(default=..., alias="size_bytes")
-    version_id: str = Field(default=..., alias="version_id")
+    download_url: str = Field(
+        default=...,
+        alias="download_url",
+        description="Required. Short-lived owner-authorized download URL or ticket.",
+    )
+    expires_at: Timestamp = Field(
+        default=..., alias="expires_at", description="Required. Expiry time of download_url."
+    )
+    export_id: str = Field(
+        default=..., alias="export_id", description="Required. Opaque export artifact identifier."
+    )
+    format: ExportFormat = Field(
+        default=..., alias="format", description="Required. PDF or PNG artifact format."
+    )
+    orientation: Orientation = Field(
+        default=...,
+        alias="orientation",
+        description="Required. Orientation inherited from the source version.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque owning page identifier."
+    )
+    sha256: str = Field(
+        default=..., alias="sha256", description="Required. SHA-256 of the validated artifact."
+    )
+    size_bytes: str = Field(
+        default=...,
+        alias="size_bytes",
+        description="Required. Actual persisted artifact size in bytes.",
+    )
+    version_id: str = Field(
+        default=..., alias="version_id", description="Required. Unique source version identifier."
+    )
 
 
 FieldMask: TypeAlias = str
@@ -2301,133 +4059,173 @@ class GenerateScriptRequest(SDKModel):
     "GenerateScriptRequest 基于主题或已有文章，调用 LLM 生成视频脚本。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None,
+        alias="article_id",
+        description="从已有文章派生脚本，与 topic 二选一。\n 指定后 LLM 会基于文章内容改编为视频脚本。",
     )
     language: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="language"
+        default=None, alias="language", description="输出语言，BCP 47 格式。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
     requirements: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="requirements"
+        default=None,
+        alias="requirements",
+        description='补充要求，例如 "面向初学者"、"突出产品优势"。',
     )
     style: Annotated[VideoStyle | None, AfterValidator(non_null)] = Field(
-        default=None, alias="style"
+        default=None, alias="style", description="视频风格，决定脚本的结构和节奏。"
     )
     target_duration_seconds: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="target_duration_seconds"
+        default=None,
+        alias="target_duration_seconds",
+        description="目标视频时长（秒），LLM 会据此控制脚本篇幅。",
     )
-    topic: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="topic")
+    topic: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="topic", description="视频主题，与 article_id 二选一。"
+    )
 
 
 class GenerateScriptResponse(SDKModel):
     "GenerateScriptResponse 是 GenerateScript 的流式响应。"
 
-    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
-    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
-        default=None, alias="event"
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="done", description="是否生成完毕。"
     )
-    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
+    event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="event",
+        description="流式事件，携带内容片段、状态更新、Token 用量或错误信息。",
+    )
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(
+        default=None, alias="task", description="完整的视频任务实体，仅在 done=true 时填充。"
+    )
 
 
 class GenerateUploadUrlRequest(SDKModel):
     "GenerateUploadUrlRequest 为大文件生成预签名上传 URL。\n 客户端获取 URL 后，直接向对象存储（OSS/S3）上传文件，\n 上传完成后调用 ConfirmUpload 确认，服务端再提取文件元信息。"
 
     content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_type"
+        default=None, alias="content_type", description="MIME 类型。"
     )
     filename: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="filename"
+        default=None, alias="filename", description="原始文件名。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
 
 
 class GenerateUploadUrlResponse(SDKModel):
     asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_id"
+        default=None, alias="asset_id", description="预分配的素材 ID，后续 ConfirmUpload 使用。"
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None, alias="expires_at", description="预签名 URL 过期时间，通常为 30 分钟。"
     )
     upload_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="upload_url"
+        default=None,
+        alias="upload_url",
+        description="预签名上传 URL，客户端使用 HTTP PUT 上传文件。",
     )
 
 
 class ProgressMessage(SDKModel):
     arguments: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="arguments"
+        default=None, alias="arguments", description="(OPTIONAL) Optional. arguments."
     )
-    default_message: str = Field(default=..., alias="default_message")
-    default_message_locale: str = Field(default=..., alias="default_message_locale")
+    default_message: str = Field(
+        default=..., alias="default_message", description="Required. default message."
+    )
+    default_message_locale: str = Field(
+        default=..., alias="default_message_locale", description="Required. default message locale."
+    )
     dynamic_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="dynamic_locale"
+        default=None, alias="dynamic_locale", description="(OPTIONAL) Optional. dynamic locale."
     )
-    message_code: str = Field(default=..., alias="message_code")
+    message_code: str = Field(
+        default=..., alias="message_code", description="Required. message code."
+    )
 
 
 class GenerationProgressEvent(SDKModel):
-    duration_ms: str | None = Field(default=None, alias="duration_ms")
-    event_id: str = Field(default=..., alias="event_id")
-    event_seq: str = Field(default=..., alias="event_seq")
-    message: ProgressMessage = Field(default=..., alias="message")
-    occurred_at: Timestamp = Field(default=..., alias="occurred_at")
-    recorded_at: Timestamp = Field(default=..., alias="recorded_at")
-    status: str = Field(default=..., alias="status")
-    step_id: str = Field(default=..., alias="step_id")
+    duration_ms: str | None = Field(
+        default=None, alias="duration_ms", description="(OPTIONAL) Optional. duration ms."
+    )
+    event_id: str = Field(default=..., alias="event_id", description="Required. event id.")
+    event_seq: str = Field(default=..., alias="event_seq", description="Required. event seq.")
+    message: ProgressMessage = Field(default=..., alias="message", description="Required. message.")
+    occurred_at: Timestamp = Field(
+        default=..., alias="occurred_at", description="Required. occurred at."
+    )
+    recorded_at: Timestamp = Field(
+        default=..., alias="recorded_at", description="Required. recorded at."
+    )
+    status: str = Field(default=..., alias="status", description="Required. status.")
+    step_id: str = Field(default=..., alias="step_id", description="Required. step id.")
 
 
 class GenerationProgressStep(SDKModel):
     completed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="completed_at"
+        default=None, alias="completed_at", description="(OPTIONAL) Optional. completed at."
     )
     failed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="failed_at"
+        default=None, alias="failed_at", description="(OPTIONAL) Optional. failed at."
     )
-    message: ProgressMessage = Field(default=..., alias="message")
+    message: ProgressMessage = Field(default=..., alias="message", description="Required. message.")
     resume_started_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="resume_started_at"
+        default=None,
+        alias="resume_started_at",
+        description="(OPTIONAL) Optional. resume started at.",
     )
     started_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="started_at"
+        default=None, alias="started_at", description="(OPTIONAL) Optional. started at."
     )
-    status: str = Field(default=..., alias="status")
-    step_id: str = Field(default=..., alias="step_id")
+    status: str = Field(default=..., alias="status", description="Required. status.")
+    step_id: str = Field(default=..., alias="step_id", description="Required. step id.")
 
 
 class GetApplicationRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
 
 
 class GetApplicationResponse(SDKModel):
     application: Annotated[OAuthApplication | None, AfterValidator(non_null)] = Field(
-        default=None, alias="application"
+        default=None,
+        alias="application",
+        description="OAuthApplication represents a registered third-party application.\n\n Display fields (`app_name`, `description`, `homepage_url`, `logo_url`)\n on this message are deprecated; the developer center is the\n authoritative source for application display metadata. The fields\n remain populated on read for backward compatibility and will be\n removed in a future major version.",
     )
 
 
 class GetArticleRequest(SDKModel):
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description=""
     )
 
 
 class GetArticleResponse(SDKModel):
     article: Annotated[Article | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article"
+        default=None,
+        alias="article",
+        description="Article represents a piece of text content (article, post, etc.).\n Article 是图文创作的核心实体，同一篇文章可能同时存在 Markdown 和 HTML 两个版本。",
     )
 
 
 class GetAssetRequest(SDKModel):
     asset_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_id"
+        default=None, alias="asset_id", description=""
     )
 
 
 class GetAssetResponse(SDKModel):
-    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(default=None, alias="asset")
+    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="asset",
+        description="Asset represents an uploaded media resource.\n 素材可被文章引用、视频合成使用，生命周期跟随所属项目。",
+    )
 
 
 GetAvatarRequest: TypeAlias = Any
@@ -2435,104 +4233,148 @@ GetAvatarRequest: TypeAlias = Any
 
 class GetAvatarResponse(SDKModel):
     avatar_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="avatar_url"
+        default=None,
+        alias="avatar_url",
+        description="Pre-signed URL for the 1024×1024 WebP primary variant.",
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description="Common expiration for avatar_url and all variant_urls.",
     )
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None, alias="media_id", description="Opaque platform.Media id (prefix `med`)."
     )
     variant_urls: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="variant_urls"
+        default=None,
+        alias="variant_urls",
+        description="Variant key -\u003e pre-signed URL for smaller renditions.",
     )
 
 
 class GetAvatarResponseVariantUrlsEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class GetAvatarRetirementRequest(SDKModel):
     "Resolve unknown results by querying the same media_id AND operation_id.\n No claimed record: NOT_FOUND / AVATAR_RETIREMENT_NOT_FOUND. A mismatched\n operation is ABORTED; callers must never adopt another operation's fence."
 
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None, alias="media_id", description=""
     )
     operation_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="operation_id"
+        default=None, alias="operation_id", description=""
     )
 
 
 class GetAvatarRetirementResponse(SDKModel):
     retirement: Annotated[AvatarRetirement | None, AfterValidator(non_null)] = Field(
-        default=None, alias="retirement"
+        default=None, alias="retirement", description=""
     )
 
 
 class GetCategoryOrganizationJobRequest(SDKModel):
-    organization_job_id: str = Field(default=..., alias="organization_job_id")
-    user_id: str = Field(default=..., alias="user_id")
+    organization_job_id: str = Field(
+        default=...,
+        alias="organization_job_id",
+        description="Required. Opaque user-requested organization job identifier.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetCategoryOrganizationJobResponse(SDKModel):
-    organization_job: CategoryOrganizationJob = Field(default=..., alias="organization_job")
+    organization_job: CategoryOrganizationJob = Field(
+        default=...,
+        alias="organization_job",
+        description="Required. Current durable organization job fact.",
+    )
 
 
 class GetCategoryOrganizationPreviewRequest(SDKModel):
-    organization_job_id: str = Field(default=..., alias="organization_job_id")
-    user_id: str = Field(default=..., alias="user_id")
+    organization_job_id: str = Field(
+        default=...,
+        alias="organization_job_id",
+        description="Required. Successful organization job identifier.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetCategoryOrganizationPreviewResponse(SDKModel):
-    preview: CategoryOrganizationPreview = Field(default=..., alias="preview")
+    preview: CategoryOrganizationPreview = Field(
+        default=..., alias="preview", description="Required. Durable settled organization preview."
+    )
 
 
 class GetCategoryPreferenceRequest(SDKModel):
-    user_id: str = Field(default=..., alias="user_id")
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetCategoryPreferenceResponse(SDKModel):
-    category_preference: CategoryPreference = Field(default=..., alias="category_preference")
+    category_preference: CategoryPreference = Field(
+        default=...,
+        alias="category_preference",
+        description="Required. Current singleton, including an explicit empty rule set.",
+    )
 
 
 class GetConsentInfoRequest(SDKModel):
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description="Space-delimited requested scopes"
+    )
 
 
 class ScopeDetail(SDKModel):
     "ScopeDetail provides display information for a scope on the consent screen."
 
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description=""
     )
     display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="display_name"
+        default=None, alias="display_name", description=""
     )
     is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_sensitive"
+        default=None, alias="is_sensitive", description=""
     )
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description=""
+    )
 
 
 class GetConsentInfoResponse(SDKModel):
     app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_name"
+        default=None, alias="app_name", description=""
     )
     homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="homepage_url"
+        default=None, alias="homepage_url", description=""
     )
     logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="logo_url"
+        default=None, alias="logo_url", description=""
     )
     previously_granted_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="previously_granted_scopes"
+        default=None, alias="previously_granted_scopes", description="Scopes already authorized"
     )
     requested_scopes: Annotated[list[ScopeDetail] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="requested_scopes"
+        default=None, alias="requested_scopes", description=""
     )
 
 
@@ -2540,56 +4382,86 @@ class GetGenerationProgressRequest(SDKModel):
     "History is append-only and paged under a fixed upper sequence. Current\n state remains live on later pages; merge it by current_revision."
 
     after_event_seq: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="after_event_seq"
+        default=None, alias="after_event_seq", description="(OPTIONAL) Optional. after event seq."
     )
-    job_id: str = Field(default=..., alias="job_id")
+    job_id: str = Field(default=..., alias="job_id", description="Required. job id.")
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="(OPTIONAL) Optional. page size."
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="(OPTIONAL) Optional. page token."
     )
     ui_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="ui_locale"
+        default=None, alias="ui_locale", description="(OPTIONAL) Optional. ui locale."
     )
-    user_id: str = Field(default=..., alias="user_id")
+    user_id: str = Field(default=..., alias="user_id", description="Required. user id.")
 
 
 class GetGenerationProgressResponse(SDKModel):
     content_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_locale"
+        default=None, alias="content_locale", description="(OPTIONAL) Optional. content locale."
     )
     content_locale_display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_locale_display_name"
+        default=None,
+        alias="content_locale_display_name",
+        description="(OPTIONAL) Optional. Human-readable content language name(s), localized using\n resolved_ui_locale, never the instruction language. Empty while metadata\n is pending. Display only; existing locale and title fields are unchanged.",
     )
     content_locale_source: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_locale_source"
+        default=None,
+        alias="content_locale_source",
+        description="(OPTIONAL) Optional. content locale source.",
     )
     content_locales: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_locales"
+        default=None, alias="content_locales", description="(OPTIONAL) Optional. content locales."
     )
-    current_revision: str = Field(default=..., alias="current_revision")
-    events: list[GenerationProgressEvent] = Field(default=..., alias="events")
-    history_upper_event_seq: str = Field(default=..., alias="history_upper_event_seq")
+    current_revision: str = Field(
+        default=..., alias="current_revision", description="Required. current revision."
+    )
+    events: list[GenerationProgressEvent] = Field(
+        default=..., alias="events", description="Required. events."
+    )
+    history_upper_event_seq: str = Field(
+        default=...,
+        alias="history_upper_event_seq",
+        description="Required. history upper event seq.",
+    )
     instruction_locale: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="instruction_locale"
+        default=None,
+        alias="instruction_locale",
+        description="(OPTIONAL) Optional. instruction locale.",
     )
-    job: JobSummary = Field(default=..., alias="job")
-    last_event_seq: str = Field(default=..., alias="last_event_seq")
+    job: JobSummary = Field(default=..., alias="job", description="Required. job.")
+    last_event_seq: str = Field(
+        default=..., alias="last_event_seq", description="Required. last event seq."
+    )
     locale_source: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="locale_source"
+        default=None, alias="locale_source", description="(OPTIONAL) Optional. locale source."
     )
-    locale_status: str = Field(default=..., alias="locale_status")
+    locale_status: str = Field(
+        default=..., alias="locale_status", description="Required. locale status."
+    )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description="(OPTIONAL) Optional. next page token."
     )
-    page_title: str = Field(default=..., alias="page_title")
-    poll_after_ms: int | None = Field(default=None, alias="poll_after_ms")
-    progress_available: bool = Field(default=..., alias="progress_available")
-    resolved_ui_locale: str = Field(default=..., alias="resolved_ui_locale")
-    steps: list[GenerationProgressStep] = Field(default=..., alias="steps")
-    title_origin: str = Field(default=..., alias="title_origin")
-    title_revision: str = Field(default=..., alias="title_revision")
+    page_title: str = Field(default=..., alias="page_title", description="Required. page title.")
+    poll_after_ms: int | None = Field(
+        default=None, alias="poll_after_ms", description="(OPTIONAL) Optional. poll after ms."
+    )
+    progress_available: bool = Field(
+        default=..., alias="progress_available", description="Required. progress available."
+    )
+    resolved_ui_locale: str = Field(
+        default=..., alias="resolved_ui_locale", description="Required. resolved ui locale."
+    )
+    steps: list[GenerationProgressStep] = Field(
+        default=..., alias="steps", description="Required. steps."
+    )
+    title_origin: str = Field(
+        default=..., alias="title_origin", description="Required. title origin."
+    )
+    title_revision: str = Field(
+        default=..., alias="title_revision", description="Required. title revision."
+    )
 
 
 GetJWKSRequest: TypeAlias = Any
@@ -2598,34 +4470,64 @@ GetJWKSRequest: TypeAlias = Any
 class JWK(SDKModel):
     'JWK (JSON Web Key, RFC 7517 §4) —— RSA 公钥子集。\n\n 平台 id_token 仅使用 RS256 签名算法，因此 kty 恒为 "RSA"、alg 恒为\n "RS256"、use 恒为 "sig"；这些字段保留在 message 里是为了在 JSON 序列化\n 后符合 RFC 7517 标准格式（让通用 JWT / JWKS 验签库能直接消费）。\n\n 私钥永远不出 IAM 内核；本 message 只承载公钥。'
 
-    alg: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="alg")
-    e: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="e")
-    kid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="kid")
-    kty: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="kty")
-    n: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="n")
-    use: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="use")
+    alg: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="alg", description='恒为 "RS256"'
+    )
+    e: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="e",
+        description='RSA public exponent，base64url-encoded（RFC 7518 §6.3.1.2，无 padding）。\n 平台所有 RSA key 都用 65537，即 base64url("AQAB")。',
+    )
+    kid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="kid",
+        description='Key ID。JWT header 的 "kid" 字段必须与本字段精确匹配。kid 是 IAM\n 内部生成的 opaque 标识（典型形如 "iam-2026-05-key-1"），不可解析、\n 不可猜测。',
+    )
+    kty: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="kty", description='恒为 "RSA"'
+    )
+    n: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="n",
+        description="RSA modulus，base64url-encoded（RFC 7518 §6.3.1.1，无 padding）。",
+    )
+    use: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="use", description='恒为 "sig"'
+    )
 
 
 class GetJWKSResponse(SDKModel):
-    keys: Annotated[list[JWK] | None, AfterValidator(non_null)] = Field(default=None, alias="keys")
+    keys: Annotated[list[JWK] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="keys",
+        description='当前所有未退役的 ID Token 签名公钥。\n\n 顺序约定：keys[0] 是当前活跃签发 key（最新生效），后续元素是上一代\n / 上上一代 key —— 它们仍保留在 JWKS 里，是为了让 rotation 期间还在\n "外面活着"的旧 id_token 仍可被验证（typical TTL 1h，rotation 时窗\n 通常 24h）。客户端验签时按 JWT header 里的 kid 字段在本列表里查找\n 匹配项，不要假定 keys[0] 就是要用的 key。\n\n accounts.appforges.com BFF 在 /.well-known/jwks.json 上直接转发\n 本 RPC 的响应（按 RFC 7517 §5 序列化为 JSON），并按 Cache-Control\n 设置约 24h 缓存。',
+    )
 
 
 class GetJobRequest(SDKModel):
-    job_id: str = Field(default=..., alias="job_id")
-    user_id: str = Field(default=..., alias="user_id")
+    job_id: str = Field(default=..., alias="job_id", description="Required. Opaque job identifier.")
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetJobResponse(SDKModel):
-    job: JobSummary = Field(default=..., alias="job")
+    job: JobSummary = Field(
+        default=..., alias="job", description="Required. Current authoritative job fact."
+    )
 
 
 class GetLoginHistoryRequest(SDKModel):
-    end_date: Timestamp | None = Field(default=None, alias="end_date")
-    page: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="page")
-    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+    end_date: Timestamp | None = Field(default=None, alias="end_date", description="")
+    page: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="page", description=""
     )
-    start_date: Timestamp | None = Field(default=None, alias="start_date")
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="page_size", description=""
+    )
+    start_date: Timestamp | None = Field(default=None, alias="start_date", description="")
 
 
 LoginType: TypeAlias = Literal[
@@ -2641,175 +4543,313 @@ class LoginHistoryEntry(SDKModel):
     "LoginHistoryEntry records a single login attempt."
 
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
     failure_reason: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="failure_reason"
+        default=None, alias="failure_reason", description=""
     )
     history_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="history_id"
+        default=None, alias="history_id", description=""
     )
-    ip: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ip")
+    ip: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ip", description=""
+    )
     location: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="location"
+        default=None, alias="location", description=""
     )
     login_time: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="login_time"
+        default=None,
+        alias="login_time",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     login_type: Annotated[LoginType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="login_type"
+        default=None,
+        alias="login_type",
+        description="LoginType describes how a login was performed.",
     )
-    success: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="success")
+    success: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="success", description=""
+    )
 
 
 class GetLoginHistoryResponse(SDKModel):
     items: Annotated[list[LoginHistoryEntry] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="items"
+        default=None, alias="items", description=""
     )
-    page: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="page")
+    page: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="page", description=""
+    )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
-    total: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="total")
+    total: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="total", description=""
+    )
 
 
 class GetMaterialRequest(SDKModel):
-    material_id: str = Field(default=..., alias="material_id")
-    user_id: str = Field(default=..., alias="user_id")
+    material_id: str = Field(
+        default=..., alias="material_id", description="Required. Opaque material identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetMaterialResponse(SDKModel):
-    material: Material = Field(default=..., alias="material")
+    material: Material = Field(
+        default=..., alias="material", description="Required. Current authoritative material fact."
+    )
 
 
 class GetOAuthClientRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
 
 
 class GetOAuthClientResponse(SDKModel):
     client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client"
+        default=None,
+        alias="client",
+        description="OAuthClient is one credential atom owned by IAM. An application may own\n multiple clients; app_id and client_id must therefore be used together for\n every management operation.\n\n Secret material and secret hashes are deliberately absent from this read\n model. Plaintext is returned exactly once by create and rotate responses.",
     )
 
 
 class GetOrganizationBySlugRequest(SDKModel):
-    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="slug", description=""
+    )
 
 
 class GetOrganizationBySlugResponse(SDKModel):
     organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
-        default=None, alias="organization"
+        default=None,
+        alias="organization",
+        description="Organization is one of the two concrete tenant forms (the other is\n Workspace).\n\n `org_id` is an opaque entity-id with the `org` prefix and shares the\n platform-wide `tenant_id` value space with workspace ids. Consumers\n must treat it as opaque — no parsing, no length assumptions,\n byte-exact case-sensitive comparison.",
     )
 
 
 class GetOrganizationRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
+    )
 
 
 class GetOrganizationResponse(SDKModel):
     organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
-        default=None, alias="organization"
+        default=None,
+        alias="organization",
+        description="Organization is one of the two concrete tenant forms (the other is\n Workspace).\n\n `org_id` is an opaque entity-id with the `org` prefix and shares the\n platform-wide `tenant_id` value space with workspace ids. Consumers\n must treat it as opaque — no parsing, no length assumptions,\n byte-exact case-sensitive comparison.",
     )
 
 
 class GetPageExportRequest(SDKModel):
-    export_id: str = Field(default=..., alias="export_id")
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
-    version_id: str = Field(default=..., alias="version_id")
+    export_id: str = Field(
+        default=...,
+        alias="export_id",
+        description="Required. Persisted artifact identifier belonging to version_id.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Owning page identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
+    version_id: str = Field(
+        default=...,
+        alias="version_id",
+        description="Required. Immutable source version identifier.",
+    )
 
 
 class GetPageExportResponse(SDKModel):
-    artifact: ExportArtifact = Field(default=..., alias="artifact")
+    artifact: ExportArtifact = Field(
+        default=...,
+        alias="artifact",
+        description="Required. Artifact metadata and freshly authorized download ticket.",
+    )
 
 
 class GetPagePromptRequest(SDKModel):
     "Empty revision selects the latest accepted requirement, even after render failure."
 
-    page_id: str = Field(default=..., alias="page_id")
-    prompt_revision_id: str | None = Field(default=None, alias="prompt_revision_id")
-    user_id: str = Field(default=..., alias="user_id")
+    page_id: str = Field(default=..., alias="page_id", description="")
+    prompt_revision_id: str | None = Field(
+        default=None, alias="prompt_revision_id", description="(OPTIONAL) "
+    )
+    user_id: str = Field(default=..., alias="user_id", description="")
 
 
 class GetPagePromptResponse(SDKModel):
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None, alias="created_at", description="(OPTIONAL) "
     )
     is_current_version: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_current_version"
+        default=None, alias="is_current_version", description="(OPTIONAL) "
     )
-    job_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="job_id")
+    job_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="job_id", description="(OPTIONAL) "
+    )
     markdown: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="markdown"
+        default=None, alias="markdown", description="(OPTIONAL) "
     )
     parent_revision_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="parent_revision_id"
+        default=None, alias="parent_revision_id", description="(OPTIONAL) "
     )
     policy_version: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="policy_version"
+        default=None, alias="policy_version", description="(OPTIONAL) "
     )
     prompt_revision_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="prompt_revision_id"
+        default=None, alias="prompt_revision_id", description="(OPTIONAL) "
     )
-    sha256: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="sha256")
+    sha256: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="sha256", description="(OPTIONAL) "
+    )
 
 
 class GetPageRequest(SDKModel):
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque page identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetPageResponse(SDKModel):
-    page: Page = Field(default=..., alias="page")
+    page: Page = Field(
+        default=...,
+        alias="page",
+        description="Required. Current page fact without complete version HTML.",
+    )
 
 
 class GetPageVersionMetadataRequest(SDKModel):
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
-    version_id: str = Field(default=..., alias="version_id")
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Owning page identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
+    version_id: str = Field(
+        default=...,
+        alias="version_id",
+        description="Required. Explicit published version belonging to page_id; never resolves latest.",
+    )
 
 
 class VersionArtifact(SDKModel):
     "VersionArtifact is immutable metadata for one validated artifact published\n with a page version."
 
-    export_id: str = Field(default=..., alias="export_id")
-    format: ExportFormat = Field(default=..., alias="format")
-    sha256: str = Field(default=..., alias="sha256")
-    size_bytes: str = Field(default=..., alias="size_bytes")
+    export_id: str = Field(
+        default=...,
+        alias="export_id",
+        description="Required. Opaque persisted export artifact identifier.",
+    )
+    format: ExportFormat = Field(
+        default=..., alias="format", description="Required. PDF or PNG; unique within the version."
+    )
+    sha256: str = Field(
+        default=..., alias="sha256", description="Required. SHA-256 of the validated artifact."
+    )
+    size_bytes: str = Field(
+        default=...,
+        alias="size_bytes",
+        description="Required. Actual persisted artifact size in bytes.",
+    )
 
 
 class PageVersionSummary(SDKModel):
     "PageVersionSummary is an immutable list projection of a published version."
 
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    html_sha256: str = Field(default=..., alias="html_sha256")
-    orientation: Orientation = Field(default=..., alias="orientation")
-    page_id: str = Field(default=..., alias="page_id")
-    published_content_revision: str = Field(default=..., alias="published_content_revision")
-    published_event_revision: str = Field(default=..., alias="published_event_revision")
-    sequence_number: str = Field(default=..., alias="sequence_number")
-    source_job_id: str = Field(default=..., alias="source_job_id")
-    version_id: str = Field(default=..., alias="version_id")
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Immutable version creation time."
+    )
+    html_sha256: str = Field(
+        default=...,
+        alias="html_sha256",
+        description="Required. SHA-256 of the complete normalized HTML.",
+    )
+    orientation: Orientation = Field(
+        default=..., alias="orientation", description="Required. Published A4 page orientation."
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque owning page identifier."
+    )
+    published_content_revision: str = Field(
+        default=...,
+        alias="published_content_revision",
+        description="Required. Page content revision committed on first publication.",
+    )
+    published_event_revision: str = Field(
+        default=...,
+        alias="published_event_revision",
+        description="Required. Page event revision committed on first publication.",
+    )
+    sequence_number: str = Field(
+        default=...,
+        alias="sequence_number",
+        description="Required. Monotonic display sequence within the page.",
+    )
+    source_job_id: str = Field(
+        default=...,
+        alias="source_job_id",
+        description="Required. Unique successful job that created the version.",
+    )
+    version_id: str = Field(
+        default=..., alias="version_id", description="Required. Opaque version identifier."
+    )
 
 
 class PageVersionMetadata(SDKModel):
     "PageVersionMetadata describes a published version without reading HTML or issuing tickets."
 
-    artifacts: list[VersionArtifact] = Field(default=..., alias="artifacts")
-    summary: PageVersionSummary = Field(default=..., alias="summary")
+    artifacts: list[VersionArtifact] = Field(
+        default=...,
+        alias="artifacts",
+        description="Required. Exactly one validated PDF and one validated PNG artifact.",
+    )
+    summary: PageVersionSummary = Field(
+        default=...,
+        alias="summary",
+        description="Required. Authoritative immutable version identity and orientation.",
+    )
 
 
 class GetPageVersionMetadataResponse(SDKModel):
-    metadata: PageVersionMetadata = Field(default=..., alias="metadata")
+    metadata: PageVersionMetadata = Field(
+        default=...,
+        alias="metadata",
+        description="Required. Authoritative summary and artifacts, without content or storage locators.",
+    )
 
 
 class GetPageVersionRequest(SDKModel):
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
-    version_id: str = Field(default=..., alias="version_id")
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Owning page identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
+    version_id: str = Field(
+        default=...,
+        alias="version_id",
+        description="Required. Version identifier that must belong to page_id.",
+    )
 
 
 SourceNoteKind: TypeAlias = Literal[
@@ -2824,95 +4864,201 @@ SourceNoteKind: TypeAlias = Literal[
 class SourceNote(SDKModel):
     "SourceNote is a short, safe explanation of used, omitted, or uncertain\n source material. External-source fields are future-reserved and absent in\n the current release."
 
-    canonical_url: str | None = Field(default=None, alias="canonical_url")
-    content_sha256: str | None = Field(default=None, alias="content_sha256")
-    external_source_id: str | None = Field(default=None, alias="external_source_id")
-    kind: SourceNoteKind = Field(default=..., alias="kind")
-    material_id: str | None = Field(default=None, alias="material_id")
+    canonical_url: str | None = Field(
+        default=None,
+        alias="canonical_url",
+        description="(OPTIONAL) Conditional. Future-reserved canonical HTTPS URL; currently absent.",
+    )
+    content_sha256: str | None = Field(
+        default=None,
+        alias="content_sha256",
+        description="(OPTIONAL) Conditional. Future-reserved retrieved-content SHA-256; currently absent.",
+    )
+    external_source_id: str | None = Field(
+        default=None,
+        alias="external_source_id",
+        description="(OPTIONAL) Conditional. Future-reserved external source identifier; currently absent.",
+    )
+    kind: SourceNoteKind = Field(
+        default=...,
+        alias="kind",
+        description="Required. Safe note kind; EXTERNAL_SOURCE is future-reserved.",
+    )
+    material_id: str | None = Field(
+        default=None,
+        alias="material_id",
+        description="(OPTIONAL) Optional. Opaque source material identifier when attributable.",
+    )
     published_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="published_at"
+        default=None,
+        alias="published_at",
+        description="(OPTIONAL) Optional. Future-reserved source publication time; currently absent.",
     )
-    publisher: str | None = Field(default=None, alias="publisher")
+    publisher: str | None = Field(
+        default=None,
+        alias="publisher",
+        description="(OPTIONAL) Conditional. Future-reserved publisher; currently absent.",
+    )
     retrieved_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="retrieved_at"
+        default=None,
+        alias="retrieved_at",
+        description="(OPTIONAL) Conditional. Future-reserved retrieval time; currently absent.",
     )
-    source_location: str | None = Field(default=None, alias="source_location")
-    summary: str = Field(default=..., alias="summary")
-    title: str | None = Field(default=None, alias="title")
+    source_location: str | None = Field(
+        default=None,
+        alias="source_location",
+        description="(OPTIONAL) Optional. Safe page, slide, sheet, cell, or image-region description.",
+    )
+    summary: str = Field(
+        default=..., alias="summary", description="Required. User-understandable short explanation."
+    )
+    title: str | None = Field(
+        default=None,
+        alias="title",
+        description="(OPTIONAL) Conditional. Future-reserved external source title; currently absent.",
+    )
 
 
 class PageVersion(SDKModel):
     "PageVersion is an immutable, complete published version including validated\n offline HTML and artifact metadata."
 
-    artifacts: list[VersionArtifact] = Field(default=..., alias="artifacts")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    html: str = Field(default=..., alias="html")
-    html_sha256: str = Field(default=..., alias="html_sha256")
+    artifacts: list[VersionArtifact] = Field(
+        default=...,
+        alias="artifacts",
+        description="Required. Exactly one validated PDF and one validated PNG artifact.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Immutable version creation time."
+    )
+    html: str = Field(
+        default=...,
+        alias="html",
+        description="Required. Complete validated HTML suitable for offline caching.",
+    )
+    html_sha256: str = Field(
+        default=...,
+        alias="html_sha256",
+        description="Required. SHA-256 of the complete normalized HTML.",
+    )
     information_as_of: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="information_as_of"
+        default=None,
+        alias="information_as_of",
+        description="(OPTIONAL) Conditional. Future-reserved; present only when external sources are enabled.",
     )
-    orientation: Orientation = Field(default=..., alias="orientation")
-    page_id: str = Field(default=..., alias="page_id")
-    published_content_revision: str = Field(default=..., alias="published_content_revision")
-    published_event_revision: str = Field(default=..., alias="published_event_revision")
-    sequence_number: str = Field(default=..., alias="sequence_number")
-    source_job_id: str = Field(default=..., alias="source_job_id")
+    orientation: Orientation = Field(
+        default=..., alias="orientation", description="Required. Published A4 page orientation."
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque owning page identifier."
+    )
+    published_content_revision: str = Field(
+        default=...,
+        alias="published_content_revision",
+        description="Required. Page content revision committed on first publication.",
+    )
+    published_event_revision: str = Field(
+        default=...,
+        alias="published_event_revision",
+        description="Required. Page event revision committed on first publication.",
+    )
+    sequence_number: str = Field(
+        default=...,
+        alias="sequence_number",
+        description="Required. Monotonic display sequence within the page.",
+    )
+    source_job_id: str = Field(
+        default=...,
+        alias="source_job_id",
+        description="Required. Unique successful job that created the version.",
+    )
     source_notes: Annotated[list[SourceNote] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="source_notes"
+        default=None,
+        alias="source_notes",
+        description="(OPTIONAL) Optional. Safe source, omission, and uncertainty notes.",
     )
-    version_id: str = Field(default=..., alias="version_id")
+    version_id: str = Field(
+        default=..., alias="version_id", description="Required. Opaque version identifier."
+    )
 
 
 class GetPageVersionResponse(SDKModel):
-    version: PageVersion = Field(default=..., alias="version")
+    version: PageVersion = Field(
+        default=..., alias="version", description="Required. Complete immutable published version."
+    )
 
 
 GetProfileRequest: TypeAlias = Any
 
 
 class GetProfileResponse(SDKModel):
-    avatar: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="avatar")
-    bio: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="bio")
+    avatar: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="avatar", description=""
+    )
+    bio: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="bio", description=""
+    )
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     default_api_version: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="default_api_version"
+        default=None,
+        alias="default_api_version",
+        description='User-level API version pin. Empty string means "no pin" — the caller\n follows the platform default. When set, the value is a date in\n "YYYY-MM-DD" form (e.g. "2026-04-01") and is validated against the\n platform\'s published API version registry on every request.',
     )
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
     email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="email_verified"
+        default=None, alias="email_verified", description=""
     )
     home_address: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="home_address"
+        default=None,
+        alias="home_address",
+        description='Home address — concrete street-level address (district + building +\n unit + room), distinct from `location` which is a city-level locale\n ("Beijing" / "San Francisco, CA"). Consumed by yihu (居家医疗呼叫)\n as the default contact_address for home-visit service tickets; LLM\n does NOT prompt the elderly user to dictate this over the phone —\n they fill it once in account settings.',
     )
     location: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="location"
+        default=None, alias="location", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
     phone_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="phone_verified"
+        default=None, alias="phone_verified", description=""
     )
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
-    website: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="website")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
+    website: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="website", description=""
+    )
     work_address: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="work_address"
+        default=None,
+        alias="work_address",
+        description='Work address — workplace street-level address. yihu uses this as\n contact_address when the LLM extracts address_type == "work" from\n the conversation ("on my way to the office", "I\'ll be at work"\n etc.).',
     )
 
 
 class GetProjectRequest(SDKModel):
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description=""
     )
 
 
 class GetProjectResponse(SDKModel):
     project: Annotated[Project | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project"
+        default=None,
+        alias="project",
+        description="Project groups related creative content together.\n Project 是创作的顶层聚合单元，一个项目包含多篇文章、多个视频任务和多个素材。\n 典型场景：一次营销活动、一个专题系列、一期内容排期。",
     )
 
 
@@ -2920,25 +5066,25 @@ class GetProjectSummaryRequest(SDKModel):
     "GetProjectSummaryRequest 获取项目概览，包含各类内容的数量统计。\n 适用于项目列表页展示概要信息。"
 
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description=""
     )
 
 
 class GetProjectSummaryResponse(SDKModel):
     article_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_count"
+        default=None, alias="article_count", description="项目下的文章数量。"
     )
     asset_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="asset_count"
+        default=None, alias="asset_count", description="项目下的素材数量。"
     )
     project: Annotated[Project | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project"
+        default=None, alias="project", description="项目基本信息。"
     )
     publish_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="publish_count"
+        default=None, alias="publish_count", description="项目下的发布记录数量。"
     )
     video_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="video_count"
+        default=None, alias="video_count", description="项目下的视频任务数量。"
     )
 
 
@@ -2946,36 +5092,48 @@ class GetPromptTemplateRequest(SDKModel):
     "GetPromptTemplateRequest 获取模板对应的排版提示词。\n 用于在 LLM 生成/转换 HTML 时提供格式化指令。"
 
     template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_id"
+        default=None, alias="template_id", description="模板 ID 或预设 ID。"
     )
 
 
 class GetPromptTemplateResponse(SDKModel):
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    prompt: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="prompt")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="模板名称。"
+    )
+    prompt: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="prompt", description="排版提示词文本，描述该模板的排版规则。"
+    )
     template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_id"
+        default=None, alias="template_id", description="模板 ID。"
     )
 
 
 class GetPublishStatusRequest(SDKModel):
     record_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="record_id"
+        default=None, alias="record_id", description="发布记录 ID。"
     )
 
 
 class GetPublishStatusResponse(SDKModel):
     record: Annotated[PublishRecord | None, AfterValidator(non_null)] = Field(
-        default=None, alias="record"
+        default=None,
+        alias="record",
+        description="PublishRecord records a single publish attempt to a platform.\n 每次发布操作（无论成功或失败）都会产生一条记录，支持追溯和重试。",
     )
 
 
 class GetScopeRequest(SDKModel):
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description='Scope name, e.g. "creative:read"'
+    )
 
 
 class GetScopeResponse(SDKModel):
-    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="scope",
+        description="Scope defines a permission boundary for OAuth access control.",
+    )
 
 
 GetSecuritySettingsRequest: TypeAlias = Any
@@ -2983,25 +5141,27 @@ GetSecuritySettingsRequest: TypeAlias = Any
 
 class GetSecuritySettingsResponse(SDKModel):
     email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="email_verified"
+        default=None, alias="email_verified", description=""
     )
     has_password: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="has_password"
+        default=None, alias="has_password", description=""
     )
     password_changed_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="password_changed_at"
+        default=None,
+        alias="password_changed_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     phone_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="phone_verified"
+        default=None, alias="phone_verified", description=""
     )
     two_factor_enabled: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="two_factor_enabled"
+        default=None, alias="two_factor_enabled", description=""
     )
 
 
 class GetSessionRequest(SDKModel):
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
@@ -3009,382 +5169,534 @@ class SessionInfo(SDKModel):
     "SessionInfo describes an active session."
 
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    ip: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ip")
+    ip: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ip", description=""
+    )
     is_current: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_current"
+        default=None, alias="is_current", description=""
     )
     last_active: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="last_active"
+        default=None,
+        alias="last_active",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     location: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="location"
+        default=None, alias="location", description=""
     )
     login_time: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="login_time"
+        default=None,
+        alias="login_time",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    port: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="port")
+    port: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="port", description=""
+    )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
 class GetSessionResponse(SDKModel):
     session: Annotated[SessionInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session"
+        default=None, alias="session", description="SessionInfo describes an active session."
     )
 
 
 class GetStorageProtectionRequest(SDKModel):
-    user_id: str = Field(default=..., alias="user_id")
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetStorageProtectionResponse(SDKModel):
-    storage_protection: AccountStorageProtection = Field(default=..., alias="storage_protection")
+    storage_protection: AccountStorageProtection = Field(
+        default=...,
+        alias="storage_protection",
+        description="Required. Current user-scoped storage protection fact.",
+    )
 
 
 class GetUploadRequest(SDKModel):
-    upload_id: str = Field(default=..., alias="upload_id")
-    user_id: str = Field(default=..., alias="user_id")
+    upload_id: str = Field(
+        default=..., alias="upload_id", description="Required. Opaque PinPage upload identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class GetUploadResponse(SDKModel):
     material: Annotated[Material | None, AfterValidator(non_null)] = Field(
-        default=None, alias="material"
+        default=None,
+        alias="material",
+        description="(OPTIONAL) Optional. Required when the upload completed and created a material.",
     )
-    upload: UploadSession = Field(default=..., alias="upload")
+    upload: UploadSession = Field(
+        default=..., alias="upload", description="Required. Current durable upload session."
+    )
 
 
 class GetVersionHintRequest(SDKModel):
     "Lightweight API version pin lookup. Returns the user's\n default_api_version without loading the full profile (no email / phone\n / avatar etc.). Used by the platform's API-Version resolution chain."
 
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user_id",
+        description="Required. The user whose pin to look up. Opaque entity-id with `usr`\n prefix.",
+    )
 
 
 class GetVersionHintResponse(SDKModel):
     default_api_version: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="default_api_version"
+        default=None,
+        alias="default_api_version",
+        description='Empty string when no pin is set (caller falls back to platform default).\n Format: "YYYY-MM-DD".',
     )
 
 
 class GetVideoTaskRequest(SDKModel):
-    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="task_id")
+    task_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="task_id", description=""
+    )
 
 
 class GetVideoTaskResponse(SDKModel):
-    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(default=None, alias="task")
+    task: Annotated[VideoTask | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="task",
+        description="VideoTask represents a video generation job.\n 视频生成是异步任务，客户端提交后通过轮询 GetVideoTask 获取进度。",
+    )
 
 
 class GetWebhookRequest(SDKModel):
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
 class GetWebhookResponse(SDKModel):
     webhook: Annotated[Webhook | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook"
+        default=None,
+        alias="webhook",
+        description="Webhook represents a registered webhook endpoint.",
     )
 
 
 class IntrospectTokenRequest(SDKModel):
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None, alias="client_secret", description=""
     )
     include_profile: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="include_profile"
+        default=None,
+        alias="include_profile",
+        description="OIDC userinfo 优化：当 true 时，IntrospectTokenResponse.profile 会\n 一次回带 user 的标准 OIDC claims（name / email / phone_number /\n picture / updated_at），让 BFF 的 /oauth2/userinfo 路由从两次 RPC\n 变一次（先 IntrospectToken，再 UserService.GetProfile → 现在合一）。\n default false 保持向前兼容：旧调用方零感知，行为完全不变。\n\n 仅当 token active 且关联 user_id 时 profile 才会被填充；\n client_credentials 类无 user 的 token 即使 include_profile=true\n 也不带 profile（保持 user_id 为空 + profile 缺省的语义一致）。",
     )
-    token: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="token")
+    token: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="token", description=""
+    )
     token_type_hint: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="token_type_hint"
+        default=None, alias="token_type_hint", description=""
     )
 
 
 class UserProfile(SDKModel):
     "UserProfile 是 OIDC userinfo 标准 claims 的 IAM 视图。字段对齐\n OpenID Connect Core 1.0 §5.4 Standard Claims。空 / 未知字段一律省略\n （proto3 zero-value 自然 omit），与 OIDC userinfo HTTP 端点的语义一致。\n\n 仅作为 IntrospectTokenResponse.profile 的载体，让 BFF 在一次\n IntrospectToken RPC 内拿齐 userinfo 所需的全部 claims，避免再调\n UserService.GetProfile。"
 
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="email_verified"
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description="OIDC email claim。"
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    email_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email_verified", description="OIDC email_verified claim。"
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="OIDC name claim — 用户全名（可能空）。"
+    )
     phone_number: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="phone_number"
+        default=None,
+        alias="phone_number",
+        description='OIDC phone_number claim — 国际 E.164 格式，如 "+8613800138000"。',
     )
     phone_number_verified: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="phone_number_verified"
+        default=None,
+        alias="phone_number_verified",
+        description="OIDC phone_number_verified claim。",
     )
-    picture: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="picture")
+    picture: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="picture",
+        description="OIDC picture claim — MediaService 生成的临时 HTTPS 图片资源直链。\n IAM 数据库只保存 media_id；输出 UserInfo profile 前必须解析并校验为\n image/* 资源的预签名 URL，约 15 分钟过期。解析失败时 omit，禁止回退为\n media_id、网页 URL 或永久 URL，避免被当作公共图床。",
+    )
     preferred_username: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="preferred_username"
+        default=None,
+        alias="preferred_username",
+        description="OIDC preferred_username claim — IAM 不分 name 和 preferred_username，\n 两个字段都填 user.name。客户端 UI 选其一显示即可。",
     )
-    sub: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="sub")
+    sub: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="sub",
+        description="OIDC sub claim（= IAM user_id）。冗余字段，调用方可直接用\n IntrospectTokenResponse.user_id；保留在 profile 里方便 BFF 直接序列\n 化成 OIDC claims JSON 不需要再拼。",
+    )
     updated_at: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description="OIDC updated_at claim — 秒级 Unix 时间戳，user 信息最近一次修改时间。",
     )
 
 
 class IntrospectTokenResponse(SDKModel):
-    active: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="active")
+    active: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="active", description=""
+    )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     issued_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="issued_at"
+        default=None,
+        alias="issued_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    profile: UserProfile | None = Field(default=None, alias="profile")
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    profile: UserProfile | None = Field(
+        default=None,
+        alias="profile",
+        description="仅当请求 include_profile=true 且 token 关联 user_id 时填充。\n OIDC userinfo 标准 claims 子集——字段对齐 OIDC Core 1.0 §5.4。\n\n 平台铁律重申：本字段不是 access_token 的合法承载——客户端不要把\n IntrospectTokenResponse 序列化后塞进 Authorization 头。profile 仅\n 用于 BFF 的 /oauth2/userinfo 端点直接序列化为 JSON 输出给浏览器。",
+    )
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description=""
+    )
     token_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="token_type"
+        default=None, alias="token_type", description=""
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description="Empty for client_credentials tokens"
+    )
 
 
 class ListAPIKeysRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
 class ListAPIKeysResponse(SDKModel):
     api_keys: Annotated[list[APIKey] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="api_keys"
+        default=None, alias="api_keys", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListApplicationsRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
 class ListApplicationsResponse(SDKModel):
     applications: Annotated[list[OAuthApplication] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="applications"
+        default=None, alias="applications", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListArticlesRequest(SDKModel):
-    format: ContentFormat | None = Field(default=None, alias="format")
+    format: ContentFormat | None = Field(
+        default=None, alias="format", description="按内容格式过滤。"
+    )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="每页返回数量，默认 20，最大 100。"
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="分页令牌，首次请求留空。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="按项目过滤。"
     )
 
 
 class ListArticlesResponse(SDKModel):
     articles: Annotated[list[Article] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="articles"
+        default=None, alias="articles", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description="下一页令牌，为空表示没有更多数据。"
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description="符合筛选条件的总数。"
     )
 
 
 class ListAssetsRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="每页返回数量，默认 20，最大 100。"
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="分页令牌。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="按项目过滤。"
     )
-    type_: AssetType | None = Field(default=None, alias="type")
+    type_: AssetType | None = Field(default=None, alias="type", description="按素材类型过滤。")
 
 
 class ListAssetsResponse(SDKModel):
     assets: Annotated[list[Asset] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="assets"
+        default=None, alias="assets", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListAuthorizedApplicationsRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
 class ListAuthorizedApplicationsResponse(SDKModel):
     applications: Annotated[list[AuthorizedApplication] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="applications"
+        default=None, alias="applications", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListCategoriesRequest(SDKModel):
-    order_by: str | None = Field(default=None, alias="order_by")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="pagination")
+    order_by: str | None = Field(
+        default=None,
+        alias="order_by",
+        description="(OPTIONAL) Optional. name asc (default) or updated_at desc.",
     )
-    parent_category_id: str | None = Field(default=None, alias="parent_category_id")
-    user_id: str = Field(default=..., alias="user_id")
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
+        Field(
+            default=None,
+            alias="pagination",
+            description="(OPTIONAL) Optional. Shared page size and opaque page token; defaults to 20 items.",
+        )
+    )
+    parent_category_id: str | None = Field(
+        default=None,
+        alias="parent_category_id",
+        description="(OPTIONAL) Optional. Omit to list roots; otherwise list direct children of this node.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class ListCategoriesResponse(SDKModel):
-    categories: list[Category] = Field(default=..., alias="categories")
-    pagination: AppforgesCommonV1PaginationResponse = Field(default=..., alias="pagination")
+    categories: list[Category] = Field(
+        default=...,
+        alias="categories",
+        description="Required. Direct child category nodes; empty when no node matches.",
+    )
+    pagination: AppforgesCommonV1PaginationResponse = Field(
+        default=..., alias="pagination", description="Required. Shared pagination result."
+    )
 
 
 class ListMembersRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
+    )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None,
+        alias="page_size",
+        description="Server clamps to [1, 200]; default 50 when zero.",
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
 class ListMembersResponse(SDKModel):
     members: Annotated[list[OrganizationMember] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="members"
+        default=None, alias="members", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
 
 
 class ListOAuthClientsRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
 class ListOAuthClientsResponse(SDKModel):
     clients: Annotated[list[OAuthClient] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="clients"
+        default=None, alias="clients", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListOrganizationsRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None,
+        alias="page_size",
+        description="Server clamps to [1, 100]; default 50 when zero.",
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="Opaque cursor from a previous response."
     )
 
 
 class ListOrganizationsResponse(SDKModel):
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description="Empty when no more pages remain."
     )
     organizations: Annotated[list[Organization] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="organizations"
+        default=None, alias="organizations", description=""
     )
 
 
 class ListPageInstructionsRequest(SDKModel):
-    page_id: str = Field(default=..., alias="page_id")
+    page_id: str = Field(default=..., alias="page_id", description="")
     pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="pagination")
+        Field(default=None, alias="pagination", description="(OPTIONAL) ")
     )
-    user_id: str = Field(default=..., alias="user_id")
+    user_id: str = Field(default=..., alias="user_id", description="")
 
 
 class PageInstruction(SDKModel):
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None, alias="created_at", description="(OPTIONAL) "
     )
     instruction: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="instruction"
+        default=None, alias="instruction", description="(OPTIONAL) "
     )
-    job_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="job_id")
+    job_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="job_id", description="(OPTIONAL) "
+    )
 
 
 class ListPageInstructionsResponse(SDKModel):
     instructions: Annotated[list[PageInstruction] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="instructions"
+        default=None, alias="instructions", description="(OPTIONAL) "
     )
     pagination: Annotated[AppforgesCommonV1PaginationResponse | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="pagination")
+        Field(default=None, alias="pagination", description="(OPTIONAL) ")
     )
 
 
 class ListPageVersionsRequest(SDKModel):
-    order_by: str | None = Field(default=None, alias="order_by")
-    page_id: str = Field(default=..., alias="page_id")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="pagination")
+    order_by: str | None = Field(
+        default=None,
+        alias="order_by",
+        description="(OPTIONAL) Optional. sequence_number desc (default) or sequence_number asc.",
     )
-    user_id: str = Field(default=..., alias="user_id")
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Owning page identifier."
+    )
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
+        Field(
+            default=None,
+            alias="pagination",
+            description="(OPTIONAL) Optional. Shared page size and opaque page token; defaults to 20 items.",
+        )
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class ListPageVersionsResponse(SDKModel):
-    pagination: AppforgesCommonV1PaginationResponse = Field(default=..., alias="pagination")
-    versions: list[PageVersionSummary] = Field(default=..., alias="versions")
+    pagination: AppforgesCommonV1PaginationResponse = Field(
+        default=..., alias="pagination", description="Required. Shared pagination result."
+    )
+    versions: list[PageVersionSummary] = Field(
+        default=...,
+        alias="versions",
+        description="Required. Immutable version summaries without HTML.",
+    )
 
 
 class ListPagesRequest(SDKModel):
-    category_id: str | None = Field(default=None, alias="category_id")
-    order_by: str | None = Field(default=None, alias="order_by")
-    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="pagination")
+    category_id: str | None = Field(
+        default=None,
+        alias="category_id",
+        description="(OPTIONAL) Optional. Restrict results to one direct category.",
     )
-    user_id: str = Field(default=..., alias="user_id")
+    order_by: str | None = Field(
+        default=None,
+        alias="order_by",
+        description="(OPTIONAL) Optional. created_at desc (default) or created_at asc.",
+    )
+    pagination: Annotated[AppforgesCommonV1PaginationRequest | None, AfterValidator(non_null)] = (
+        Field(
+            default=None,
+            alias="pagination",
+            description="(OPTIONAL) Optional. Shared page size and opaque page token; defaults to 20 items.",
+        )
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 PageStatus: TypeAlias = Literal[
@@ -3395,33 +5707,69 @@ PageStatus: TypeAlias = Literal[
 class PageSummary(SDKModel):
     "PageSummary is the lightweight list projection and never includes HTML."
 
-    category_id: str | None = Field(default=None, alias="category_id")
-    content_revision: str = Field(default=..., alias="content_revision")
-    created_at: Timestamp = Field(default=..., alias="created_at")
-    current_version_summary: Annotated[CurrentVersionSummary | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="current_version_summary")
+    category_id: str | None = Field(
+        default=None,
+        alias="category_id",
+        description="(OPTIONAL) Optional. Direct category identifier; absent when uncategorized.",
     )
-    event_revision: str = Field(default=..., alias="event_revision")
-    page_id: str = Field(default=..., alias="page_id")
-    status: PageStatus = Field(default=..., alias="status")
-    title: str = Field(default=..., alias="title")
-    updated_at: Timestamp = Field(default=..., alias="updated_at")
+    content_revision: str = Field(
+        default=...,
+        alias="content_revision",
+        description="Required. Current page content revision.",
+    )
+    created_at: Timestamp = Field(
+        default=..., alias="created_at", description="Required. Page creation time."
+    )
+    current_version_summary: Annotated[CurrentVersionSummary | None, AfterValidator(non_null)] = (
+        Field(
+            default=None,
+            alias="current_version_summary",
+            description="(OPTIONAL) Conditional. Present whenever a current successful version exists.",
+        )
+    )
+    event_revision: str = Field(
+        default=..., alias="event_revision", description="Required. Current page event revision."
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque page identifier."
+    )
+    status: PageStatus = Field(
+        default=...,
+        alias="status",
+        description="Required. Status derived from page and latest-job facts.",
+    )
+    title: str = Field(
+        default=..., alias="title", description="Required. Current user-visible title."
+    )
+    updated_at: Timestamp = Field(
+        default=...,
+        alias="updated_at",
+        description="Required. Time the list-visible page projection last changed.",
+    )
 
 
 class ListPagesResponse(SDKModel):
-    pages: list[PageSummary] = Field(default=..., alias="pages")
-    pagination: AppforgesCommonV1PaginationResponse = Field(default=..., alias="pagination")
+    pages: list[PageSummary] = Field(
+        default=...,
+        alias="pages",
+        description="Required. Lightweight page projections; empty when no page matches.",
+    )
+    pagination: AppforgesCommonV1PaginationResponse = Field(
+        default=..., alias="pagination", description="Required. Shared pagination result."
+    )
 
 
 class ListPlatformAccountsRequest(SDKModel):
     "ListPlatformAccountsRequest 查询已绑定的平台账号。"
 
-    platform: Platform | None = Field(default=None, alias="platform")
+    platform: Platform | None = Field(
+        default=None, alias="platform", description="按平台过滤，不指定则返回所有平台的账号。"
+    )
 
 
 class ListPlatformAccountsResponse(SDKModel):
     accounts: Annotated[list[PlatformAccount] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="accounts"
+        default=None, alias="accounts", description=""
     )
 
 
@@ -3430,29 +5778,31 @@ ListPresetsRequest: TypeAlias = Any
 
 class ListPresetsResponse(SDKModel):
     presets: Annotated[list[Preset] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="presets"
+        default=None, alias="presets", description=""
     )
 
 
 class ListProjectsRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="每页返回数量，默认 20，最大 100。"
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="分页令牌。"
     )
-    status: ProjectStatus | None = Field(default=None, alias="status")
+    status: ProjectStatus | None = Field(
+        default=None, alias="status", description="按项目状态过滤。"
+    )
 
 
 class ListProjectsResponse(SDKModel):
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     projects: Annotated[list[Project] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="projects"
+        default=None, alias="projects", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
@@ -3460,39 +5810,41 @@ class ListPublishRecordsRequest(SDKModel):
     "ListPublishRecordsRequest 查询发布历史，支持按文章、平台、状态过滤。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="按文章 ID 过滤。"
     )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="每页返回数量，默认 20，最大 100。"
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="分页令牌。"
     )
-    platform: Platform | None = Field(default=None, alias="platform")
-    status: PublishStatus | None = Field(default=None, alias="status")
+    platform: Platform | None = Field(default=None, alias="platform", description="按平台过滤。")
+    status: PublishStatus | None = Field(
+        default=None, alias="status", description="按发布状态过滤。"
+    )
 
 
 class ListPublishRecordsResponse(SDKModel):
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     records: Annotated[list[PublishRecord] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="records"
+        default=None, alias="records", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListScopesRequest(SDKModel):
     category: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="category"
+        default=None, alias="category", description="Optional filter by category"
     )
 
 
 class ListScopesResponse(SDKModel):
     scopes: Annotated[list[Scope] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="scopes"
+        default=None, alias="scopes", description=""
     )
 
 
@@ -3501,7 +5853,7 @@ ListSessionsRequest: TypeAlias = Any
 
 class ListSessionsResponse(SDKModel):
     sessions: Annotated[list[SessionInfo] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="sessions"
+        default=None, alias="sessions", description=""
     )
 
 
@@ -3512,66 +5864,70 @@ class Template(SDKModel):
     "Template 系统排版模板。"
 
     created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="created_at"
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="模板描述。"
     )
     is_default: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_default"
+        default=None, alias="is_default", description="是否为默认模板。"
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="模板显示名称。"
+    )
     template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_id"
+        default=None, alias="template_id", description="模板唯一标识。"
     )
     thumbnail_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="thumbnail_url"
+        default=None, alias="thumbnail_url", description="模板缩略图 URL。"
     )
 
 
 class ListTemplatesResponse(SDKModel):
     templates: Annotated[list[Template] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="templates"
+        default=None, alias="templates", description=""
     )
 
 
 class ListVideoTasksRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="每页返回数量，默认 20，最大 100。"
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description="分页令牌。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="按项目过滤。"
     )
-    status: VideoStatus | None = Field(default=None, alias="status")
+    status: VideoStatus | None = Field(default=None, alias="status", description="按任务状态过滤。")
 
 
 class ListVideoTasksResponse(SDKModel):
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     tasks: Annotated[list[VideoTask] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tasks"
+        default=None, alias="tasks", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListWebhookDeliveriesRequest(SDKModel):
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
     status: Annotated[DeliveryStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None, alias="status", description="Optional filter"
     )
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
@@ -3579,100 +5935,126 @@ class WebhookDelivery(SDKModel):
     "WebhookDelivery records a single delivery attempt."
 
     delivered_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="delivered_at"
+        default=None,
+        alias="delivered_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
     delivery_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="delivery_id"
+        default=None, alias="delivery_id", description=""
     )
     duration_ms: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="duration_ms"
+        default=None, alias="duration_ms", description="Round-trip time"
     )
     error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="error_message"
+        default=None, alias="error_message", description="Set on failure"
     )
     event_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="event_type"
+        default=None, alias="event_type", description=""
     )
     response_body: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="response_body"
+        default=None, alias="response_body", description="Truncated response body for debugging"
     )
     response_status: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="response_status"
+        default=None, alias="response_status", description="HTTP status code from the receiver"
     )
     status: Annotated[DeliveryStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="DeliveryStatus represents the outcome of a webhook delivery attempt.",
     )
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
 class ListWebhookDeliveriesResponse(SDKModel):
     deliveries: Annotated[list[WebhookDelivery] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="deliveries"
+        default=None, alias="deliveries", description=""
     )
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
 
 
 class ListWebhooksRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description=""
     )
     page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_token"
+        default=None, alias="page_token", description=""
     )
 
 
 class ListWebhooksResponse(SDKModel):
     next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="next_page_token"
+        default=None, alias="next_page_token", description=""
     )
     total_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_count"
+        default=None, alias="total_count", description=""
     )
     webhooks: Annotated[list[Webhook] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhooks"
+        default=None, alias="webhooks", description=""
     )
 
 
 class LoginRequest(SDKModel):
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
     password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="password_hash"
+        default=None, alias="password_hash", description=""
     )
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
 
 
 class UserBrief(SDKModel):
     "UserBrief is a minimal user representation returned in auth responses."
 
-    avatar: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="avatar")
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    avatar: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="avatar", description=""
+    )
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
 
 
 class LoginResponse(SDKModel):
     csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="csrf_token"
+        default=None, alias="csrf_token", description=""
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="TokenPair contains access and refresh tokens returned after authentication.",
     )
-    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user",
+        description="UserBrief is a minimal user representation returned in auth responses.",
+    )
 
 
 VerificationType: TypeAlias = Literal[
@@ -3681,31 +6063,45 @@ VerificationType: TypeAlias = Literal[
 
 
 class LoginWithVerificationCodeRequest(SDKModel):
-    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="code", description=""
+    )
     code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_verifier"
+        default=None, alias="code_verifier", description=""
     )
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
-    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
-    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="target", description=""
+    )
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="txid", description=""
+    )
     type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="type"
+        default=None,
+        alias="type",
+        description="VerificationType indicates the channel for verification code delivery.",
     )
 
 
 class LoginWithVerificationCodeResponse(SDKModel):
     csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="csrf_token"
+        default=None, alias="csrf_token", description=""
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="TokenPair contains access and refresh tokens returned after authentication.",
     )
-    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user",
+        description="UserBrief is a minimal user representation returned in auth responses.",
+    )
 
 
 LogoutRequest: TypeAlias = Any
@@ -3724,99 +6120,141 @@ UserStatus: TypeAlias = Literal[
 
 class LookupUserResponse(SDKModel):
     email_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="email_masked"
+        default=None,
+        alias="email_masked",
+        description='Masked contact fields (e.g. "j***@example.com", "138****8000").',
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
     phone_masked: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="phone_masked"
+        default=None, alias="phone_masked", description=""
     )
     status: Annotated[UserStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None, alias="status", description="Account lifecycle status."
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description="Opaque entity-id (`usr` prefix)."
+    )
 
 
 class OpaqueLoginFinalizeRequest(SDKModel):
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
-    ke3: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ke3")
+    ke3: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ke3", description=""
+    )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
 class OpaqueLoginFinalizeResponse(SDKModel):
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="TokenPair contains access and refresh tokens returned after authentication.",
     )
-    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user",
+        description="UserBrief is a minimal user representation returned in auth responses.",
+    )
 
 
 class OpaqueLoginInitRequest(SDKModel):
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    ke1: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ke1")
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
+    ke1: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ke1", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
 
 
 class OpaqueLoginInitResponse(SDKModel):
-    ke2: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="ke2")
+    ke2: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ke2", description=""
+    )
     server_identity: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="server_identity"
+        default=None, alias="server_identity", description=""
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
 class OpaqueRegisterFinalizeRequest(SDKModel):
-    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="code", description=""
+    )
     code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_verifier"
+        default=None, alias="code_verifier", description=""
     )
     registration_record: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="registration_record"
+        default=None, alias="registration_record", description=""
     )
-    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="txid", description=""
+    )
 
 
 class OpaqueRegisterFinalizeResponse(SDKModel):
-    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user",
+        description="UserBrief is a minimal user representation returned in auth responses.",
+    )
 
 
 class OpaqueRegisterInitRequest(SDKModel):
     code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_challenge"
+        default=None, alias="code_challenge", description=""
     )
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
     registration_request: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="registration_request"
+        default=None, alias="registration_request", description=""
     )
 
 
 class OpaqueRegisterInitResponse(SDKModel):
     registration_response: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="registration_response"
+        default=None, alias="registration_response", description=""
     )
     server_identity: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="server_identity"
+        default=None, alias="server_identity", description=""
     )
-    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="txid", description=""
+    )
 
 
 class OptimizeHtmlRequest(SDKModel):
     "OptimizeHtmlRequest 对已有的 HTML 内容进行格式和排版优化。\n 可指定 target_platform 以针对特定平台的 HTML 兼容性进行优化\n （例如微信公众号不支持外链图片、知乎有特定 CSS 限制等）。\n article_id 和 content 二选一。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="待优化的文章 ID，与 content 互斥。"
     )
-    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="content", description="待优化的原始 HTML 文本，与 article_id 互斥。"
+    )
     instructions: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="instructions"
+        default=None,
+        alias="instructions",
+        description='优化指令，例如 "适配暗色模式"、"优化移动端排版"。',
     )
     target_platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="target_platform"
+        default=None,
+        alias="target_platform",
+        description="目标发布平台，指定后会针对该平台的 HTML 限制和最佳实践进行优化。",
     )
 
 
@@ -3824,11 +6262,15 @@ class OptimizeHtmlResponse(SDKModel):
     "OptimizeHtmlResponse 是 OptimizeHtml 的流式响应。"
 
     article: Annotated[Article | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article"
+        default=None, alias="article", description="优化后的完整文章实体，仅在 done=true 时填充。"
     )
-    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="done", description="是否优化完毕。"
+    )
     event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
-        default=None, alias="event"
+        default=None,
+        alias="event",
+        description="流式事件，携带内容片段、状态更新、Token 用量或错误信息。",
     )
 
 
@@ -3836,11 +6278,17 @@ class OptimizeMarkdownRequest(SDKModel):
     "OptimizeMarkdownRequest 对已有的 Markdown 内容进行格式和排版优化。\n article_id 和 content 二选一：指定 article_id 则从数据库加载，\n 指定 content 则直接处理原始文本。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="待优化的文章 ID，与 content 互斥。"
     )
-    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="content",
+        description="待优化的原始 Markdown 文本，与 article_id 互斥。",
+    )
     instructions: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="instructions"
+        default=None,
+        alias="instructions",
+        description='优化指令，例如 "改善可读性"、"统一标题层级"、"添加目录"。',
     )
 
 
@@ -3848,234 +6296,576 @@ class OptimizeMarkdownResponse(SDKModel):
     "OptimizeMarkdownResponse 是 OptimizeMarkdown 的流式响应。"
 
     article: Annotated[Article | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article"
+        default=None, alias="article", description="优化后的完整文章实体，仅在 done=true 时填充。"
     )
-    done: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="done")
+    done: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="done", description="是否优化完毕。"
+    )
     event: Annotated[StreamEvent | None, AfterValidator(non_null)] = Field(
-        default=None, alias="event"
+        default=None,
+        alias="event",
+        description="流式事件，携带内容片段、状态更新、Token 用量或错误信息。",
     )
 
 
 class PageDeletionPreview(SDKModel):
     "PageDeletionPreview is a signed, short-lived exact impact snapshot used for\n explicit page-deletion confirmation."
 
-    active_estimate_count: int = Field(default=..., alias="active_estimate_count")
-    ai_call_count: int = Field(default=..., alias="ai_call_count")
-    brief_revision_count: int = Field(default=..., alias="brief_revision_count")
+    active_estimate_count: int = Field(
+        default=...,
+        alias="active_estimate_count",
+        description="Required. Active estimates that will be invalidated.",
+    )
+    ai_call_count: int = Field(
+        default=...,
+        alias="ai_call_count",
+        description="Required. Logical AI call slots included in the deletion scope.",
+    )
+    brief_revision_count: int = Field(
+        default=...,
+        alias="brief_revision_count",
+        description="Required. Complete brief revisions included in the deletion scope.",
+    )
     category_organization_estimate_count: int = Field(
-        default=..., alias="category_organization_estimate_count"
+        default=...,
+        alias="category_organization_estimate_count",
+        description="Required. Category-organization estimates that will be invalidated.",
     )
     category_organization_job_count: int = Field(
-        default=..., alias="category_organization_job_count"
+        default=...,
+        alias="category_organization_job_count",
+        description="Required. Category-organization jobs included in the deletion scope.",
     )
-    category_plan_count: int = Field(default=..., alias="category_plan_count")
-    confirmation_token: str = Field(default=..., alias="confirmation_token")
-    content_revision: str = Field(default=..., alias="content_revision")
-    event_revision: str = Field(default=..., alias="event_revision")
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    export_count: int = Field(default=..., alias="export_count")
-    external_source_count: int = Field(default=..., alias="external_source_count")
-    external_temp_copy_count: int = Field(default=..., alias="external_temp_copy_count")
-    failure_context_count: int = Field(default=..., alias="failure_context_count")
-    generation_plan_count: int = Field(default=..., alias="generation_plan_count")
-    generation_plan_step_count: int = Field(default=..., alias="generation_plan_step_count")
-    impact_fingerprint: str = Field(default=..., alias="impact_fingerprint")
-    job_count: int = Field(default=..., alias="job_count")
-    job_input_count: int = Field(default=..., alias="job_input_count")
-    material_count: int = Field(default=..., alias="material_count")
-    page_id: str = Field(default=..., alias="page_id")
-    provisional_candidate_count: int = Field(default=..., alias="provisional_candidate_count")
-    replan_decision_count: int = Field(default=..., alias="replan_decision_count")
-    review_report_count: int = Field(default=..., alias="review_report_count")
-    source_count: int = Field(default=..., alias="source_count")
-    tool_call_count: int = Field(default=..., alias="tool_call_count")
-    version_count: int = Field(default=..., alias="version_count")
+    category_plan_count: int = Field(
+        default=...,
+        alias="category_plan_count",
+        description="Required. Category plan storage objects included in the deletion scope.",
+    )
+    confirmation_token: str = Field(
+        default=...,
+        alias="confirmation_token",
+        description="Required. Short-lived confirmation capability; never log or persist in telemetry.",
+    )
+    content_revision: str = Field(
+        default=...,
+        alias="content_revision",
+        description="Required. Page content revision bound into this preview.",
+    )
+    event_revision: str = Field(
+        default=...,
+        alias="event_revision",
+        description="Required. Page event revision observed by this preview.",
+    )
+    expires_at: Timestamp = Field(
+        default=...,
+        alias="expires_at",
+        description="Required. Expiry of the confirmation token and impact snapshot.",
+    )
+    export_count: int = Field(
+        default=...,
+        alias="export_count",
+        description="Required. PDF and PNG artifacts included in the deletion scope.",
+    )
+    external_source_count: int = Field(
+        default=...,
+        alias="external_source_count",
+        description="Required. Future-reserved external source count; zero in the current release.",
+    )
+    external_temp_copy_count: int = Field(
+        default=...,
+        alias="external_temp_copy_count",
+        description="Required. Registered external temporary copies included in the scope.",
+    )
+    failure_context_count: int = Field(
+        default=...,
+        alias="failure_context_count",
+        description="Required. Typed failure contexts included in the deletion scope.",
+    )
+    generation_plan_count: int = Field(
+        default=...,
+        alias="generation_plan_count",
+        description="Required. Generation plan revisions included in the deletion scope.",
+    )
+    generation_plan_step_count: int = Field(
+        default=...,
+        alias="generation_plan_step_count",
+        description="Required. Structured plan steps included in the deletion scope.",
+    )
+    impact_fingerprint: str = Field(
+        default=...,
+        alias="impact_fingerprint",
+        description="Required. SHA-256 of the exact canonical deletion scope.",
+    )
+    job_count: int = Field(
+        default=...,
+        alias="job_count",
+        description="Required. Logical jobs included in the deletion scope.",
+    )
+    job_input_count: int = Field(
+        default=...,
+        alias="job_input_count",
+        description="Required. Frozen job inputs included in the deletion scope.",
+    )
+    material_count: int = Field(
+        default=...,
+        alias="material_count",
+        description="Required. Materials included in the deletion scope.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Opaque page identifier to delete."
+    )
+    provisional_candidate_count: int = Field(
+        default=...,
+        alias="provisional_candidate_count",
+        description="Required. Unpublished candidates included in the deletion scope.",
+    )
+    replan_decision_count: int = Field(
+        default=...,
+        alias="replan_decision_count",
+        description="Required. Structured replan decisions included in the deletion scope.",
+    )
+    review_report_count: int = Field(
+        default=...,
+        alias="review_report_count",
+        description="Required. Structured review reports included in the deletion scope.",
+    )
+    source_count: int = Field(
+        default=...,
+        alias="source_count",
+        description="Required. Material and inline-text sources included in the deletion scope.",
+    )
+    tool_call_count: int = Field(
+        default=...,
+        alias="tool_call_count",
+        description="Required. Future-reserved tool call count; zero in the current release.",
+    )
+    version_count: int = Field(
+        default=...,
+        alias="version_count",
+        description="Required. Published versions included in the deletion scope.",
+    )
 
 
 class PinpageCategoriesApplyOrganizationBody(SDKModel):
-    billing_intent_id: str = Field(default=..., alias="billingIntentId")
-    estimate_id: str = Field(default=..., alias="estimateId")
-    organization_job_id: str = Field(default=..., alias="organizationJobId")
+    billing_intent_id: str = Field(
+        default=...,
+        alias="billingIntentId",
+        description="Required. Settled billing intent belonging to the organization job.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimateId",
+        description="Required. Estimate consumed by the organization job.",
+    )
+    organization_job_id: str = Field(
+        default=...,
+        alias="organizationJobId",
+        description="Required. Successful, unexpired organization job.",
+    )
 
 
 class PinpageCategoriesEstimateOrganizationBody(SDKModel):
-    instruction: str = Field(default=..., alias="instruction")
-    scope_category_id: str | None = Field(default=None, alias="scopeCategoryId")
+    instruction: str = Field(
+        default=...,
+        alias="instruction",
+        description="Required. One-time organization instruction, from 1 to 2,000 characters.",
+    )
+    scope_category_id: str | None = Field(
+        default=None,
+        alias="scopeCategoryId",
+        description="(OPTIONAL) Optional. Omit for the whole tree; otherwise restrict to this subtree.",
+    )
 
 
 class PinpageCategoriesPreviewOrganizationBody(SDKModel):
-    confirmed_authorized_max_credit: str = Field(default=..., alias="confirmedAuthorizedMaxCredit")
-    confirmed_estimated_ai_credit: str = Field(default=..., alias="confirmedEstimatedAiCredit")
-    estimate_id: str = Field(default=..., alias="estimateId")
-    input_fingerprint: str = Field(default=..., alias="inputFingerprint")
+    confirmed_authorized_max_credit: str = Field(
+        default=...,
+        alias="confirmedAuthorizedMaxCredit",
+        description="Required. Exact maximum user net charge confirmed by the user.",
+    )
+    confirmed_estimated_ai_credit: str = Field(
+        default=...,
+        alias="confirmedEstimatedAiCredit",
+        description="Required. Public AI estimate confirmed by the user.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimateId",
+        description="Required. Active estimate whose tree snapshot still matches.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="inputFingerprint",
+        description="Required. Exact frozen instruction, scope, and tree fingerprint.",
+    )
 
 
 class PinpageCategoryPreferenceUpdateCategoryPreferenceBody(SDKModel):
-    etag: str = Field(default=..., alias="etag")
-    rules_text: str = Field(default=..., alias="rulesText")
+    etag: str = Field(
+        default=...,
+        alias="etag",
+        description="Required. Optimistic concurrency validator read from the singleton.",
+    )
+    rules_text: str = Field(
+        default=...,
+        alias="rulesText",
+        description="Required. Complete replacement text; empty explicitly clears the rules.",
+    )
 
 
 class PinpageJobsCreateGenerationBody(SDKModel):
-    client_reference: str | None = Field(default=None, alias="clientReference")
-    instruction: str = Field(default=..., alias="instruction")
-    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="materialIds"
+    client_reference: str | None = Field(
+        default=None,
+        alias="clientReference",
+        description="(OPTIONAL) Optional. Client-local draft correlation value, at most 128 characters.",
     )
-    orientation: Orientation | None = Field(default=None, alias="orientation")
-    title: str | None = Field(default=None, alias="title")
-    ui_locale: str | None = Field(default=None, alias="uiLocale")
+    instruction: str = Field(
+        default=...,
+        alias="instruction",
+        description="Required. The complete production requirement, including any source text\n the user wants PinPage to use. It is never interpreted as a money budget.",
+    )
+    material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="materialIds",
+        description="(OPTIONAL) Optional. Complete set of READY materials attached to this generation.",
+    )
+    orientation: Orientation | None = Field(
+        default=None, alias="orientation", description="(OPTIONAL) Optional. Defaults to AUTO."
+    )
+    title: str | None = Field(
+        default=None, alias="title", description="(OPTIONAL) Optional. Candidate page title."
+    )
+    ui_locale: str | None = Field(
+        default=None,
+        alias="uiLocale",
+        description="(OPTIONAL) Optional. Actual UI locale; valid Accept-Language takes precedence.",
+    )
 
 
 class PinpageJobsEstimateBody(SDKModel):
     add_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="addMaterialIds"
+        default=None,
+        alias="addMaterialIds",
+        description="(OPTIONAL) Optional. Materials added to a regeneration baseline.",
     )
-    base_job_id: str | None = Field(default=None, alias="baseJobId")
-    brief_instruction: str | None = Field(default=None, alias="briefInstruction")
+    base_job_id: str | None = Field(
+        default=None,
+        alias="baseJobId",
+        description="(OPTIONAL) Optional. Regeneration baseline job when the selected branch requires one.",
+    )
+    brief_instruction: str | None = Field(
+        default=None,
+        alias="briefInstruction",
+        description="(OPTIONAL) Optional. Required for create and an optional delta for regeneration.",
+    )
     content_decision_action_token: str | None = Field(
-        default=None, alias="contentDecisionActionToken"
+        default=None,
+        alias="contentDecisionActionToken",
+        description="(OPTIONAL) Optional. Required with content_decision_context_id and never logged.",
     )
     content_decision_context_digest: str | None = Field(
-        default=None, alias="contentDecisionContextDigest"
+        default=None,
+        alias="contentDecisionContextDigest",
+        description="(OPTIONAL) Optional. Required with content_decision_context_id.",
     )
-    content_decision_context_id: str | None = Field(default=None, alias="contentDecisionContextId")
-    content_decision_note: str | None = Field(default=None, alias="contentDecisionNote")
+    content_decision_context_id: str | None = Field(
+        default=None,
+        alias="contentDecisionContextId",
+        description="(OPTIONAL) Optional. Required when resolving a durable content-decision context.",
+    )
+    content_decision_note: str | None = Field(
+        default=None,
+        alias="contentDecisionNote",
+        description="(OPTIONAL) Optional. Regeneration-only note accompanying selected option identifiers.",
+    )
     content_decision_option_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="contentDecisionOptionIds"
+        default=None,
+        alias="contentDecisionOptionIds",
+        description="(OPTIONAL) Optional. Required and non-empty with content_decision_context_id.",
     )
     external_information_mode: ExternalInformationMode | None = Field(
-        default=None, alias="externalInformationMode"
+        default=None,
+        alias="externalInformationMode",
+        description="(OPTIONAL) Optional. Required for create/regeneration and currently must be DISABLED.",
     )
-    inline_text: str | None = Field(default=None, alias="inlineText")
+    inline_text: str | None = Field(
+        default=None,
+        alias="inlineText",
+        description="(OPTIONAL) Optional. Complete inline source for create; forbidden for other operations.",
+    )
     inline_text_change: Annotated[InlineTextChange | None, AfterValidator(non_null)] = Field(
-        default=None, alias="inlineTextChange"
+        default=None,
+        alias="inlineTextChange",
+        description="(OPTIONAL) Optional. Typed inline-text delta for regeneration only.",
     )
     material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="materialIds"
+        default=None,
+        alias="materialIds",
+        description="(OPTIONAL) Optional. Complete create-time material set; conditionally non-empty.",
     )
-    operation: GenerationOperation = Field(default=..., alias="operation")
-    orientation: Orientation | None = Field(default=None, alias="orientation")
-    page_id: str | None = Field(default=None, alias="pageId")
+    operation: GenerationOperation = Field(
+        default=...,
+        alias="operation",
+        description="Required. CREATE_PAGE, REGENERATE_PAGE, or RETRY_JOB.",
+    )
+    orientation: Orientation | None = Field(
+        default=None,
+        alias="orientation",
+        description="(OPTIONAL) Optional. Create or regeneration orientation; forbidden for retry.",
+    )
+    page_id: str | None = Field(
+        default=None,
+        alias="pageId",
+        description="(OPTIONAL) Optional. Required for REGENERATE_PAGE and RETRY_JOB; forbidden for create.",
+    )
     remove_material_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="removeMaterialIds"
+        default=None,
+        alias="removeMaterialIds",
+        description="(OPTIONAL) Optional. Materials removed from a regeneration baseline.",
     )
-    source_job_id: str | None = Field(default=None, alias="sourceJobId")
-    title: str | None = Field(default=None, alias="title")
+    source_job_id: str | None = Field(
+        default=None,
+        alias="sourceJobId",
+        description="(OPTIONAL) Optional. Required only for RETRY_JOB.",
+    )
+    title: str | None = Field(
+        default=None, alias="title", description="(OPTIONAL) Optional. Create-only candidate title."
+    )
 
 
 class PinpageJobsRetryJobBody(SDKModel):
-    confirmed_authorized_max_credit: str = Field(default=..., alias="confirmedAuthorizedMaxCredit")
-    estimate_id: str = Field(default=..., alias="estimateId")
-    input_fingerprint: str = Field(default=..., alias="inputFingerprint")
+    confirmed_authorized_max_credit: str = Field(
+        default=...,
+        alias="confirmedAuthorizedMaxCredit",
+        description="Required. Exact maximum user net charge confirmed by the user.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimateId",
+        description="Required. Active RETRY_JOB estimate bound to job_id.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="inputFingerprint",
+        description="Required. Exact fingerprint from the durable estimate.",
+    )
 
 
 class PinpageJobsSubmitBody(SDKModel):
-    client_reference: str | None = Field(default=None, alias="clientReference")
-    confirmed_authorized_max_credit: str = Field(default=..., alias="confirmedAuthorizedMaxCredit")
-    estimate_id: str = Field(default=..., alias="estimateId")
-    input_fingerprint: str = Field(default=..., alias="inputFingerprint")
+    client_reference: str | None = Field(
+        default=None,
+        alias="clientReference",
+        description="(OPTIONAL) Optional. Client-local draft correlation value, at most 128 characters.",
+    )
+    confirmed_authorized_max_credit: str = Field(
+        default=...,
+        alias="confirmedAuthorizedMaxCredit",
+        description="Required. Exact maximum user net charge confirmed by the user.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimateId",
+        description="Required. Active CREATE_PAGE estimate identifier.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="inputFingerprint",
+        description="Required. Exact fingerprint from the durable estimate.",
+    )
 
 
 class PinpagePagesRegeneratePageBody(SDKModel):
     confirmed_authorized_max_credit: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="confirmedAuthorizedMaxCredit"
+        default=None,
+        alias="confirmedAuthorizedMaxCredit",
+        description="(OPTIONAL) Deprecated. Legacy user-authorized maximum charge.",
     )
     estimate_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="estimateId"
+        default=None,
+        alias="estimateId",
+        description="(OPTIONAL) Deprecated. Legacy REGENERATE_PAGE estimate bound to page_id.",
     )
     input_fingerprint: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="inputFingerprint"
+        default=None,
+        alias="inputFingerprint",
+        description="(OPTIONAL) Deprecated. Legacy fingerprint from the durable estimate.",
     )
-    instruction: str | None = Field(default=None, alias="instruction")
-    ui_locale: str | None = Field(default=None, alias="uiLocale")
+    instruction: str | None = Field(
+        default=None,
+        alias="instruction",
+        description="(OPTIONAL) Required for the direct flow. Complete modification requirement. Vertex\n owns LLM quota admission and charging behind the PinPage boundary.",
+    )
+    ui_locale: str | None = Field(
+        default=None,
+        alias="uiLocale",
+        description="(OPTIONAL) Optional. Actual UI locale; valid Accept-Language takes precedence.",
+    )
 
 
 class PinpagePagesRenamePageBody(SDKModel):
-    expected_title_revision: str = Field(default=..., alias="expectedTitleRevision")
-    title: str = Field(default=..., alias="title")
+    expected_title_revision: str = Field(
+        default=...,
+        alias="expectedTitleRevision",
+        description="Required. Title revision from GetGenerationProgress; rejects stale edits.",
+    )
+    title: str = Field(default=..., alias="title", description="Required. Desired display title.")
 
 
 class PinpageUploadsCreateUploadBody(SDKModel):
-    confirmed_authorized_max_credit: str = Field(default=..., alias="confirmedAuthorizedMaxCredit")
-    estimate_item_id: str = Field(default=..., alias="estimateItemId")
+    confirmed_authorized_max_credit: str = Field(
+        default=...,
+        alias="confirmedAuthorizedMaxCredit",
+        description="Required. Exact parent-estimate maximum net charge confirmed by the user.",
+    )
+    estimate_item_id: str = Field(
+        default=...,
+        alias="estimateItemId",
+        description="Required. Available item in an unexpired upload estimate.",
+    )
 
 
 class PinpageUploadsEstimateBody(SDKModel):
-    files: list[UploadEstimateDeclaration] = Field(default=..., alias="files")
+    files: list[UploadEstimateDeclaration] = Field(
+        default=...,
+        alias="files",
+        description="Required. One to ten declarations with at most 200 MB in aggregate.",
+    )
 
 
 class PinpageUploadsSignUploadPartsBody(SDKModel):
-    part_numbers: list[int] = Field(default=..., alias="partNumbers")
+    part_numbers: list[int] = Field(
+        default=...,
+        alias="partNumbers",
+        description="Required. One to one hundred unique numbers within the session part plan.",
+    )
 
 
 class PreviewCategoryDeletionRequest(SDKModel):
-    category_id: str = Field(default=..., alias="category_id")
-    user_id: str = Field(default=..., alias="user_id")
+    category_id: str = Field(
+        default=...,
+        alias="category_id",
+        description="Required. Root category whose exact subtree impact is requested.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class PreviewCategoryDeletionResponse(SDKModel):
-    deletion_preview: CategoryDeletionPreview = Field(default=..., alias="deletion_preview")
+    deletion_preview: CategoryDeletionPreview = Field(
+        default=...,
+        alias="deletion_preview",
+        description="Required. Signed, short-lived exact category and page impact snapshot.",
+    )
 
 
 class PreviewCategoryOrganizationRequest(SDKModel):
     confirmed_authorized_max_credit: str = Field(
-        default=..., alias="confirmed_authorized_max_credit"
+        default=...,
+        alias="confirmed_authorized_max_credit",
+        description="Required. Exact maximum user net charge confirmed by the user.",
     )
-    confirmed_estimated_ai_credit: str = Field(default=..., alias="confirmed_estimated_ai_credit")
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    input_fingerprint: str = Field(default=..., alias="input_fingerprint")
-    user_id: str = Field(default=..., alias="user_id")
+    confirmed_estimated_ai_credit: str = Field(
+        default=...,
+        alias="confirmed_estimated_ai_credit",
+        description="Required. Public AI estimate confirmed by the user.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimate_id",
+        description="Required. Active estimate whose tree snapshot still matches.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="input_fingerprint",
+        description="Required. Exact frozen instruction, scope, and tree fingerprint.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class PreviewCategoryOrganizationResponse(SDKModel):
-    organization_job: CategoryOrganizationJob = Field(default=..., alias="organization_job")
+    organization_job: CategoryOrganizationJob = Field(
+        default=...,
+        alias="organization_job",
+        description="Required. Newly accepted asynchronous organization job.",
+    )
 
 
 class PreviewPageDeletionRequest(SDKModel):
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
+    page_id: str = Field(
+        default=...,
+        alias="page_id",
+        description="Required. Page whose exact deletion impact is requested.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class PreviewPageDeletionResponse(SDKModel):
-    deletion_preview: PageDeletionPreview = Field(default=..., alias="deletion_preview")
+    deletion_preview: PageDeletionPreview = Field(
+        default=...,
+        alias="deletion_preview",
+        description="Required. Signed, short-lived exact impact snapshot.",
+    )
 
 
 class ProgressMessageArgumentsEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class ProjectMetadataEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class ProtoAny(SDKModel):
     "Contains an arbitrary serialized message along with a @type that describes the type of the serialized message."
 
-    field_type: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="@type")
+    field_type: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="@type",
+        description="A URL/resource name that uniquely identifies the type of the serialized message.",
+    )
 
 
 class PublishArticleRequest(SDKModel):
     "PublishArticleRequest 将一篇文章发布到指定平台。"
 
     account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="account_id"
+        default=None, alias="account_id", description="使用哪个已绑定的平台账号发布。"
     )
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description="要发布的文章 ID。"
     )
     platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform"
+        default=None, alias="platform", description="目标平台。"
     )
     platform_config: Annotated[PlatformConfig | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform_config"
+        default=None, alias="platform_config", description="平台特有的发布配置。"
     )
 
 
 class PublishArticleResponse(SDKModel):
     record: Annotated[PublishRecord | None, AfterValidator(non_null)] = Field(
-        default=None, alias="record"
+        default=None, alias="record", description="本次发布的记录，可通过 record_id 追踪后续状态。"
     )
 
 
@@ -4083,13 +6873,19 @@ class PublishedArticleInfo(SDKModel):
     "PublishedArticleInfo 已发布文章信息。"
 
     category: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="category"
+        default=None,
+        alias="category",
+        description='文章分类（例如 "千万 QPS 架构系列 · 网络架构篇 · IP与路由"）。',
     )
     publish_time: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="publish_time"
+        default=None, alias="publish_time", description="发布时间（Unix 时间戳，秒）。"
     )
-    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
-    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="title", description="文章标题。"
+    )
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="url", description="文章链接。"
+    )
 
 
 PublishToWechatMpTarget: TypeAlias = Literal[
@@ -4102,175 +6898,281 @@ PublishToWechatMpTarget: TypeAlias = Literal[
 class WechatMpCredentials(SDKModel):
     "WechatMpCredentials 微信公众号 API 调用凭证。\n\n 由调用方在请求体中提供，server 端用于调用微信公众号开放 API（上传素材 /\n 创建草稿 / 群发等）。**业务凭证是请求的固有属性，应随请求体传输**，不应\n 放在 HTTP header 中——HTTP header 在跨网关 / 多跳 RPC 时透传策略不一定\n 可靠，且不受 proto 类型 / 必填校验保护，审计日志透明度也差。\n\n 注意：app_secret 是敏感凭证，server 端日志 / 错误响应 / wire dump 必须脱敏。"
 
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="app_id",
+        description='微信公众号 AppID（形如 "wxbd099e0f2e27cca4"，18 位）。',
+    )
     app_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_secret"
+        default=None,
+        alias="app_secret",
+        description="微信公众号 AppSecret（32 位十六进制）。**敏感字段，禁止落日志**。",
     )
 
 
 class PublishToWechatMpRequest(SDKModel):
     "PublishToWechatMpRequest 一站式发布 Markdown 或 HTML 内容到微信公众号。\n 流程：按格式预处理正文 → 封面上传 → 创建/更新草稿 → 可选群发。"
 
-    author: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="author")
-    cached_articles: Annotated[list[PublishedArticleInfo] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="cached_articles"
+    author: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="author", description="文章作者。"
     )
-    content: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="content")
+    cached_articles: Annotated[list[PublishedArticleInfo] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="cached_articles",
+        description="客户端缓存的已发布文章（往期推荐功能的回退数据源）。",
+    )
+    content: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="content", description="Markdown 或 HTML 正文内容（必填）。"
+    )
     content_format: Annotated[ContentFormat | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_format"
+        default=None,
+        alias="content_format",
+        description="正文格式。未指定时按 Markdown 处理，以兼容旧客户端。",
     )
     content_source_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_source_url"
+        default=None, alias="content_source_url", description="原文链接 URL。"
     )
     cover_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="cover_url"
+        default=None, alias="cover_url", description="封面图 URL，将自动上传为微信 thumb 素材。"
     )
-    debug: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="debug")
-    digest: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="digest")
+    debug: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="debug", description="是否返回调试日志。"
+    )
+    digest: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="digest", description="文章摘要，未填写时微信默认截取正文前 120 字。"
+    )
     image_map: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="image_map"
+        default=None,
+        alias="image_map",
+        description="正文中的图片映射：本地路径/标识 → 已上传的微信图片 URL。",
     )
     need_open_comment: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="need_open_comment"
+        default=None, alias="need_open_comment", description="是否开启评论功能。"
     )
     show_cover_pic: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="show_cover_pic"
+        default=None, alias="show_cover_pic", description="是否在正文中显示封面图。"
     )
     target: Annotated[PublishToWechatMpTarget | None, AfterValidator(non_null)] = Field(
-        default=None, alias="target"
+        default=None, alias="target", description="发布目标：草稿或群发。"
     )
     template_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="template_id"
+        default=None, alias="template_id", description="排版模板/主题 ID。"
     )
-    title: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="title")
+    title: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="title", description="文章标题（必填）。"
+    )
     wechat_mp_credentials: Annotated[WechatMpCredentials | None, AfterValidator(non_null)] = Field(
-        default=None, alias="wechat_mp_credentials"
+        default=None,
+        alias="wechat_mp_credentials",
+        description="微信公众号 API 调用凭证（必填）。\n 详见 WechatMpCredentials 设计说明（types.proto）。",
     )
 
 
 class PublishToWechatMpRequestImageMapEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class PublishToWechatMpResponse(SDKModel):
     "PublishToWechatMpResponse 发布结果。"
 
     debug_logs: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="debug_logs"
+        default=None, alias="debug_logs", description="调试日志（debug=true 时返回）。"
     )
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None, alias="media_id", description="草稿的 media_id。"
     )
-    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
-    ok: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="ok")
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="message", description="结果描述信息。"
+    )
+    ok: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="ok", description="操作是否成功。"
+    )
     published_articles: Annotated[list[PublishedArticleInfo] | None, AfterValidator(non_null)] = (
-        Field(default=None, alias="published_articles")
+        Field(
+            default=None,
+            alias="published_articles",
+            description="拉取到的已发布文章列表（供客户端缓存）。",
+        )
     )
 
 
 class RefreshTokenRequest(SDKModel):
     refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="refresh_token"
+        default=None, alias="refresh_token", description=""
     )
 
 
 class RefreshTokenResponse(SDKModel):
     access_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="access_token"
+        default=None, alias="access_token", description=""
     )
     expires_in: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_in"
+        default=None, alias="expires_in", description=""
     )
     refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="refresh_token"
+        default=None, alias="refresh_token", description=""
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
 
 
 class RegenerateAPIKeyRequest(SDKModel):
-    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key_id")
+    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key_id", description=""
+    )
 
 
 class RegenerateAPIKeyResponse(SDKModel):
     api_key: Annotated[APIKey | None, AfterValidator(non_null)] = Field(
-        default=None, alias="api_key"
+        default=None,
+        alias="api_key",
+        description="APIKey represents a developer's API key credential.",
     )
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="key",
+        description="New key in plaintext; old key is immediately invalidated",
+    )
 
 
 class RegeneratePageRequest(SDKModel):
     confirmed_authorized_max_credit: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="confirmed_authorized_max_credit"
+        default=None,
+        alias="confirmed_authorized_max_credit",
+        description="(OPTIONAL) Deprecated. Legacy user-authorized maximum charge.",
     )
     estimate_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="estimate_id"
+        default=None,
+        alias="estimate_id",
+        description="(OPTIONAL) Deprecated. Legacy REGENERATE_PAGE estimate bound to page_id.",
     )
     input_fingerprint: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="input_fingerprint"
+        default=None,
+        alias="input_fingerprint",
+        description="(OPTIONAL) Deprecated. Legacy fingerprint from the durable estimate.",
     )
-    instruction: str | None = Field(default=None, alias="instruction")
-    page_id: str = Field(default=..., alias="page_id")
-    ui_locale: str | None = Field(default=None, alias="ui_locale")
-    user_id: str = Field(default=..., alias="user_id")
+    instruction: str | None = Field(
+        default=None,
+        alias="instruction",
+        description="(OPTIONAL) Required for the direct flow. Complete modification requirement. Vertex\n owns LLM quota admission and charging behind the PinPage boundary.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Existing page to regenerate."
+    )
+    ui_locale: str | None = Field(
+        default=None,
+        alias="ui_locale",
+        description="(OPTIONAL) Optional. Actual UI locale; valid Accept-Language takes precedence.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class RegeneratePageResponse(SDKModel):
-    job: JobSummary = Field(default=..., alias="job")
-    page: Page = Field(default=..., alias="page")
+    job: JobSummary = Field(
+        default=..., alias="job", description="Required. Newly created regeneration job."
+    )
+    page: Page = Field(
+        default=...,
+        alias="page",
+        description="Required. Current page; its version pointer is not changed early.",
+    )
 
 
 class RegisterRequest(SDKModel):
-    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="code", description="verification code"
+    )
     code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_verifier"
+        default=None, alias="code_verifier", description="PKCE verifier"
     )
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
     password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="password_hash"
+        default=None, alias="password_hash", description="SHA256 hash from client"
     )
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
-    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="txid", description=""
+    )
 
 
 class RegisterResponse(SDKModel):
     csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="csrf_token"
+        default=None, alias="csrf_token", description=""
     )
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="注册后自动创建的 session（与 LoginResponse 一致）",
     )
 
 
 class RemoveMemberRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
 
 
 RemoveMemberResponse: TypeAlias = Any
 
 
 class RenamePageRequest(SDKModel):
-    expected_title_revision: str = Field(default=..., alias="expected_title_revision")
-    page_id: str = Field(default=..., alias="page_id")
-    title: str = Field(default=..., alias="title")
-    user_id: str = Field(default=..., alias="user_id")
+    expected_title_revision: str = Field(
+        default=...,
+        alias="expected_title_revision",
+        description="Required. Title revision from GetGenerationProgress; rejects stale edits.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Owned page identifier."
+    )
+    title: str = Field(default=..., alias="title", description="Required. Desired display title.")
+    user_id: str = Field(
+        default=..., alias="user_id", description="Required. Authenticated owner or me."
+    )
 
 
 class RenamePageResponse(SDKModel):
-    page: Page = Field(default=..., alias="page")
+    page: Page = Field(
+        default=..., alias="page", description="Required. Current page after the name was saved."
+    )
 
 
 class RequestPasswordResetRequest(SDKModel):
-    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="target", description=""
+    )
     type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="type"
+        default=None,
+        alias="type",
+        description="VerificationType indicates the channel for verification code delivery.",
     )
 
 
@@ -4278,17 +7180,25 @@ RequestPasswordResetResponse: TypeAlias = Any
 
 
 class ResetPasswordRequest(SDKModel):
-    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="code", description=""
+    )
     code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_verifier"
+        default=None, alias="code_verifier", description=""
     )
     new_password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="new_password_hash"
+        default=None, alias="new_password_hash", description=""
     )
-    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
-    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="target", description=""
+    )
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="txid", description=""
+    )
     type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="type"
+        default=None,
+        alias="type",
+        description="VerificationType indicates the channel for verification code delivery.",
     )
 
 
@@ -4296,13 +7206,17 @@ ResetPasswordResponse: TypeAlias = Any
 
 
 class RestoreAccountRequest(SDKModel):
-    email: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="email")
-    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="password_hash"
+    email: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="email", description=""
     )
-    phone: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phone")
+    password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="password_hash", description=""
+    )
+    phone: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="phone", description=""
+    )
     verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="verification_code"
+        default=None, alias="verification_code", description=""
     )
 
 
@@ -4310,53 +7224,105 @@ RestoreAccountResponse: TypeAlias = Any
 
 
 class RestorePageVersionRequest(SDKModel):
-    expected_content_revision: str = Field(default=..., alias="expected_content_revision")
-    expected_current_version_id: str = Field(default=..., alias="expected_current_version_id")
-    page_etag: str | None = Field(default=None, alias="page_etag")
-    page_id: str = Field(default=..., alias="page_id")
-    user_id: str = Field(default=..., alias="user_id")
-    version_id: str = Field(default=..., alias="version_id")
+    expected_content_revision: str = Field(
+        default=...,
+        alias="expected_content_revision",
+        description="Required. Page content revision observed before the write.",
+    )
+    expected_current_version_id: str = Field(
+        default=...,
+        alias="expected_current_version_id",
+        description="Required. Current version observed before the write.",
+    )
+    page_etag: str | None = Field(
+        default=None,
+        alias="page_etag",
+        description="(OPTIONAL) Optional. Exact representation validator requested by the client.",
+    )
+    page_id: str = Field(
+        default=..., alias="page_id", description="Required. Owning page identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
+    version_id: str = Field(
+        default=..., alias="version_id", description="Required. Historical version to make current."
+    )
 
 
 class RestorePageVersionResponse(SDKModel):
-    page: Page = Field(default=..., alias="page")
+    page: Page = Field(
+        default=...,
+        alias="page",
+        description="Required. Page after the historical version becomes current.",
+    )
 
 
 class RetryJobRequest(SDKModel):
     confirmed_authorized_max_credit: str = Field(
-        default=..., alias="confirmed_authorized_max_credit"
+        default=...,
+        alias="confirmed_authorized_max_credit",
+        description="Required. Exact maximum user net charge confirmed by the user.",
     )
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    input_fingerprint: str = Field(default=..., alias="input_fingerprint")
-    job_id: str = Field(default=..., alias="job_id")
-    user_id: str = Field(default=..., alias="user_id")
+    estimate_id: str = Field(
+        default=...,
+        alias="estimate_id",
+        description="Required. Active RETRY_JOB estimate bound to job_id.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="input_fingerprint",
+        description="Required. Exact fingerprint from the durable estimate.",
+    )
+    job_id: str = Field(
+        default=...,
+        alias="job_id",
+        description="Required. Failed source job from the request path.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class RetryJobResponse(SDKModel):
-    job: JobSummary = Field(default=..., alias="job")
+    job: JobSummary = Field(
+        default=...,
+        alias="job",
+        description="Required. Newly created retry job; the source job remains unchanged.",
+    )
 
 
 class RetryWebhookDeliveryRequest(SDKModel):
     delivery_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="delivery_id"
+        default=None, alias="delivery_id", description=""
     )
 
 
 class RetryWebhookDeliveryResponse(SDKModel):
     delivery: Annotated[WebhookDelivery | None, AfterValidator(non_null)] = Field(
-        default=None, alias="delivery"
+        default=None,
+        alias="delivery",
+        description="WebhookDelivery records a single delivery attempt.",
     )
 
 
 class RevokeAPIKeyRequest(SDKModel):
-    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key_id")
+    key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key_id", description=""
+    )
 
 
 RevokeAPIKeyResponse: TypeAlias = Any
 
 
 class RevokeApplicationAccessRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
 
 
 RevokeApplicationAccessResponse: TypeAlias = Any
@@ -4364,14 +7330,16 @@ RevokeApplicationAccessResponse: TypeAlias = Any
 
 class RevokeTokenRequest(SDKModel):
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None, alias="client_secret", description=""
     )
-    token: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="token")
+    token: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="token", description="The token to revoke (access or refresh)"
+    )
     token_type_hint: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="token_type_hint"
+        default=None, alias="token_type_hint", description='"access_token" or "refresh_token"'
     )
 
 
@@ -4379,43 +7347,53 @@ RevokeTokenResponse: TypeAlias = Any
 
 
 class RotateClientSecretRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
 
 
 class RotateClientSecretResponse(SDKModel):
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None, alias="client_secret", description="New secret in plaintext"
     )
 
 
 class RotateOAuthClientSecretRequest(SDKModel):
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
 
 
 class RotateOAuthClientSecretResponse(SDKModel):
     client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client"
+        default=None,
+        alias="client",
+        description="OAuthClient is one credential atom owned by IAM. An application may own\n multiple clients; app_id and client_id must therefore be used together for\n every management operation.\n\n Secret material and secret hashes are deliberately absent from this read\n model. Plaintext is returned exactly once by create and rotate responses.",
     )
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None,
+        alias="client_secret",
+        description="Plaintext returned once; old secret is invalidated.",
     )
     rotated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="rotated_at"
+        default=None,
+        alias="rotated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class RotateWebhookSecretRequest(SDKModel):
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
 class RotateWebhookSecretResponse(SDKModel):
     signing_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="signing_secret"
+        default=None, alias="signing_secret", description="New secret in plaintext"
     )
 
 
@@ -4423,16 +7401,18 @@ class SearchUsersByPhoneRequest(SDKModel):
     "Bounded, masked INTERNAL account search. Digits match anywhere in phone."
 
     page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="page_size"
+        default=None, alias="page_size", description="1-10, defaults to 10."
     )
     phone_query: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="phone_query"
+        default=None,
+        alias="phone_query",
+        description="3-15 digits after removing formatting separators; no wildcard syntax.",
     )
 
 
 class SearchUsersByPhoneResponse(SDKModel):
     users: Annotated[list[LookupUserResponse] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="users"
+        default=None, alias="users", description=""
     )
 
 
@@ -4448,33 +7428,43 @@ VerificationPurpose: TypeAlias = Literal[
 
 class SendVerificationCodeRequest(SDKModel):
     code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_challenge"
+        default=None, alias="code_challenge", description="PKCE: base64url(SHA256(code_verifier))"
     )
     purpose: Annotated[VerificationPurpose | None, AfterValidator(non_null)] = Field(
-        default=None, alias="purpose"
+        default=None,
+        alias="purpose",
+        description="VerificationPurpose indicates why the code is being sent.",
     )
-    target: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="target")
+    target: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="target", description="email address or phone number"
+    )
     type_: Annotated[VerificationType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="type"
+        default=None,
+        alias="type",
+        description="VerificationType indicates the channel for verification code delivery.",
     )
 
 
 class SendVerificationCodeResponse(SDKModel):
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
-    txid: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="txid")
+    txid: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="txid", description=""
+    )
 
 
 class SetPasswordRequest(SDKModel):
     csrf_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="csrf_token"
+        default=None, alias="csrf_token", description=""
     )
     password_hash: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="password_hash"
+        default=None, alias="password_hash", description=""
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
@@ -4485,43 +7475,77 @@ class SignAssetUrlsRequest(SDKModel):
     "SignAssetUrlsRequest 为已缓存的素材对象键重新生成签名 URL。\n 用于客户端本地缓存了 object_key 后，URL 过期时重新签名。"
 
     object_keys: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="object_keys"
+        default=None, alias="object_keys", description="需要重新签名的对象键列表。"
     )
 
 
 class SignAssetUrlsResponse(SDKModel):
     signed_urls: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="signed_urls"
+        default=None, alias="signed_urls", description="对象键 → 签名后的访问 URL。"
     )
 
 
 class SignAssetUrlsResponseSignedUrlsEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class SignUploadPartsRequest(SDKModel):
-    part_numbers: list[int] = Field(default=..., alias="part_numbers")
-    upload_id: str = Field(default=..., alias="upload_id")
-    user_id: str = Field(default=..., alias="user_id")
+    part_numbers: list[int] = Field(
+        default=...,
+        alias="part_numbers",
+        description="Required. One to one hundred unique numbers within the session part plan.",
+    )
+    upload_id: str = Field(
+        default=..., alias="upload_id", description="Required. OPEN upload session identifier."
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class SignedUploadPart(SDKModel):
     "SignedUploadPart is a short-lived, owner-authorized capability for uploading\n one part. URLs and headers must never be logged or forwarded."
 
-    expires_at: Timestamp = Field(default=..., alias="expires_at")
-    part_number: int = Field(default=..., alias="part_number")
-    put_url: str = Field(default=..., alias="put_url")
-    required_headers: dict[str, str] = Field(default=..., alias="required_headers")
+    expires_at: Timestamp = Field(
+        default=..., alias="expires_at", description="Required. Expiry time of put_url."
+    )
+    part_number: int = Field(
+        default=..., alias="part_number", description="Required. Multipart part number."
+    )
+    put_url: str = Field(
+        default=...,
+        alias="put_url",
+        description="Required. Short-lived HTTPS bearer URL for this part.",
+    )
+    required_headers: dict[str, str] = Field(
+        default=...,
+        alias="required_headers",
+        description="Required. Headers that must be sent byte-for-byte; empty when none.",
+    )
 
 
 class SignUploadPartsResponse(SDKModel):
-    parts: list[SignedUploadPart] = Field(default=..., alias="parts")
+    parts: list[SignedUploadPart] = Field(
+        default=...,
+        alias="parts",
+        description="Required. One short-lived signed capability per requested part.",
+    )
 
 
 class SignedUploadPartRequiredHeadersEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 SocialProvider: TypeAlias = Literal[
@@ -4535,65 +7559,101 @@ SocialProvider: TypeAlias = Literal[
 
 class SocialLoginRequest(SDKModel):
     auth_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="auth_code"
+        default=None, alias="auth_code", description="Authorization code from the social provider"
     )
     code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_verifier"
+        default=None,
+        alias="code_verifier",
+        description="PKCE verifier (optional, depends on provider)",
     )
     device_info: Annotated[DeviceInfo | None, AfterValidator(non_null)] = Field(
-        default=None, alias="device_info"
+        default=None, alias="device_info", description="DeviceInfo describes the client device."
     )
     provider: Annotated[SocialProvider | None, AfterValidator(non_null)] = Field(
-        default=None, alias="provider"
+        default=None,
+        alias="provider",
+        description="SocialProvider identifies a third-party identity provider for social login.",
     )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None,
+        alias="redirect_uri",
+        description="Must match the redirect_uri used in the initial request",
     )
 
 
 class SocialLoginResponse(SDKModel):
     is_new_user: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_new_user"
+        default=None, alias="is_new_user", description="True if this login created a new account"
     )
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
     tokens: Annotated[TokenPair | None, AfterValidator(non_null)] = Field(
-        default=None, alias="tokens"
+        default=None,
+        alias="tokens",
+        description="TokenPair contains access and refresh tokens returned after authentication.",
     )
-    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(default=None, alias="user")
+    user: Annotated[UserBrief | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user",
+        description="UserBrief is a minimal user representation returned in auth responses.",
+    )
 
 
 class Status(SDKModel):
     "The Status type defines a logical error model suitable for gRPC and REST APIs."
 
-    code: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="code")
-    details: Annotated[list[ProtoAny] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="details"
+    code: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="code",
+        description="The status code, which should be an enum value of google.rpc.Code.",
     )
-    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
+    details: Annotated[list[ProtoAny] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="details",
+        description="A list of messages that carry the error details.",
+    )
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="message", description="A developer-facing error message."
+    )
 
 
 class StatusUpdate(SDKModel):
     "StatusUpdate notifies the client about processing phase changes."
 
-    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
-    phase: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="phase")
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="message", description="人类可读的状态描述。"
+    )
+    phase: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="phase",
+        description='当前处理阶段，例如 "generating"、"optimizing"、"converting"。',
+    )
     progress_percent: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="progress_percent"
+        default=None,
+        alias="progress_percent",
+        description="处理进度百分比（0-100），不可用时为 0。",
     )
 
 
 class StreamError(SDKModel):
     "StreamError reports a non-fatal error during stream processing."
 
-    code: Annotated[int | None, AfterValidator(non_null)] = Field(default=None, alias="code")
-    message: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="message")
+    code: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="code", description="错误码，业务自定义。"
+    )
+    message: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="message", description="错误描述信息。"
+    )
 
 
 class StreamEventMetadataEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 StreamEventType: TypeAlias = Literal[
@@ -4607,55 +7667,95 @@ StreamEventType: TypeAlias = Literal[
 
 class SubmitConsentRequest(SDKModel):
     approved: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="approved"
+        default=None, alias="approved", description="False if the user denied consent"
     )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     code_challenge: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_challenge"
+        default=None, alias="code_challenge", description=""
     )
     code_challenge_method: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_challenge_method"
+        default=None, alias="code_challenge_method", description=""
     )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None, alias="redirect_uri", description=""
     )
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
-    state: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="state")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description="Space-delimited scopes the user approved"
+    )
+    state: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="state", description="CSRF state from the authorize request"
+    )
 
 
 class SubmitConsentResponse(SDKModel):
     authorization_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="authorization_code"
+        default=None, alias="authorization_code", description="Set only if approved = true"
     )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None, alias="redirect_uri", description="Full redirect URI with code and state"
     )
 
 
 class SubmitGenerationRequest(SDKModel):
-    client_reference: str | None = Field(default=None, alias="client_reference")
-    confirmed_authorized_max_credit: str = Field(
-        default=..., alias="confirmed_authorized_max_credit"
+    client_reference: str | None = Field(
+        default=None,
+        alias="client_reference",
+        description="(OPTIONAL) Optional. Client-local draft correlation value, at most 128 characters.",
     )
-    estimate_id: str = Field(default=..., alias="estimate_id")
-    input_fingerprint: str = Field(default=..., alias="input_fingerprint")
-    user_id: str = Field(default=..., alias="user_id")
+    confirmed_authorized_max_credit: str = Field(
+        default=...,
+        alias="confirmed_authorized_max_credit",
+        description="Required. Exact maximum user net charge confirmed by the user.",
+    )
+    estimate_id: str = Field(
+        default=...,
+        alias="estimate_id",
+        description="Required. Active CREATE_PAGE estimate identifier.",
+    )
+    input_fingerprint: str = Field(
+        default=...,
+        alias="input_fingerprint",
+        description="Required. Exact fingerprint from the durable estimate.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class SubmitGenerationResponse(SDKModel):
-    job: JobSummary = Field(default=..., alias="job")
-    page: Page = Field(default=..., alias="page")
+    job: JobSummary = Field(
+        default=..., alias="job", description="Required. Newly created logical generation job."
+    )
+    page: Page = Field(default=..., alias="page", description="Required. Newly created page.")
 
 
 class SyncAppMemberRequest(SDKModel):
     "SyncAppMemberRequest carries one upsert into the application\n membership table. All fields are required."
 
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
-    role: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="role")
-    status: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="status")
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="app_id",
+        description="Required. Application this row belongs to. Opaque entity-id with\n `app` prefix.",
+    )
+    role: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="role",
+        description="Required. Application-level role. The role taxonomy differs from\n organization roles (which use owner / admin / member); applications\n use owner / admin / developer / viewer. Stored verbatim.",
+    )
+    status: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="status",
+        description='Required. Membership status. One of "active" / "invited" /\n "removed". Rows with status != "active" cause Check to return\n NOT_A_MEMBER for the user/app pair, even when a row exists.',
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user_id",
+        description="Required. The principal whose membership is being synced. Opaque\n entity-id with `usr` prefix.",
+    )
 
 
 SyncAppMemberResponse: TypeAlias = Any
@@ -4666,13 +7766,13 @@ TerminateAllOtherSessionsRequest: TypeAlias = Any
 
 class TerminateAllOtherSessionsResponse(SDKModel):
     terminated_count: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="terminated_count"
+        default=None, alias="terminated_count", description=""
     )
 
 
 class TerminateSessionRequest(SDKModel):
     session_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="session_id"
+        default=None, alias="session_id", description=""
     )
 
 
@@ -4681,44 +7781,58 @@ TerminateSessionResponse: TypeAlias = Any
 
 class TokenRequest(SDKModel):
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description="Client authentication (all grant types)"
     )
     client_secret: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_secret"
+        default=None, alias="client_secret", description=""
     )
-    code: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="code")
+    code: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="code", description="For authorization_code grant"
+    )
     code_verifier: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="code_verifier"
+        default=None, alias="code_verifier", description="PKCE verifier"
     )
     grant_type: Annotated[GrantType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="grant_type"
+        default=None,
+        alias="grant_type",
+        description="GrantType enumerates supported OAuth 2.0 grant types.",
     )
-    nonce: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="nonce")
+    nonce: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="nonce",
+        description='OIDC nonce (Core 1.0 §3.1.2.1). Optional. **旧客户端兼容兜底**：\n 标准路径是 AuthorizeRequest.nonce（authorize 阶段持久化，交换时自动\n 回灌 id_token）。仅当授权码上没有存储 nonce 时（旧链路 / 过渡期），\n IAM 才使用本字段的值。BFF 转发时 verbatim 透传，不解析、不生成。\n 仅当 grant_type=authorization_code 且 scope 包含 "openid" 时有意义。',
+    )
     redirect_uri: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uri"
+        default=None, alias="redirect_uri", description=""
     )
     refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="refresh_token"
+        default=None, alias="refresh_token", description="For refresh_token grant"
     )
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description="Requested scope (optional, for narrowing)"
+    )
 
 
 class TokenResponse(SDKModel):
     access_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="access_token"
+        default=None, alias="access_token", description=""
     )
     expires_in: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_in"
+        default=None, alias="expires_in", description=""
     )
     id_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="id_token"
+        default=None,
+        alias="id_token",
+        description='OIDC ID Token (JWT, RS256). 仅当原始 /token 请求 scope 含 "openid"\n 时返回；否则为空串。\n\n 平台采用 access_token / id_token **严格分离**的双 token 模型：\n   - access_token：opaque 字符串，资源 API 调用 Authorization: Bearer\n     使用，由平台网关通过 IntrospectToken 校验。\n   - id_token：JWT，仅供客户端 / BFF **本地**验签确认登录身份\n     （iss / sub / aud / exp / iat / nonce / auth_time）。profile、email、\n     phone、picture 等展示资料统一用 access_token 从 UserInfo 获取。\n\n 严禁把 id_token 当作 Authorization: Bearer 调资源 API——平台网关\n 不会接受 JWT 形式的 access_token，且 IntrospectToken 只认 opaque\n access_token。如果客户端混用，会得到 401 / introspect inactive。\n\n 详细模型见 site/docs/system-design/service-governance/security/\n oauth-token-model.md。',
     )
     refresh_token: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="refresh_token"
+        default=None, alias="refresh_token", description="Not returned for client_credentials"
     )
-    scope: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="scope", description="Actually granted scopes"
+    )
     token_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="token_type"
+        default=None, alias="token_type", description='"Bearer"'
     )
 
 
@@ -4726,14 +7840,16 @@ class TokenUsage(SDKModel):
     "TokenUsage reports LLM token consumption statistics."
 
     input_tokens: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="input_tokens"
+        default=None, alias="input_tokens", description="输入 Token 数。"
     )
-    model: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="model")
+    model: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="model", description='使用的模型标识，例如 "gpt-4o"、"claude-3-opus"。'
+    )
     output_tokens: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="output_tokens"
+        default=None, alias="output_tokens", description="输出 Token 数。"
     )
     total_tokens: Annotated[int | None, AfterValidator(non_null)] = Field(
-        default=None, alias="total_tokens"
+        default=None, alias="total_tokens", description="总 Token 数。"
     )
 
 
@@ -4741,14 +7857,16 @@ class ToutiaoConfig(SDKModel):
     "ToutiaoConfig 今日头条发布配置。\n 文章将通过头条号 API 发布。"
 
     category: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="category"
+        default=None, alias="category", description='文章分类，例如 "科技"、"财经"。'
     )
-    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="tags", description="文章标签。"
+    )
 
 
 class UnbindPlatformAccountRequest(SDKModel):
     account_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="account_id"
+        default=None, alias="account_id", description="要解绑的账号 ID。"
     )
 
 
@@ -4757,29 +7875,35 @@ UnbindPlatformAccountResponse: TypeAlias = Any
 
 class UpdateApplicationRequest(SDKModel):
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     app_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="app_name"
+        default=None,
+        alias="app_name",
+        description="Deprecated: send display-field updates via the developer center.\n Accepted here for legacy callers; will be removed in a future major\n version.",
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description="Deprecated: same as app_name."
     )
     homepage_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="homepage_url"
+        default=None, alias="homepage_url", description="Deprecated: same as app_name."
     )
     logo_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="logo_url"
+        default=None, alias="logo_url", description="Deprecated: same as app_name."
     )
     redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uris"
+        default=None, alias="redirect_uris", description=""
     )
 
 
 class UpdateApplicationResponse(SDKModel):
     application: Annotated[OAuthApplication | None, AfterValidator(non_null)] = Field(
-        default=None, alias="application"
+        default=None,
+        alias="application",
+        description="OAuthApplication represents a registered third-party application.\n\n Display fields (`app_name`, `description`, `homepage_url`, `logo_url`)\n on this message are deprecated; the developer center is the\n authoritative source for application display metadata. The fields\n remain populated on read for backward compatibility and will be\n removed in a future major version.",
     )
 
 
@@ -4787,37 +7911,57 @@ class UpdateArticleRequest(SDKModel):
     "UpdateArticleRequest 手动更新文章字段。使用 optional 语义：\n 未设置的字段不会被修改。"
 
     article_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article_id"
+        default=None, alias="article_id", description=""
     )
-    content: str | None = Field(default=None, alias="content")
-    cover_image_url: str | None = Field(default=None, alias="cover_image_url")
-    summary: str | None = Field(default=None, alias="summary")
-    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
-    title: str | None = Field(default=None, alias="title")
+    content: str | None = Field(default=None, alias="content", description="")
+    cover_image_url: str | None = Field(default=None, alias="cover_image_url", description="")
+    summary: str | None = Field(default=None, alias="summary", description="")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="tags", description="标签列表，提供时将完全替换原有标签。"
+    )
+    title: str | None = Field(default=None, alias="title", description="")
 
 
 class UpdateArticleResponse(SDKModel):
     article: Annotated[Article | None, AfterValidator(non_null)] = Field(
-        default=None, alias="article"
+        default=None,
+        alias="article",
+        description="Article represents a piece of text content (article, post, etc.).\n Article 是图文创作的核心实体，同一篇文章可能同时存在 Markdown 和 HTML 两个版本。",
     )
 
 
 class UpdateCategoryPreferenceRequest(SDKModel):
-    etag: str = Field(default=..., alias="etag")
-    rules_text: str = Field(default=..., alias="rules_text")
-    user_id: str = Field(default=..., alias="user_id")
+    etag: str = Field(
+        default=...,
+        alias="etag",
+        description="Required. Optimistic concurrency validator read from the singleton.",
+    )
+    rules_text: str = Field(
+        default=...,
+        alias="rules_text",
+        description="Required. Complete replacement text; empty explicitly clears the rules.",
+    )
+    user_id: str = Field(
+        default=...,
+        alias="user_id",
+        description="Required. Owner path; accepts me or the authenticated user's identifier.",
+    )
 
 
 class UpdateCategoryPreferenceResponse(SDKModel):
-    category_preference: CategoryPreference = Field(default=..., alias="category_preference")
+    category_preference: CategoryPreference = Field(
+        default=...,
+        alias="category_preference",
+        description="Required. Singleton after replacement or explicit clearing.",
+    )
 
 
 class UpdateEmailRequest(SDKModel):
     new_email: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="new_email"
+        default=None, alias="new_email", description=""
     )
     verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="verification_code"
+        default=None, alias="verification_code", description=""
     )
 
 
@@ -4825,79 +7969,107 @@ UpdateEmailResponse: TypeAlias = Any
 
 
 class UpdateMemberRoleRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
-    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
-        default=None, alias="role"
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
     )
-    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="user_id")
+    role: Annotated[OrganizationMemberRole | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="role",
+        description="OrganizationMemberRole governs the actions a member may take within the\n organization. Authorization decisions are delegated to AuthZService.Check;\n these values are the canonical role identifiers stored on the row.",
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="user_id", description=""
+    )
 
 
 class UpdateMemberRoleResponse(SDKModel):
     member: Annotated[OrganizationMember | None, AfterValidator(non_null)] = Field(
-        default=None, alias="member"
+        default=None,
+        alias="member",
+        description="OrganizationMember is a (org, user) edge with a role and lifecycle status.\n\n The role taxonomy (owner / admin / member) is the SAME WORDS as the\n application-level membership role surfaced by the developer center;\n the two live at different scopes and do not transitively grant each\n other.",
     )
 
 
 class UpdateOAuthClientRequest(SDKModel):
     allowed_grant_types: Annotated[list[GrantType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_grant_types"
+        default=None, alias="allowed_grant_types", description=""
     )
     allowed_identities: Annotated[list[IdentityType] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_identities"
+        default=None, alias="allowed_identities", description=""
     )
     allowed_scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="allowed_scopes"
+        default=None, alias="allowed_scopes", description=""
     )
-    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="app_id")
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
     client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_id"
+        default=None, alias="client_id", description=""
     )
     client_type: Annotated[ClientCredentialType | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client_type"
+        default=None,
+        alias="client_type",
+        description="ClientCredentialType describes whether an OAuth client can keep a secret.",
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
     redirect_uris: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="redirect_uris"
+        default=None, alias="redirect_uris", description=""
     )
     status: Annotated[ClientCredentialStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="ClientCredentialStatus represents the lifecycle state of one OAuth client.",
     )
     update_mask: Annotated[FieldMask | None, AfterValidator(non_null)] = Field(
-        default=None, alias="update_mask"
+        default=None,
+        alias="update_mask",
+        description='`FieldMask` represents a set of symbolic field paths, for example:\n\n     paths: "f.a"\n     paths: "f.b.d"\n\n Here `f` represents a field in some root message, `a` and `b`\n fields in the message found in `f`, and `d` a field found in the\n message in `f.b`.\n\n Field masks are used to specify a subset of fields that should be\n returned by a get operation or modified by an update operation.\n Field masks also have a custom JSON encoding (see below).\n\n # Field Masks in Projections\n\n When used in the context of a projection, a response message or\n sub-message is filtered by the API to only contain those fields as\n specified in the mask. For example, if the mask in the previous\n example is applied to a response message as follows:\n\n     f {\n       a : 22\n       b {\n         d : 1\n         x : 2\n       }\n       y : 13\n     }\n     z: 8\n\n The result will not contain specific values for fields x,y and z\n (their value will be set to the default, and omitted in proto text\n output):\n\n\n     f {\n       a : 22\n       b {\n         d : 1\n       }\n     }\n\n A repeated field is not allowed except at the last position of a\n paths string.\n\n If a FieldMask object is not present in a get operation, the\n operation applies to all fields (as if a FieldMask of all fields\n had been specified).\n\n Note that a field mask does not necessarily apply to the\n top-level response message. In case of a REST get operation, the\n field mask applies directly to the response, but in case of a REST\n list operation, the mask instead applies to each individual message\n in the returned resource list. In case of a REST custom method,\n other definitions may be used. Where the mask applies will be\n clearly documented together with its declaration in the API.  In\n any case, the effect on the returned resource/resources is required\n behavior for APIs.\n\n # Field Masks in Update Operations\n\n A field mask in update operations specifies which fields of the\n targeted resource are going to be updated. The API is required\n to only change the values of the fields as specified in the mask\n and leave the others untouched. If a resource is passed in to\n describe the updated values, the API ignores the values of all\n fields not covered by the mask.\n\n If a repeated field is specified for an update operation, new values will\n be appended to the existing repeated field in the target resource. Note that\n a repeated field is only allowed in the last position of a `paths` string.\n\n If a sub-message is specified in the last position of the field mask for an\n update operation, then new value will be merged into the existing sub-message\n in the target resource.\n\n For example, given the target message:\n\n     f {\n       b {\n         d: 1\n         x: 2\n       }\n       c: [1]\n     }\n\n And an update message:\n\n     f {\n       b {\n         d: 10\n       }\n       c: [2]\n     }\n\n then if the field mask is:\n\n  paths: ["f.b", "f.c"]\n\n then the result will be:\n\n     f {\n       b {\n         d: 10\n         x: 2\n       }\n       c: [1, 2]\n     }\n\n An implementation may provide options to override this default behavior for\n repeated and message fields.\n\n Note that libraries which implement FieldMask resolution have various\n different behaviors in the face of empty masks or the special "*" mask.\n When implementing a service you should confirm these cases have the\n appropriate behavior in the underlying FieldMask library that you desire,\n and you may need to special case those cases in your application code if\n the underlying field mask library behavior differs from your intended\n service semantics.\n\n Update methods implementing https://google.aip.dev/134\n - MUST support the special value * meaning "full replace"\n - MUST treat an omitted field mask as "replace fields which are present".\n\n Other methods implementing https://google.aip.dev/157\n - SHOULD support the special value "*" to mean "get all".\n - MUST treat an omitted field mask to mean "get all", unless otherwise\n documented.\n\n ## Considerations for HTTP REST\n\n The HTTP kind of an update operation which uses a field mask must\n be set to PATCH instead of PUT in order to satisfy HTTP semantics\n (PUT must only be used for full updates).\n\n # JSON Encoding of Field Masks\n\n In JSON, a field mask is encoded as a single string where paths are\n separated by a comma. Fields name in each path are converted\n to/from lower-camel naming conventions.\n\n As an example, consider the following message declarations:\n\n     message Profile {\n       User user = 1;\n       Photo photo = 2;\n     }\n     message User {\n       string display_name = 1;\n       string address = 2;\n     }\n\n In proto a field mask for `Profile` may look as such:\n\n     mask {\n       paths: "user.display_name"\n       paths: "photo"\n     }\n\n In JSON, the same mask is represented as below:\n\n     {\n       mask: "user.displayName,photo"\n     }\n\n # Field Masks and Oneof Fields\n\n Field masks treat fields in oneofs just as regular fields. Consider the\n following message:\n\n     message SampleMessage {\n       oneof test_oneof {\n         string name = 4;\n         SubMessage sub_message = 9;\n       }\n     }\n\n The field mask can be:\n\n     mask {\n       paths: "name"\n     }\n\n Or:\n\n     mask {\n       paths: "sub_message"\n     }\n\n Note that oneof type names ("test_oneof" in this case) cannot be used in\n paths.\n\n ## Field Mask Verification\n\n The implementation of any API method which has a FieldMask type field in the\n request should verify the included field paths, and return an\n `INVALID_ARGUMENT` error if any path is unmappable.',
     )
 
 
 class UpdateOAuthClientResponse(SDKModel):
     client: Annotated[OAuthClient | None, AfterValidator(non_null)] = Field(
-        default=None, alias="client"
+        default=None,
+        alias="client",
+        description="OAuthClient is one credential atom owned by IAM. An application may own\n multiple clients; app_id and client_id must therefore be used together for\n every management operation.\n\n Secret material and secret hashes are deliberately absent from this read\n model. Plaintext is returned exactly once by create and rotate responses.",
     )
 
 
 class UpdateOrganizationRequest(SDKModel):
-    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="org_id")
+    org_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="org_id", description=""
+    )
     organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
-        default=None, alias="organization"
+        default=None,
+        alias="organization",
+        description="The (potentially partial) replacement values. Fields outside update_mask\n are ignored. Empty mask is rejected (INVALID_ARGUMENT) to prevent\n accidental full-replace semantics.",
     )
     update_mask: Annotated[FieldMask | None, AfterValidator(non_null)] = Field(
-        default=None, alias="update_mask"
+        default=None,
+        alias="update_mask",
+        description="Allowed paths: name, slug, status, metadata. Other paths return\n INVALID_ARGUMENT.",
     )
 
 
 class UpdateOrganizationResponse(SDKModel):
     organization: Annotated[Organization | None, AfterValidator(non_null)] = Field(
-        default=None, alias="organization"
+        default=None,
+        alias="organization",
+        description="Organization is one of the two concrete tenant forms (the other is\n Workspace).\n\n `org_id` is an opaque entity-id with the `org` prefix and shares the\n platform-wide `tenant_id` value space with workspace ids. Consumers\n must treat it as opaque — no parsing, no length assumptions,\n byte-exact case-sensitive comparison.",
     )
 
 
 class UpdatePhoneRequest(SDKModel):
     new_phone: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="new_phone"
+        default=None, alias="new_phone", description=""
     )
     verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="verification_code"
+        default=None, alias="verification_code", description=""
     )
 
 
@@ -4905,148 +8077,206 @@ UpdatePhoneResponse: TypeAlias = Any
 
 
 class UpdateProfileRequest(SDKModel):
-    bio: str | None = Field(default=None, alias="bio")
-    default_api_version: str | None = Field(default=None, alias="default_api_version")
-    home_address: str | None = Field(default=None, alias="home_address")
-    location: str | None = Field(default=None, alias="location")
-    name: str | None = Field(default=None, alias="name")
-    website: str | None = Field(default=None, alias="website")
-    work_address: str | None = Field(default=None, alias="work_address")
+    bio: str | None = Field(default=None, alias="bio", description="")
+    default_api_version: str | None = Field(
+        default=None,
+        alias="default_api_version",
+        description='Optional. Empty string clears the pin; a "YYYY-MM-DD" string sets it.\n Both the write here and every subsequent read are validated against\n the platform\'s published API version registry.',
+    )
+    home_address: str | None = Field(
+        default=None,
+        alias="home_address",
+        description="Optional. Empty string clears the field; a non-empty value (up to\n 512 chars after server-side validation) sets it. See\n GetProfileResponse.home_address for semantics.",
+    )
+    location: str | None = Field(default=None, alias="location", description="")
+    name: str | None = Field(default=None, alias="name", description="")
+    website: str | None = Field(default=None, alias="website", description="")
+    work_address: str | None = Field(
+        default=None,
+        alias="work_address",
+        description="Optional. Same semantics as home_address but for the workplace.",
+    )
 
 
 class UpdateProfileResponse(SDKModel):
     updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="updated_at"
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
     )
 
 
 class UpdateProjectRequest(SDKModel):
     "UpdateProjectRequest 更新项目字段。使用 optional 语义：\n 未设置的字段不会被修改。"
 
-    description: str | None = Field(default=None, alias="description")
+    description: str | None = Field(default=None, alias="description", description="")
     metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None,
+        alias="metadata",
+        description="元数据，提供时将合并到已有元数据（相同 key 覆盖）。",
     )
-    name: str | None = Field(default=None, alias="name")
+    name: str | None = Field(default=None, alias="name", description="")
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description=""
     )
-    status: ProjectStatus | None = Field(default=None, alias="status")
-    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(default=None, alias="tags")
+    status: ProjectStatus | None = Field(default=None, alias="status", description="")
+    tags: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="tags", description="标签列表，提供时将完全替换原有标签。"
+    )
 
 
 class UpdateProjectRequestMetadataEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class UpdateProjectResponse(SDKModel):
     project: Annotated[Project | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project"
+        default=None,
+        alias="project",
+        description="Project groups related creative content together.\n Project 是创作的顶层聚合单元，一个项目包含多篇文章、多个视频任务和多个素材。\n 典型场景：一次营销活动、一个专题系列、一期内容排期。",
     )
 
 
 class UpdateScopeRequest(SDKModel):
     category: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="category"
+        default=None, alias="category", description=""
     )
     description: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="description"
+        default=None, alias="description", description=""
     )
     display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="display_name"
+        default=None, alias="display_name", description=""
     )
     is_sensitive: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="is_sensitive"
+        default=None, alias="is_sensitive", description=""
     )
-    name: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="name")
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description="Identifies which scope to update"
+    )
 
 
 class UpdateScopeResponse(SDKModel):
-    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(default=None, alias="scope")
+    scope: Annotated[Scope | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="scope",
+        description="Scope defines a permission boundary for OAuth access control.",
+    )
 
 
 class UpdateWebhookRequest(SDKModel):
     status: Annotated[WebhookStatus | None, AfterValidator(non_null)] = Field(
-        default=None, alias="status"
+        default=None,
+        alias="status",
+        description="WebhookStatus represents the state of a webhook endpoint.",
     )
     subscribed_events: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="subscribed_events"
+        default=None, alias="subscribed_events", description=""
     )
-    url: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="url")
+    url: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="url", description=""
+    )
     webhook_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook_id"
+        default=None, alias="webhook_id", description=""
     )
 
 
 class UpdateWebhookResponse(SDKModel):
     webhook: Annotated[Webhook | None, AfterValidator(non_null)] = Field(
-        default=None, alias="webhook"
+        default=None,
+        alias="webhook",
+        description="Webhook represents a registered webhook endpoint.",
     )
 
 
 class UploadAssetRequest(SDKModel):
-    "UploadAssetRequest 直接通过 gRPC 上传小文件（建议 < 4MB）。\n 大文件请使用 GenerateUploadUrl + ConfirmUpload 流程。"
+    "UploadAssetRequest 直接通过 gRPC 上传小文件（建议 \u003c 4MB）。\n 大文件请使用 GenerateUploadUrl + ConfirmUpload 流程。"
 
     content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_type"
+        default=None, alias="content_type", description='MIME 类型，例如 "image/png"、"video/mp4"。'
     )
-    data: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="data")
+    data: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="data", description="文件二进制数据。"
+    )
     filename: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="filename"
+        default=None, alias="filename", description="原始文件名。"
     )
     metadata: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="metadata"
+        default=None, alias="metadata", description="扩展元数据。"
     )
     project_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="project_id"
+        default=None, alias="project_id", description="所属项目 ID。"
     )
     wechat_mp_credentials: Annotated[WechatMpCredentials | None, AfterValidator(non_null)] = Field(
-        default=None, alias="wechat_mp_credentials"
+        default=None,
+        alias="wechat_mp_credentials",
+        description="微信公众号 API 调用凭证。\n 当 server 需要把素材上传到微信公众号素材库时必填（图片 / 视频 / 缩略图）。\n 详见 WechatMpCredentials 设计说明（types.proto）。",
     )
 
 
 class UploadAssetRequestMetadataEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class UploadAssetResponse(SDKModel):
-    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(default=None, alias="asset")
+    asset: Annotated[Asset | None, AfterValidator(non_null)] = Field(
+        default=None, alias="asset", description="上传成功后返回的素材信息（含 asset_id 和 url）。"
+    )
 
 
 class UploadAvatarRequest(SDKModel):
     content_type: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="content_type"
+        default=None, alias="content_type", description='e.g. "image/png", "image/jpeg"'
     )
     image_data: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="image_data"
+        default=None, alias="image_data", description=""
     )
 
 
 class UploadAvatarResponse(SDKModel):
     avatar_url: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="avatar_url"
+        default=None,
+        alias="avatar_url",
+        description="Pre-signed URL for the 1024×1024 WebP primary variant.",
     )
     expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
-        default=None, alias="expires_at"
+        default=None,
+        alias="expires_at",
+        description="Common expiration for avatar_url and all variant_urls.",
     )
     media_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="media_id"
+        default=None,
+        alias="media_id",
+        description="Opaque platform.Media id (prefix `med`). Cache client-side so\n future refreshes can skip GetProfile.",
     )
     variant_urls: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="variant_urls"
+        default=None,
+        alias="variant_urls",
+        description='Variant key -\u003e pre-signed URL for smaller renditions. Keys are\n decimal-stringified pixel sizes (e.g. "256", "64").',
     )
 
 
 class UploadAvatarResponseVariantUrlsEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class VerifyEmailRequest(SDKModel):
     verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="verification_code"
+        default=None, alias="verification_code", description=""
     )
 
 
@@ -5055,7 +8285,7 @@ VerifyEmailResponse: TypeAlias = Any
 
 class VerifyPhoneRequest(SDKModel):
     verification_code: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="verification_code"
+        default=None, alias="verification_code", description=""
     )
 
 
@@ -5066,63 +8296,91 @@ class VerifyPlatformAccountRequest(SDKModel):
     "VerifyPlatformAccountRequest 验证平台账号凭证是否有效。\n 用于在正式发布前检查凭证可用性，例如验证微信公众号的 appid/appsecret。"
 
     credentials: Annotated[dict[str, str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="credentials"
+        default=None,
+        alias="credentials",
+        description='平台凭证，键值对格式。\n 微信公众号: {"appid": "...", "appsecret": "..."}',
     )
     platform: Annotated[Platform | None, AfterValidator(non_null)] = Field(
-        default=None, alias="platform"
+        default=None, alias="platform", description="目标平台。"
     )
 
 
 class VerifyPlatformAccountRequestCredentialsEntry(SDKModel):
-    key: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="key")
-    value: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="value")
+    key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key", description=""
+    )
+    value: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="value", description=""
+    )
 
 
 class VerifyPlatformAccountResponse(SDKModel):
     display_name: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="display_name"
+        default=None, alias="display_name", description="验证通过时返回的账号名称（如公众号名称）。"
     )
     error_message: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="error_message"
+        default=None, alias="error_message", description="验证失败时的错误信息。"
     )
-    valid: Annotated[bool | None, AfterValidator(non_null)] = Field(default=None, alias="valid")
+    valid: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="valid", description="凭证是否有效。"
+    )
 
 
 class VersionsRestorePageVersionBody(SDKModel):
-    expected_content_revision: str = Field(default=..., alias="expectedContentRevision")
-    expected_current_version_id: str = Field(default=..., alias="expectedCurrentVersionId")
-    page_etag: str | None = Field(default=None, alias="pageEtag")
+    expected_content_revision: str = Field(
+        default=...,
+        alias="expectedContentRevision",
+        description="Required. Page content revision observed before the write.",
+    )
+    expected_current_version_id: str = Field(
+        default=...,
+        alias="expectedCurrentVersionId",
+        description="Required. Current version observed before the write.",
+    )
+    page_etag: str | None = Field(
+        default=None,
+        alias="pageEtag",
+        description="(OPTIONAL) Optional. Exact representation validator requested by the client.",
+    )
 
 
 class WechatMpConfig(SDKModel):
     'WechatMpConfig 微信公众号发布配置。\n 对应微信公众平台"新建图文消息"的参数。'
 
-    author: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="author")
-    digest: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="digest")
+    author: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="author", description="文章作者名。"
+    )
+    digest: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="digest", description="图文消息摘要，未填写时默认截取正文前 120 字。"
+    )
     need_open_comment: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="need_open_comment"
+        default=None, alias="need_open_comment", description="是否开启文章评论功能。"
     )
     show_cover_pic: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="show_cover_pic"
+        default=None, alias="show_cover_pic", description="是否在正文中显示封面图。"
     )
 
 
 class YuqueConfig(SDKModel):
     "YuqueConfig 语雀发布配置。\n 文章将发布到指定的语雀知识库。"
 
-    book_id: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="book_id")
-    public_access: Annotated[bool | None, AfterValidator(non_null)] = Field(
-        default=None, alias="public_access"
+    book_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="book_id", description="目标知识库 ID。"
     )
-    slug: Annotated[str | None, AfterValidator(non_null)] = Field(default=None, alias="slug")
+    public_access: Annotated[bool | None, AfterValidator(non_null)] = Field(
+        default=None, alias="public_access", description="是否公开访问。"
+    )
+    slug: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="slug", description="文档路径（slug），用于生成文档 URL。"
+    )
 
 
 class ZhihuConfig(SDKModel):
     "ZhihuConfig 知乎发布配置。\n 文章将发布到指定的知乎专栏。"
 
     column_id: Annotated[str | None, AfterValidator(non_null)] = Field(
-        default=None, alias="column_id"
+        default=None, alias="column_id", description="目标专栏 ID。"
     )
     topic_ids: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
-        default=None, alias="topic_ids"
+        default=None, alias="topic_ids", description="关联的话题 ID 列表。"
     )

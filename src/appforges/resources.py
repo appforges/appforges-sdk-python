@@ -21,7 +21,7 @@ class Articles:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PublishToWechatMpResponse:
-        "PublishToWechatMp"
+        "PublishToWechatMp\n\n直接发布 Markdown 或 HTML 内容到微信公众号。\n 一站式完成：正文预处理 → 封面上传 → 创建/更新草稿 → 可选群发。\n 适用于 CLI 工具（如 wepub）直接调用的场景。"
         return cast(
             models.PublishToWechatMpResponse,
             self._client.request(
@@ -47,7 +47,7 @@ class AsyncArticles:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PublishToWechatMpResponse:
-        "PublishToWechatMp"
+        "PublishToWechatMp\n\n直接发布 Markdown 或 HTML 内容到微信公众号。\n 一站式完成：正文预处理 → 封面上传 → 创建/更新草稿 → 可选群发。\n 适用于 CLI 工具（如 wepub）直接调用的场景。"
         return cast(
             models.PublishToWechatMpResponse,
             await self._client.request(
@@ -73,7 +73,7 @@ class Assets:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.UploadAssetResponse:
-        "UploadAsset"
+        "UploadAsset\n\n直接上传小文件（建议 \u003c 4MB），文件数据通过 gRPC 消息体传输。"
         return cast(
             models.UploadAssetResponse,
             self._client.request(
@@ -99,7 +99,7 @@ class AsyncAssets:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.UploadAssetResponse:
-        "UploadAsset"
+        "UploadAsset\n\n直接上传小文件（建议 \u003c 4MB），文件数据通过 gRPC 消息体传输。"
         return cast(
             models.UploadAssetResponse,
             await self._client.request(
@@ -125,7 +125,7 @@ class Authorize:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.AuthorizeResponse:
-        "Generate an authorization code after the user grants consent."
+        "Generate an authorization code after the user grants consent.\n\nAlthough the public-facing OAuth 2.0 /authorize endpoint (RFC 6749 §3.1)\n is a browser-redirect entry that relies on the IdP session cookie rather\n than a Bearer token, **this RPC is invoked from the BFF** (account\n service) after it has already exchanged the user's session cookie for an\n access_token. Therefore the call into IAM itself MUST carry\n `Authorization: Bearer \u003caccess_token\u003e` so authMiddleware can resolve the\n user_id — declaring CREDENTIAL_NONE here would cause the middleware to\n skip token validation and the handler would then fail with\n `no user_id in context`."
         return cast(
             models.AuthorizeResponse,
             self._client.request(
@@ -151,7 +151,7 @@ class AsyncAuthorize:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.AuthorizeResponse:
-        "Generate an authorization code after the user grants consent."
+        "Generate an authorization code after the user grants consent.\n\nAlthough the public-facing OAuth 2.0 /authorize endpoint (RFC 6749 §3.1)\n is a browser-redirect entry that relies on the IdP session cookie rather\n than a Bearer token, **this RPC is invoked from the BFF** (account\n service) after it has already exchanged the user's session cookie for an\n access_token. Therefore the call into IAM itself MUST carry\n `Authorization: Bearer \u003caccess_token\u003e` so authMiddleware can resolve the\n user_id — declaring CREDENTIAL_NONE here would cause the middleware to\n skip token validation and the handler would then fail with\n `no user_id in context`."
         return cast(
             models.AuthorizeResponse,
             await self._client.request(
@@ -177,7 +177,7 @@ class CreativePrompt:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPromptTemplateResponse:
-        "GetPromptTemplate"
+        "GetPromptTemplate\n\n获取指定模板的排版提示词。\n 提示词描述了该模板的排版规则，可直接用于 LLM 指令。"
         return cast(
             models.GetPromptTemplateResponse,
             self._client.request(
@@ -205,7 +205,7 @@ class AsyncCreativePrompt:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPromptTemplateResponse:
-        "GetPromptTemplate"
+        "GetPromptTemplate\n\n获取指定模板的排版提示词。\n 提示词描述了该模板的排版规则，可直接用于 LLM 指令。"
         return cast(
             models.GetPromptTemplateResponse,
             await self._client.request(
@@ -236,7 +236,7 @@ class Exports:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageExportResponse:
-        "GetPageExport"
+        "GetPageExport\n\nRefresh the controlled download ticket for a published artifact.\n\nexport_id: Required. Persisted artifact identifier belonging to version_id.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Immutable source version identifier."
         return cast(
             models.GetPageExportResponse,
             self._client.request(
@@ -270,7 +270,7 @@ class AsyncExports:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageExportResponse:
-        "GetPageExport"
+        "GetPageExport\n\nRefresh the controlled download ticket for a published artifact.\n\nexport_id: Required. Persisted artifact identifier belonging to version_id.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Immutable source version identifier."
         return cast(
             models.GetPageExportResponse,
             await self._client.request(
@@ -304,7 +304,7 @@ class Instructions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPageInstructionsResponse:
-        "ListPageInstructions"
+        "ListPageInstructions\n\nRead private requirements for an owned page; never includes system prompts."
         return cast(
             models.ListPageInstructionsResponse,
             self._client.request(
@@ -331,7 +331,7 @@ class Instructions:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> Iterator[models.PageInstruction]:
-        "ListPageInstructions"
+        "ListPageInstructions\n\nRead private requirements for an owned page; never includes system prompts."
         return cast(
             Iterator[models.PageInstruction],
             self._client.paginate(
@@ -366,7 +366,7 @@ class AsyncInstructions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPageInstructionsResponse:
-        "ListPageInstructions"
+        "ListPageInstructions\n\nRead private requirements for an owned page; never includes system prompts."
         return cast(
             models.ListPageInstructionsResponse,
             await self._client.request(
@@ -393,7 +393,7 @@ class AsyncInstructions:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> AsyncIterator[models.PageInstruction]:
-        "ListPageInstructions"
+        "ListPageInstructions\n\nRead private requirements for an owned page; never includes system prompts."
         return cast(
             AsyncIterator[models.PageInstruction],
             self._client.paginate(
@@ -425,7 +425,7 @@ class Introspect:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.IntrospectTokenResponse:
-        "IntrospectToken"
+        "IntrospectToken\n\nIntrospect a token to determine its validity and metadata (RFC 7662)."
         return cast(
             models.IntrospectTokenResponse,
             self._client.request(
@@ -452,7 +452,7 @@ class AsyncIntrospect:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.IntrospectTokenResponse:
-        "IntrospectToken"
+        "IntrospectToken\n\nIntrospect a token to determine its validity and metadata (RFC 7662)."
         return cast(
             models.IntrospectTokenResponse,
             await self._client.request(
@@ -478,7 +478,7 @@ class Jwks:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetJWKSResponse:
-        "返回当前活跃的 ID Token 签名公钥列表（JWKS 格式，RFC 7517 §5）。"
+        "返回当前活跃的 ID Token 签名公钥列表（JWKS 格式，RFC 7517 §5）。\n\n用于 OIDC 双 token 模型中 id_token (JWT, RS256) 的本地验签。\n accounts.appforges.com BFF 把本 RPC 的响应直接转发给\n /.well-known/jwks.json 端点，客户端启动时拉取一次、按 Cache-Control\n 缓存（典型 24h），随后用 keys[].kid 匹配 JWT header 的 kid 字段、\n 用对应公钥验 RS256 签名。\n\n 公开端点，无需任何 credential。资源 API 鉴权与本 RPC 无关——资源\n API 仍走 access_token + IntrospectToken 路径。"
         return cast(
             models.GetJWKSResponse,
             self._client.request(
@@ -503,7 +503,7 @@ class AsyncJwks:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetJWKSResponse:
-        "返回当前活跃的 ID Token 签名公钥列表（JWKS 格式，RFC 7517 §5）。"
+        "返回当前活跃的 ID Token 签名公钥列表（JWKS 格式，RFC 7517 §5）。\n\n用于 OIDC 双 token 模型中 id_token (JWT, RS256) 的本地验签。\n accounts.appforges.com BFF 把本 RPC 的响应直接转发给\n /.well-known/jwks.json 端点，客户端启动时拉取一次、按 Cache-Control\n 缓存（典型 24h），随后用 keys[].kid 匹配 JWT header 的 kid 字段、\n 用对应公钥验 RS256 签名。\n\n 公开端点，无需任何 credential。资源 API 鉴权与本 RPC 无关——资源\n API 仍走 access_token + IntrospectToken 路径。"
         return cast(
             models.GetJWKSResponse,
             await self._client.request(
@@ -531,7 +531,7 @@ class Metadata:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageVersionMetadataResponse:
-        "GetPageVersionMetadata"
+        "GetPageVersionMetadata\n\nReturn authoritative published-version metadata without HTML or download tickets.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Explicit published version belonging to page_id; never resolves latest."
         return cast(
             models.GetPageVersionMetadataResponse,
             self._client.request(
@@ -563,7 +563,7 @@ class AsyncMetadata:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageVersionMetadataResponse:
-        "GetPageVersionMetadata"
+        "GetPageVersionMetadata\n\nReturn authoritative published-version metadata without HTML or download tickets.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Explicit published version belonging to page_id; never resolves latest."
         return cast(
             models.GetPageVersionMetadataResponse,
             await self._client.request(
@@ -595,7 +595,7 @@ class PinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ApplyCategoryOrganizationResponse:
-        "ApplyCategoryOrganization"
+        "ApplyCategoryOrganization\n\nApply one unexpired settled preview without a second charge.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -626,7 +626,7 @@ class PinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.DeleteCategoryResponse:
-        "DeleteCategory"
+        "DeleteCategory\n\nRevoke a confirmed subtree and its pages, then schedule exact cleanup.\n\ncategory_id: Required. Root category to revoke and delete with its subtree.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nimpactFingerprint: Required. Exact aggregate impact fingerprint from the adjacent preview.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation.\n\nX-PinPage-Deletion-Confirmation: Required short-lived deletion capability returned by the matching PinPage deletion preview operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -657,7 +657,7 @@ class PinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.EstimateCategoryOrganizationResponse:
-        "EstimateCategoryOrganization"
+        "EstimateCategoryOrganization\n\nCreate a durable estimate for one natural-language organization request.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.EstimateCategoryOrganizationResponse,
             self._client.request(
@@ -684,7 +684,7 @@ class PinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListCategoriesResponse:
-        "ListCategories"
+        "ListCategories\n\nList one level of direct child categories.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. name asc (default) or updated_at desc.\n\nparentCategoryId: Optional. Omit to list roots; otherwise list direct children of this node."
         return cast(
             models.ListCategoriesResponse,
             self._client.request(
@@ -717,7 +717,7 @@ class PinpageCategories:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> Iterator[models.Category]:
-        "ListCategories"
+        "ListCategories\n\nList one level of direct child categories.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. name asc (default) or updated_at desc.\n\nparentCategoryId: Optional. Omit to list roots; otherwise list direct children of this node."
         return cast(
             Iterator[models.Category],
             self._client.paginate(
@@ -750,7 +750,7 @@ class PinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PreviewCategoryDeletionResponse:
-        "PreviewCategoryDeletion"
+        "PreviewCategoryDeletion\n\nProduce a signed exact impact snapshot for one category subtree.\n\ncategory_id: Required. Root category whose exact subtree impact is requested.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.PreviewCategoryDeletionResponse,
             self._client.request(
@@ -774,7 +774,7 @@ class PinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PreviewCategoryOrganizationResponse:
-        "PreviewCategoryOrganization"
+        "PreviewCategoryOrganization\n\nConsume an estimate and accept asynchronous organization planning.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -808,7 +808,7 @@ class AsyncPinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ApplyCategoryOrganizationResponse:
-        "ApplyCategoryOrganization"
+        "ApplyCategoryOrganization\n\nApply one unexpired settled preview without a second charge.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -839,7 +839,7 @@ class AsyncPinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.DeleteCategoryResponse:
-        "DeleteCategory"
+        "DeleteCategory\n\nRevoke a confirmed subtree and its pages, then schedule exact cleanup.\n\ncategory_id: Required. Root category to revoke and delete with its subtree.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nimpactFingerprint: Required. Exact aggregate impact fingerprint from the adjacent preview.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation.\n\nX-PinPage-Deletion-Confirmation: Required short-lived deletion capability returned by the matching PinPage deletion preview operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -870,7 +870,7 @@ class AsyncPinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.EstimateCategoryOrganizationResponse:
-        "EstimateCategoryOrganization"
+        "EstimateCategoryOrganization\n\nCreate a durable estimate for one natural-language organization request.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.EstimateCategoryOrganizationResponse,
             await self._client.request(
@@ -897,7 +897,7 @@ class AsyncPinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListCategoriesResponse:
-        "ListCategories"
+        "ListCategories\n\nList one level of direct child categories.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. name asc (default) or updated_at desc.\n\nparentCategoryId: Optional. Omit to list roots; otherwise list direct children of this node."
         return cast(
             models.ListCategoriesResponse,
             await self._client.request(
@@ -930,7 +930,7 @@ class AsyncPinpageCategories:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> AsyncIterator[models.Category]:
-        "ListCategories"
+        "ListCategories\n\nList one level of direct child categories.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. name asc (default) or updated_at desc.\n\nparentCategoryId: Optional. Omit to list roots; otherwise list direct children of this node."
         return cast(
             AsyncIterator[models.Category],
             self._client.paginate(
@@ -963,7 +963,7 @@ class AsyncPinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PreviewCategoryDeletionResponse:
-        "PreviewCategoryDeletion"
+        "PreviewCategoryDeletion\n\nProduce a signed exact impact snapshot for one category subtree.\n\ncategory_id: Required. Root category whose exact subtree impact is requested.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.PreviewCategoryDeletionResponse,
             await self._client.request(
@@ -987,7 +987,7 @@ class AsyncPinpageCategories:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PreviewCategoryOrganizationResponse:
-        "PreviewCategoryOrganization"
+        "PreviewCategoryOrganization\n\nConsume an estimate and accept asynchronous organization planning.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1020,7 +1020,7 @@ class PinpageCategoryOrganizationJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetCategoryOrganizationJobResponse:
-        "GetCategoryOrganizationJob"
+        "GetCategoryOrganizationJob\n\nReturn one user-requested category organization job.\n\norganization_job_id: Required. Opaque user-requested organization job identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetCategoryOrganizationJobResponse,
             self._client.request(
@@ -1049,7 +1049,7 @@ class AsyncPinpageCategoryOrganizationJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetCategoryOrganizationJobResponse:
-        "GetCategoryOrganizationJob"
+        "GetCategoryOrganizationJob\n\nReturn one user-requested category organization job.\n\norganization_job_id: Required. Opaque user-requested organization job identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetCategoryOrganizationJobResponse,
             await self._client.request(
@@ -1077,7 +1077,7 @@ class PinpageCategoryPreference:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetCategoryPreferenceResponse:
-        "GetCategoryPreference"
+        "GetCategoryPreference\n\nReturn the user-scoped singleton category preference.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetCategoryPreferenceResponse,
             self._client.request(
@@ -1102,7 +1102,7 @@ class PinpageCategoryPreference:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.UpdateCategoryPreferenceResponse:
-        "UpdateCategoryPreference"
+        "UpdateCategoryPreference\n\nFully replace or explicitly clear the singleton category preference.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1134,7 +1134,7 @@ class AsyncPinpageCategoryPreference:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetCategoryPreferenceResponse:
-        "GetCategoryPreference"
+        "GetCategoryPreference\n\nReturn the user-scoped singleton category preference.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetCategoryPreferenceResponse,
             await self._client.request(
@@ -1159,7 +1159,7 @@ class AsyncPinpageCategoryPreference:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.UpdateCategoryPreferenceResponse:
-        "UpdateCategoryPreference"
+        "UpdateCategoryPreference\n\nFully replace or explicitly clear the singleton category preference.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1193,7 +1193,7 @@ class PinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.CreateGenerationResponse:
-        "CreateGeneration"
+        "CreateGeneration\n\nAtomically freeze the user input and create a page plus generation job.\n Vertex owns LLM charging and quota admission; this request deliberately\n carries no quote, balance, budget, or user-authorized charge fields.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1221,7 +1221,7 @@ class PinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.EstimateGenerationResponse:
-        "EstimateGeneration"
+        "EstimateGeneration\n\nCreate a durable, short-lived estimate without starting generation.\n Deprecated. New clients call CreateGeneration directly.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nDeprecated:"
         return cast(
             models.EstimateGenerationResponse,
             self._client.request(
@@ -1245,7 +1245,7 @@ class PinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetJobResponse:
-        "GetJob"
+        "GetJob\n\nReturn the authoritative state of one generation job.\n\njob_id: Required. Opaque job identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetJobResponse,
             self._client.request(
@@ -1271,7 +1271,7 @@ class PinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RetryJobResponse:
-        "RetryJob"
+        "RetryJob\n\nConsume a RETRY_JOB estimate and create a new job with frozen input.\n\njob_id: Required. Failed source job from the request path.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1300,7 +1300,7 @@ class PinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.SubmitGenerationResponse:
-        "SubmitGeneration"
+        "SubmitGeneration\n\nConsume a CREATE_PAGE estimate and atomically create a page and job.\n Deprecated. New clients call CreateGeneration directly.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation.\n\nDeprecated:"
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1334,7 +1334,7 @@ class AsyncPinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.CreateGenerationResponse:
-        "CreateGeneration"
+        "CreateGeneration\n\nAtomically freeze the user input and create a page plus generation job.\n Vertex owns LLM charging and quota admission; this request deliberately\n carries no quote, balance, budget, or user-authorized charge fields.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1362,7 +1362,7 @@ class AsyncPinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.EstimateGenerationResponse:
-        "EstimateGeneration"
+        "EstimateGeneration\n\nCreate a durable, short-lived estimate without starting generation.\n Deprecated. New clients call CreateGeneration directly.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nDeprecated:"
         return cast(
             models.EstimateGenerationResponse,
             await self._client.request(
@@ -1386,7 +1386,7 @@ class AsyncPinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetJobResponse:
-        "GetJob"
+        "GetJob\n\nReturn the authoritative state of one generation job.\n\njob_id: Required. Opaque job identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetJobResponse,
             await self._client.request(
@@ -1412,7 +1412,7 @@ class AsyncPinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RetryJobResponse:
-        "RetryJob"
+        "RetryJob\n\nConsume a RETRY_JOB estimate and create a new job with frozen input.\n\njob_id: Required. Failed source job from the request path.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1441,7 +1441,7 @@ class AsyncPinpageJobs:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.SubmitGenerationResponse:
-        "SubmitGeneration"
+        "SubmitGeneration\n\nConsume a CREATE_PAGE estimate and atomically create a page and job.\n Deprecated. New clients call CreateGeneration directly.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation.\n\nDeprecated:"
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1475,7 +1475,7 @@ class PinpageMaterials:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.DeleteMaterialResponse:
-        "DeleteMaterial"
+        "DeleteMaterial\n\nRevoke access to one unbound material and schedule cleanup.\n\nmaterial_id: Required. Unbound material whose access is revoked.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1502,7 +1502,7 @@ class PinpageMaterials:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetMaterialResponse:
-        "GetMaterial"
+        "GetMaterial\n\nReturn one user-owned material's validation and parsing fact.\n\nmaterial_id: Required. Opaque material identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetMaterialResponse,
             self._client.request(
@@ -1532,7 +1532,7 @@ class AsyncPinpageMaterials:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.DeleteMaterialResponse:
-        "DeleteMaterial"
+        "DeleteMaterial\n\nRevoke access to one unbound material and schedule cleanup.\n\nmaterial_id: Required. Unbound material whose access is revoked.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1559,7 +1559,7 @@ class AsyncPinpageMaterials:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetMaterialResponse:
-        "GetMaterial"
+        "GetMaterial\n\nReturn one user-owned material's validation and parsing fact.\n\nmaterial_id: Required. Opaque material identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetMaterialResponse,
             await self._client.request(
@@ -1593,7 +1593,7 @@ class PinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.DeletePageResponse:
-        "DeletePage"
+        "DeletePage\n\nRevoke page access and accept its exact content scope for cleanup.\n\npage_id: Required. Page to revoke and delete.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nexpectedContentRevision: Required. Content revision returned by the adjacent preview.\n\nimpactFingerprint: Required. Exact impact fingerprint returned by the adjacent preview.\n\npageEtag: Optional. Exact representation validator requested by the client.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation.\n\nX-PinPage-Deletion-Confirmation: Required short-lived deletion capability returned by the matching PinPage deletion preview operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1628,7 +1628,7 @@ class PinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageResponse:
-        "GetPage"
+        "GetPage\n\nReturn one authoritative page without embedding version HTML.\n\npage_id: Required. Opaque page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetPageResponse,
             self._client.request(
@@ -1655,7 +1655,7 @@ class PinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPagesResponse:
-        "ListPages"
+        "ListPages\n\nList the user's recent pages or pages directly assigned to one category.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\ncategoryId: Optional. Restrict results to one direct category.\n\norderBy: Optional. created_at desc (default) or created_at asc."
         return cast(
             models.ListPagesResponse,
             self._client.request(
@@ -1688,7 +1688,7 @@ class PinpagePages:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> Iterator[models.PageSummary]:
-        "ListPages"
+        "ListPages\n\nList the user's recent pages or pages directly assigned to one category.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\ncategoryId: Optional. Restrict results to one direct category.\n\norderBy: Optional. created_at desc (default) or created_at asc."
         return cast(
             Iterator[models.PageSummary],
             self._client.paginate(
@@ -1721,7 +1721,7 @@ class PinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PreviewPageDeletionResponse:
-        "PreviewPageDeletion"
+        "PreviewPageDeletion\n\nProduce a signed, short-lived exact deletion-impact snapshot.\n\npage_id: Required. Page whose exact deletion impact is requested.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.PreviewPageDeletionResponse,
             self._client.request(
@@ -1746,7 +1746,7 @@ class PinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RegeneratePageResponse:
-        "RegeneratePage"
+        "RegeneratePage\n\nConsume a REGENERATE_PAGE estimate and create a new logical job.\n\npage_id: Required. Existing page to regenerate.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1775,7 +1775,7 @@ class PinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RenamePageResponse:
-        "RenamePage"
+        "RenamePage\n\nSave a user display name without regenerating immutable artifacts.\n\npage_id: Required. Owned page identifier.\n\nuser_id: Required. Authenticated owner or me."
         return cast(
             models.RenamePageResponse,
             self._client.request(
@@ -1810,7 +1810,7 @@ class AsyncPinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.DeletePageResponse:
-        "DeletePage"
+        "DeletePage\n\nRevoke page access and accept its exact content scope for cleanup.\n\npage_id: Required. Page to revoke and delete.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nexpectedContentRevision: Required. Content revision returned by the adjacent preview.\n\nimpactFingerprint: Required. Exact impact fingerprint returned by the adjacent preview.\n\npageEtag: Optional. Exact representation validator requested by the client.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation.\n\nX-PinPage-Deletion-Confirmation: Required short-lived deletion capability returned by the matching PinPage deletion preview operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1845,7 +1845,7 @@ class AsyncPinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageResponse:
-        "GetPage"
+        "GetPage\n\nReturn one authoritative page without embedding version HTML.\n\npage_id: Required. Opaque page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetPageResponse,
             await self._client.request(
@@ -1872,7 +1872,7 @@ class AsyncPinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPagesResponse:
-        "ListPages"
+        "ListPages\n\nList the user's recent pages or pages directly assigned to one category.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\ncategoryId: Optional. Restrict results to one direct category.\n\norderBy: Optional. created_at desc (default) or created_at asc."
         return cast(
             models.ListPagesResponse,
             await self._client.request(
@@ -1905,7 +1905,7 @@ class AsyncPinpagePages:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> AsyncIterator[models.PageSummary]:
-        "ListPages"
+        "ListPages\n\nList the user's recent pages or pages directly assigned to one category.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\ncategoryId: Optional. Restrict results to one direct category.\n\norderBy: Optional. created_at desc (default) or created_at asc."
         return cast(
             AsyncIterator[models.PageSummary],
             self._client.paginate(
@@ -1938,7 +1938,7 @@ class AsyncPinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.PreviewPageDeletionResponse:
-        "PreviewPageDeletion"
+        "PreviewPageDeletion\n\nProduce a signed, short-lived exact deletion-impact snapshot.\n\npage_id: Required. Page whose exact deletion impact is requested.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.PreviewPageDeletionResponse,
             await self._client.request(
@@ -1963,7 +1963,7 @@ class AsyncPinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RegeneratePageResponse:
-        "RegeneratePage"
+        "RegeneratePage\n\nConsume a REGENERATE_PAGE estimate and create a new logical job.\n\npage_id: Required. Existing page to regenerate.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -1992,7 +1992,7 @@ class AsyncPinpagePages:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RenamePageResponse:
-        "RenamePage"
+        "RenamePage\n\nSave a user display name without regenerating immutable artifacts.\n\npage_id: Required. Owned page identifier.\n\nuser_id: Required. Authenticated owner or me."
         return cast(
             models.RenamePageResponse,
             await self._client.request(
@@ -2023,7 +2023,7 @@ class PinpagePrompt:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPagePromptResponse:
-        "GetPagePrompt"
+        "GetPagePrompt\n\nRead private requirements for an owned page; never includes system prompts."
         return cast(
             models.GetPagePromptResponse,
             self._client.request(
@@ -2053,7 +2053,7 @@ class AsyncPinpagePrompt:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPagePromptResponse:
-        "GetPagePrompt"
+        "GetPagePrompt\n\nRead private requirements for an owned page; never includes system prompts."
         return cast(
             models.GetPagePromptResponse,
             await self._client.request(
@@ -2081,7 +2081,7 @@ class PinpageStorageProtection:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetStorageProtectionResponse:
-        "GetStorageProtection"
+        "GetStorageProtection\n\nReturn the user's authoritative hosted-content protection state.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetStorageProtectionResponse,
             self._client.request(
@@ -2109,7 +2109,7 @@ class AsyncPinpageStorageProtection:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetStorageProtectionResponse:
-        "GetStorageProtection"
+        "GetStorageProtection\n\nReturn the user's authoritative hosted-content protection state.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetStorageProtectionResponse,
             await self._client.request(
@@ -2139,7 +2139,7 @@ class PinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.AbortUploadResponse:
-        "AbortUpload"
+        "AbortUpload\n\nAbort an unfinished multipart session without creating a material.\n\nupload_id: Required. Unfinished upload session to abort.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -2167,7 +2167,7 @@ class PinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.CompleteUploadResponse:
-        "CompleteUpload"
+        "CompleteUpload\n\nComplete and verify multipart content, then create a material on success.\n\nupload_id: Required. OPEN or idempotently completed upload identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -2195,7 +2195,7 @@ class PinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.CreateUploadResponse:
-        "CreateUpload"
+        "CreateUpload\n\nConsume one estimate item and create a durable multipart session.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -2223,7 +2223,7 @@ class PinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.EstimateUploadResponse:
-        "EstimateUpload"
+        "EstimateUpload\n\nCreate a durable file-service estimate before reserving or signing work.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.EstimateUploadResponse,
             self._client.request(
@@ -2247,7 +2247,7 @@ class PinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetUploadResponse:
-        "GetUpload"
+        "GetUpload\n\nReturn and reconcile one durable multipart session.\n\nupload_id: Required. Opaque PinPage upload identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetUploadResponse,
             self._client.request(
@@ -2272,7 +2272,7 @@ class PinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.SignUploadPartsResponse:
-        "SignUploadParts"
+        "SignUploadParts\n\nSign short-lived PUT capabilities for explicitly requested parts.\n\nupload_id: Required. OPEN upload session identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.SignUploadPartsResponse,
             self._client.request(
@@ -2302,7 +2302,7 @@ class AsyncPinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.AbortUploadResponse:
-        "AbortUpload"
+        "AbortUpload\n\nAbort an unfinished multipart session without creating a material.\n\nupload_id: Required. Unfinished upload session to abort.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -2330,7 +2330,7 @@ class AsyncPinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.CompleteUploadResponse:
-        "CompleteUpload"
+        "CompleteUpload\n\nComplete and verify multipart content, then create a material on success.\n\nupload_id: Required. OPEN or idempotently completed upload identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -2358,7 +2358,7 @@ class AsyncPinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.CreateUploadResponse:
-        "CreateUpload"
+        "CreateUpload\n\nConsume one estimate item and create a durable multipart session.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -2386,7 +2386,7 @@ class AsyncPinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.EstimateUploadResponse:
-        "EstimateUpload"
+        "EstimateUpload\n\nCreate a durable file-service estimate before reserving or signing work.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.EstimateUploadResponse,
             await self._client.request(
@@ -2410,7 +2410,7 @@ class AsyncPinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetUploadResponse:
-        "GetUpload"
+        "GetUpload\n\nReturn and reconcile one durable multipart session.\n\nupload_id: Required. Opaque PinPage upload identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetUploadResponse,
             await self._client.request(
@@ -2435,7 +2435,7 @@ class AsyncPinpageUploads:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.SignUploadPartsResponse:
-        "SignUploadParts"
+        "SignUploadParts\n\nSign short-lived PUT capabilities for explicitly requested parts.\n\nupload_id: Required. OPEN upload session identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.SignUploadPartsResponse,
             await self._client.request(
@@ -2464,7 +2464,7 @@ class Preview:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetCategoryOrganizationPreviewResponse:
-        "GetCategoryOrganizationPreview"
+        "GetCategoryOrganizationPreview\n\nReturn the durable settled preview produced by a successful job.\n\norganization_job_id: Required. Successful organization job identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetCategoryOrganizationPreviewResponse,
             self._client.request(
@@ -2493,7 +2493,7 @@ class AsyncPreview:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetCategoryOrganizationPreviewResponse:
-        "GetCategoryOrganizationPreview"
+        "GetCategoryOrganizationPreview\n\nReturn the durable settled preview produced by a successful job.\n\norganization_job_id: Required. Successful organization job identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier."
         return cast(
             models.GetCategoryOrganizationPreviewResponse,
             await self._client.request(
@@ -2526,7 +2526,7 @@ class Progress:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetGenerationProgressResponse:
-        "GetGenerationProgress"
+        "GetGenerationProgress\n\nRead current state and immutable history without triggering recovery.\n\nafterEventSeq: Optional. after event seq.\n\npageSize: Optional. page size.\n\npageToken: Optional. page token.\n\nuiLocale: Optional. ui locale."
         return cast(
             models.GetGenerationProgressResponse,
             self._client.request(
@@ -2564,7 +2564,7 @@ class AsyncProgress:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetGenerationProgressResponse:
-        "GetGenerationProgress"
+        "GetGenerationProgress\n\nRead current state and immutable history without triggering recovery.\n\nafterEventSeq: Optional. after event seq.\n\npageSize: Optional. page size.\n\npageToken: Optional. page token.\n\nuiLocale: Optional. ui locale."
         return cast(
             models.GetGenerationProgressResponse,
             await self._client.request(
@@ -2597,7 +2597,7 @@ class Revoke:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RevokeTokenResponse:
-        "RevokeToken"
+        "RevokeToken\n\nRevoke an access or refresh token (RFC 7009)."
         return cast(
             models.RevokeTokenResponse,
             self._client.request(
@@ -2624,7 +2624,7 @@ class AsyncRevoke:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RevokeTokenResponse:
-        "RevokeToken"
+        "RevokeToken\n\nRevoke an access or refresh token (RFC 7009)."
         return cast(
             models.RevokeTokenResponse,
             await self._client.request(
@@ -2651,7 +2651,7 @@ class Scopes:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetScopeResponse:
-        "GetScope"
+        "GetScope\n\nGet a scope by its name."
         return cast(
             models.GetScopeResponse,
             self._client.request(
@@ -2672,7 +2672,7 @@ class Scopes:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListScopesResponse:
-        "ListScopes"
+        "ListScopes\n\nList all available scopes, optionally filtered by category.\n\ncategory: Optional filter by category"
         return cast(
             models.ListScopesResponse,
             self._client.request(
@@ -2698,7 +2698,7 @@ class AsyncScopes:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetScopeResponse:
-        "GetScope"
+        "GetScope\n\nGet a scope by its name."
         return cast(
             models.GetScopeResponse,
             await self._client.request(
@@ -2719,7 +2719,7 @@ class AsyncScopes:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListScopesResponse:
-        "ListScopes"
+        "ListScopes\n\nList all available scopes, optionally filtered by category.\n\ncategory: Optional filter by category"
         return cast(
             models.ListScopesResponse,
             await self._client.request(
@@ -2745,7 +2745,7 @@ class SignUrls:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.SignAssetUrlsResponse:
-        "SignAssetUrls"
+        "SignAssetUrls\n\n为已缓存的对象键重新生成签名 URL。\n 当客户端本地缓存了 object_key 但 URL 过期时，调用此接口获取新的签名 URL。"
         return cast(
             models.SignAssetUrlsResponse,
             self._client.request(
@@ -2772,7 +2772,7 @@ class AsyncSignUrls:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.SignAssetUrlsResponse:
-        "SignAssetUrls"
+        "SignAssetUrls\n\n为已缓存的对象键重新生成签名 URL。\n 当客户端本地缓存了 object_key 但 URL 过期时，调用此接口获取新的签名 URL。"
         return cast(
             models.SignAssetUrlsResponse,
             await self._client.request(
@@ -2798,7 +2798,7 @@ class TemplatePresets:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPresetsResponse:
-        "ListPresets"
+        "ListPresets\n\n列出当前用户的所有自定义预设。"
         return cast(
             models.ListPresetsResponse,
             self._client.request(
@@ -2823,7 +2823,7 @@ class AsyncTemplatePresets:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPresetsResponse:
-        "ListPresets"
+        "ListPresets\n\n列出当前用户的所有自定义预设。"
         return cast(
             models.ListPresetsResponse,
             await self._client.request(
@@ -2848,7 +2848,7 @@ class Templates:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListTemplatesResponse:
-        "ListTemplates"
+        "ListTemplates\n\n列出所有系统排版模板。"
         return cast(
             models.ListTemplatesResponse,
             self._client.request(
@@ -2873,7 +2873,7 @@ class AsyncTemplates:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListTemplatesResponse:
-        "ListTemplates"
+        "ListTemplates\n\n列出所有系统排版模板。"
         return cast(
             models.ListTemplatesResponse,
             await self._client.request(
@@ -2899,7 +2899,7 @@ class Token:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.TokenResponse:
-        "Token"
+        "Token\n\nExchange an authorization code, refresh token, or client credentials for tokens."
         return cast(
             models.TokenResponse,
             self._client.request(
@@ -2925,7 +2925,7 @@ class AsyncToken:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.TokenResponse:
-        "Token"
+        "Token\n\nExchange an authorization code, refresh token, or client credentials for tokens."
         return cast(
             models.TokenResponse,
             await self._client.request(
@@ -2950,7 +2950,7 @@ class Users:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetProfileResponse:
-        "Get the authenticated user's profile."
+        'Get the authenticated user\'s profile.\n\nGetProfileRequest is empty — caller identity comes from the OAuth\n access token. `me` in the URL is a reserved word meaning\n "holder of the current token"; substituting `/v1/users/{user_id}`\n is rejected with 403 PERMISSION_DENIED.'
         return cast(
             models.GetProfileResponse,
             self._client.request(
@@ -2975,7 +2975,7 @@ class AsyncUsers:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetProfileResponse:
-        "Get the authenticated user's profile."
+        'Get the authenticated user\'s profile.\n\nGetProfileRequest is empty — caller identity comes from the OAuth\n access token. `me` in the URL is a reserved word meaning\n "holder of the current token"; substituting `/v1/users/{user_id}`\n is rejected with 403 PERMISSION_DENIED.'
         return cast(
             models.GetProfileResponse,
             await self._client.request(
@@ -3001,7 +3001,7 @@ class Verify:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.VerifyPlatformAccountResponse:
-        "VerifyPlatformAccount"
+        "VerifyPlatformAccount\n\n验证平台账号凭证是否有效。\n 用于在正式绑定或发布前检查凭证可用性。"
         return cast(
             models.VerifyPlatformAccountResponse,
             self._client.request(
@@ -3028,7 +3028,7 @@ class AsyncVerify:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.VerifyPlatformAccountResponse:
-        "VerifyPlatformAccount"
+        "VerifyPlatformAccount\n\n验证平台账号凭证是否有效。\n 用于在正式绑定或发布前检查凭证可用性。"
         return cast(
             models.VerifyPlatformAccountResponse,
             await self._client.request(
@@ -3057,7 +3057,7 @@ class Versions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageVersionResponse:
-        "GetPageVersion"
+        "GetPageVersion\n\nReturn one complete immutable version, including validated HTML.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Version identifier that must belong to page_id."
         return cast(
             models.GetPageVersionResponse,
             self._client.request(
@@ -3086,7 +3086,7 @@ class Versions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPageVersionsResponse:
-        "ListPageVersions"
+        "ListPageVersions\n\nList immutable published-version summaries for one page.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. sequence_number desc (default) or sequence_number asc."
         return cast(
             models.ListPageVersionsResponse,
             self._client.request(
@@ -3114,7 +3114,7 @@ class Versions:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> Iterator[models.PageVersionSummary]:
-        "ListPageVersions"
+        "ListPageVersions\n\nList immutable published-version summaries for one page.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. sequence_number desc (default) or sequence_number asc."
         return cast(
             Iterator[models.PageVersionSummary],
             self._client.paginate(
@@ -3145,7 +3145,7 @@ class Versions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RestorePageVersionResponse:
-        "RestorePageVersion"
+        "RestorePageVersion\n\nMake one immutable historical version current without creating a job.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Historical version to make current.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
@@ -3181,7 +3181,7 @@ class AsyncVersions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.GetPageVersionResponse:
-        "GetPageVersion"
+        "GetPageVersion\n\nReturn one complete immutable version, including validated HTML.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Version identifier that must belong to page_id."
         return cast(
             models.GetPageVersionResponse,
             await self._client.request(
@@ -3210,7 +3210,7 @@ class AsyncVersions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.ListPageVersionsResponse:
-        "ListPageVersions"
+        "ListPageVersions\n\nList immutable published-version summaries for one page.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. sequence_number desc (default) or sequence_number asc."
         return cast(
             models.ListPageVersionsResponse,
             await self._client.request(
@@ -3238,7 +3238,7 @@ class AsyncVersions:
         idempotency_key: str | None = None,
         max_pages: int | None = None,
     ) -> AsyncIterator[models.PageVersionSummary]:
-        "ListPageVersions"
+        "ListPageVersions\n\nList immutable published-version summaries for one page.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\norderBy: Optional. sequence_number desc (default) or sequence_number asc."
         return cast(
             AsyncIterator[models.PageVersionSummary],
             self._client.paginate(
@@ -3269,7 +3269,7 @@ class AsyncVersions:
         headers: Mapping[str, str] | None = None,
         idempotency_key: str | None = None,
     ) -> models.RestorePageVersionResponse:
-        "RestorePageVersion"
+        "RestorePageVersion\n\nMake one immutable historical version current without creating a job.\n\npage_id: Required. Owning page identifier.\n\nuser_id: Required. Owner path; accepts me or the authenticated user's identifier.\n\nversion_id: Required. Historical version to make current.\n\nX-Idempotency-Key: Required opaque idempotency key for this operation."
         request_headers = dict(headers or {})
         if not isinstance(x_idempotency_key, NotGiven):
             request_headers["X-Idempotency-Key"] = str(x_idempotency_key)
