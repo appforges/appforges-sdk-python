@@ -3208,6 +3208,104 @@ class CreateUploadResponse(SDKModel):
     )
 
 
+class CreateVertexAPIKeyRequest(SDKModel):
+    allowed_models: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="allowed_models", description=""
+    )
+    caller_service: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="caller_service", description=""
+    )
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="expires_at",
+        description="Required, in the future and no more than 366 days from now.",
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
+    owner_user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="owner_user_id", description=""
+    )
+    request_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="request_id",
+        description="Unique issuance attempt ID. Replays return ALREADY_EXISTS, without issuing\n another key. If a response is lost, revoke its listed key and create anew.",
+    )
+
+
+VertexAPIKeyStatus: TypeAlias = Literal[
+    "VERTEX_API_KEY_STATUS_UNSPECIFIED",
+    "VERTEX_API_KEY_STATUS_ACTIVE",
+    "VERTEX_API_KEY_STATUS_DISABLED",
+]
+
+
+class VertexAPIKey(SDKModel):
+    "VertexAPIKey contains non-secret metadata only. Identity bindings are immutable."
+
+    allowed_models: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="allowed_models",
+        description="Exact requested model IDs; nonempty, no wildcard. No privilege escalation\n through user-supplied internal identity or application headers.",
+    )
+    api_key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key_id", description=""
+    )
+    caller_service: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="caller_service", description=""
+    )
+    created_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="created_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
+    )
+    created_by: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="created_by", description=""
+    )
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
+    )
+    key_prefix: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="key_prefix", description=""
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
+    owner_user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="owner_user_id",
+        description="IAM user charged and audited for calls made with this key.",
+    )
+    status: Annotated[VertexAPIKeyStatus | None, AfterValidator(non_null)] = Field(
+        default=None, alias="status", description=""
+    )
+    updated_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="updated_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
+    )
+    version: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="version",
+        description="Optimistic concurrency version. Update/Delete require the current value.",
+    )
+
+
+class CreateVertexAPIKeyResponse(SDKModel):
+    api_key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="api_key",
+        description="Secret, shown once; must never be logged, cached or persisted by Smithy.",
+    )
+    key: Annotated[VertexAPIKey | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="key",
+        description="VertexAPIKey contains non-secret metadata only. Identity bindings are immutable.",
+    )
+
+
 class CreateVideoRequest(SDKModel):
     "CreateVideoRequest 基于脚本和素材合成视频。\n 支持两种模式：\n   1. 指定 task_id —— 使用已有 VideoTask 中 LLM 生成的脚本\n   2. 指定 project_id + script —— 直接提供脚本创建视频"
 
@@ -3562,6 +3660,18 @@ class DeleteProjectRequest(SDKModel):
 
 
 DeleteProjectResponse: TypeAlias = Any
+
+
+class DeleteVertexAPIKeyRequest(SDKModel):
+    api_key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key_id", description=""
+    )
+    expected_version: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="expected_version", description=""
+    )
+
+
+DeleteVertexAPIKeyResponse: TypeAlias = Any
 
 
 class DeleteVideoTaskRequest(SDKModel):
@@ -5265,6 +5375,20 @@ class GetVersionHintResponse(SDKModel):
     )
 
 
+class GetVertexAPIKeyRequest(SDKModel):
+    api_key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key_id", description=""
+    )
+
+
+class GetVertexAPIKeyResponse(SDKModel):
+    key: Annotated[VertexAPIKey | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="key",
+        description="VertexAPIKey contains non-secret metadata only. Identity bindings are immutable.",
+    )
+
+
 class GetVideoTaskRequest(SDKModel):
     task_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="task_id", description=""
@@ -5387,6 +5511,27 @@ class IntrospectTokenResponse(SDKModel):
     )
     user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="user_id", description="Empty for client_credentials tokens"
+    )
+
+
+IssueInternalDelegationRequest: TypeAlias = Any
+
+
+class IssueInternalDelegationResponse(SDKModel):
+    delegation: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="delegation",
+        description="Signed proof: subject, issuer, expiry, exact caller/audience/method/path\n grants and credential-derived bindings. Receiver must enforce bindings.\n Lifetime \u003c= 5 minutes and bounded by the credential/operation expiry.",
+    )
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
+    )
+    user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="user_id",
+        description="Authoritative subject used with the proof; never independently trusted.",
     )
 
 
@@ -5888,6 +6033,27 @@ class Template(SDKModel):
 class ListTemplatesResponse(SDKModel):
     templates: Annotated[list[Template] | None, AfterValidator(non_null)] = Field(
         default=None, alias="templates", description=""
+    )
+
+
+class ListVertexAPIKeysRequest(SDKModel):
+    owner_user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="owner_user_id", description="Optional exact owner filter."
+    )
+    page_size: Annotated[int | None, AfterValidator(non_null)] = Field(
+        default=None, alias="page_size", description=""
+    )
+    page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="page_token", description=""
+    )
+
+
+class ListVertexAPIKeysResponse(SDKModel):
+    keys: Annotated[list[VertexAPIKey] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="keys", description=""
+    )
+    next_page_token: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="next_page_token", description=""
     )
 
 
@@ -8168,6 +8334,37 @@ class UpdateScopeResponse(SDKModel):
     )
 
 
+class UpdateVertexAPIKeyRequest(SDKModel):
+    allowed_models: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None, alias="allowed_models", description=""
+    )
+    api_key_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key_id", description=""
+    )
+    expected_version: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="expected_version", description=""
+    )
+    expires_at: Annotated[Timestamp | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="expires_at",
+        description='A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(\u0026tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(\u0026ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) \u003c\u003c 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone\n is required. A ProtoJSON serializer should always use UTC (as indicated by\n "Z") when printing the Timestamp type and a ProtoJSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec \'%Y-%m-%dT%H:%M:%S.%fZ\'. Likewise, in Java, one can use\n the Joda Time\'s [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.',
+    )
+    name: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="name", description=""
+    )
+    status: Annotated[VertexAPIKeyStatus | None, AfterValidator(non_null)] = Field(
+        default=None, alias="status", description=""
+    )
+
+
+class UpdateVertexAPIKeyResponse(SDKModel):
+    key: Annotated[VertexAPIKey | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="key",
+        description="VertexAPIKey contains non-secret metadata only. Identity bindings are immutable.",
+    )
+
+
 class UpdateWebhookRequest(SDKModel):
     status: Annotated[WebhookStatus | None, AfterValidator(non_null)] = Field(
         default=None,
@@ -8326,6 +8523,27 @@ class VerifyPlatformAccountResponse(SDKModel):
     )
 
 
+class VerifyVertexAPIKeyRequest(SDKModel):
+    "Contains a secret. Request/response body logging and caching are prohibited."
+
+    api_key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key", description=""
+    )
+    model: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="model",
+        description="Exact requested model, no wildcard or provider-resolved substitution.",
+    )
+
+
+class VerifyVertexAPIKeyResponse(SDKModel):
+    key: Annotated[VertexAPIKey | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="key",
+        description="Metadata of the authenticated key; no hash or plaintext credential.\n This metadata is not a wallet delegation and must never be treated as one.",
+    )
+
+
 class VersionsRestorePageVersionBody(SDKModel):
     expected_content_revision: str = Field(
         default=...,
@@ -8341,6 +8559,15 @@ class VersionsRestorePageVersionBody(SDKModel):
         default=None,
         alias="pageEtag",
         description="(OPTIONAL) Optional. Exact representation validator requested by the client.",
+    )
+
+
+class VertexDelegationCredential(SDKModel):
+    api_key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key", description=""
+    )
+    model: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="model", description=""
     )
 
 
