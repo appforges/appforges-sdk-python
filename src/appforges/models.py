@@ -8544,6 +8544,22 @@ class VerifyVertexAPIKeyResponse(SDKModel):
     )
 
 
+class VerifyVertexToolCredentialRequest(SDKModel):
+    "Contains a secret: never log, trace, cache or persist its body.\n No owner, model, amount or requested grants may be supplied by the caller."
+
+    api_key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key", description=""
+    )
+
+
+class VerifyVertexToolCredentialResponse(SDKModel):
+    key: Annotated[VertexAPIKey | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="key",
+        description="Authenticated metadata only; not a wallet or paid-tool delegation.",
+    )
+
+
 class VersionsRestorePageVersionBody(SDKModel):
     expected_content_revision: str = Field(
         default=...,
@@ -8568,6 +8584,17 @@ class VertexDelegationCredential(SDKModel):
     )
     model: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None, alias="model", description=""
+    )
+
+
+class VertexToolDelegationCredential(SDKModel):
+    api_key: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="api_key", description=""
+    )
+    sku: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="sku",
+        description="Exact registered SKU (e.g. web_search.basic), no wildcard. Must be bound\n into the signed proof and enforced by Vertex and Billing against the\n accepted operation and actual settlement usage. Never a model alias.",
     )
 
 
