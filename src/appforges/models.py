@@ -542,6 +542,24 @@ class AppforgesCommonV1PaginationResponse(SDKModel):
     )
 
 
+class ApplicationDelegationPrincipal(SDKModel):
+    "Application identity is not an end user and not a workload ServiceAccount.\n A valid application proof also requires the caller's own workload identity."
+
+    app_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None, alias="app_id", description=""
+    )
+    client_id: Annotated[str | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="client_id",
+        description="Active OAuth client that obtained the credential. Required and signed.\n This is distinct from app_id; never use one as a fallback for the other.",
+    )
+    scopes: Annotated[list[str] | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="scopes",
+        description="Nonempty exact intersection of current token/client and installed policy.\n No wildcard or implicit administrator/user permission. Resource-level\n authorization remains mandatory at the destination.",
+    )
+
+
 ApplicationStatus: TypeAlias = Literal[
     "APPLICATION_STATUS_UNSPECIFIED",
     "APPLICATION_STATUS_ACTIVE",
@@ -5518,6 +5536,11 @@ IssueInternalDelegationRequest: TypeAlias = Any
 
 
 class IssueInternalDelegationResponse(SDKModel):
+    application: Annotated[ApplicationDelegationPrincipal | None, AfterValidator(non_null)] = Field(
+        default=None,
+        alias="application",
+        description="Present only for an application proof. The signed token uses the distinct\n appforges-app-delegation+jwt type and application payload; old user-only\n verifiers must reject it. Check these fields against the verified signature,\n and apply the receiving route's explicit application scope/resource policy.",
+    )
     delegation: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None,
         alias="delegation",
@@ -5531,7 +5554,7 @@ class IssueInternalDelegationResponse(SDKModel):
     user_id: Annotated[str | None, AfterValidator(non_null)] = Field(
         default=None,
         alias="user_id",
-        description="Authoritative subject used with the proof; never independently trusted.",
+        description="Authoritative user subject; never independently trusted. Required only for\n user proofs. Empty for an application proof. Receivers must reject a\n response carrying both user_id and application, or neither.",
     )
 
 
