@@ -3,7 +3,7 @@
 Official synchronous and asynchronous Python SDK. Python 3.11 or newer.
 Generated from the same OpenAPI specification tag as the TypeScript SDK.
 
-Install: `pip install appforges==0.65.0`
+Install: `pip install appforges==0.66.0`
 
 ```python
 import os
